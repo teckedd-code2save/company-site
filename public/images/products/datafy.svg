@@ -1,0 +1,9 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" fill="#0F172A"/>
+  <rect x="40" y="40" width="1120" height="620" rx="24" fill="#111827" stroke="#1F2937"/>
+  <circle cx="220" cy="180" r="120" fill="#06B6D4" fill-opacity="0.25"/>
+  <circle cx="940" cy="520" r="160" fill="#3B82F6" fill-opacity="0.2"/>
+  <rect x="140" y="200" width="920" height="300" rx="20" fill="#0B1220" stroke="#334155"/>
+  <text x="600" y="320" text-anchor="middle" fill="#E2E8F0" font-size="62" font-family="Inter, Arial, sans-serif" font-weight="700">@teckedd-code2save/datafy</text>
+  <text x="600" y="390" text-anchor="middle" fill="#94A3B8" font-size="32" font-family="Inter, Arial, sans-serif">Database MCP Gateway</text>
+</svg>
