@@ -27,11 +27,8 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const prefersDark =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches;
     const storedTheme = localStorage.getItem('theme');
-    const shouldUseDark = storedTheme ? storedTheme === 'dark' : prefersDark;
+    const shouldUseDark = storedTheme ? storedTheme === 'dark' : false;
     setIsDark(shouldUseDark);
     document.documentElement.classList.toggle('dark', shouldUseDark);
   }, []);

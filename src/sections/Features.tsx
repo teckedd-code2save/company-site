@@ -32,9 +32,9 @@ export default function Features() {
   const isExternalDemo = demoLink !== '#contact';
 
   return (
-    <section id="features" className="bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] py-24 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)] lg:py-32">
+    <section id="features" className="bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] py-20 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className="grid items-start gap-10 sm:gap-12 lg:gap-16 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -44,10 +44,10 @@ export default function Features() {
             <span className="inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
               Why teams choose Serendepify
             </span>
-            <h2 className="mt-6 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
+            <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
               The right help from first idea to launch.
             </h2>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
               Serendepify works best when a team needs product thinking, technical delivery,
               and a faster path to something real in front of users.
             </p>

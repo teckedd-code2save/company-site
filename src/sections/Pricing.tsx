@@ -90,22 +90,22 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="bg-gray-50 py-24 dark:bg-slate-950 lg:py-32">
+    <section id="pricing" className="bg-gray-50 py-20 dark:bg-slate-950 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mb-12 text-center"
+          className="mb-10 text-center sm:mb-12"
         >
           <span className="mb-4 inline-block rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
             Pricing
           </span>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
             Simple ways to get started
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
             Choose a starting point, request a demo, or talk to us about a broader engagement.
           </p>
         </motion.div>
@@ -115,7 +115,7 @@ export default function Pricing() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
           {plans.map((plan) => (
             <motion.div key={plan.name} variants={itemVariants}>
@@ -135,18 +135,18 @@ export default function Pricing() {
                   </div>
                 )}
 
-                <CardContent className="p-8">
-                  <h3 className="mb-2 text-2xl font-bold text-black dark:text-white">{plan.name}</h3>
+                <CardContent className="p-6 sm:p-8">
+                  <h3 className="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">{plan.name}</h3>
                   <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">{plan.description}</p>
 
                   <div className="mb-6">
                     {plan.price !== null ? (
                       <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-black dark:text-white">${plan.price}</span>
+                        <span className="text-3xl font-bold text-black dark:text-white sm:text-4xl">${plan.price}</span>
                         <span className="text-gray-500 dark:text-gray-400">starting from</span>
                       </div>
                     ) : (
-                      <div className="text-4xl font-bold text-black dark:text-white">Custom</div>
+                      <div className="text-3xl font-bold text-black dark:text-white sm:text-4xl">Custom</div>
                     )}
                   </div>
 

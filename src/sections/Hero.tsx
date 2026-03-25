@@ -42,9 +42,9 @@ export default function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid min-h-[calc(100vh-4rem)] items-center gap-16 py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:py-24"
+          className="grid min-h-[calc(100vh-4rem)] items-center gap-10 py-12 sm:gap-12 sm:py-16 lg:gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:py-24"
         >
-          <div className="max-w-2xl">
+          <div className="max-w-2xl text-center lg:text-left">
             <motion.div variants={itemVariants} className="mb-6">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/80 dark:text-slate-200">
                 <span className="h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-200" />
@@ -54,25 +54,25 @@ export default function Hero() {
 
             <motion.h1
               variants={itemVariants}
-              className="max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-7xl"
+              className="max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
             >
               Build AI products people can trust, adopt, and pay for.
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="mt-7 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300 sm:text-xl"
+              className="mx-auto mt-6 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8 lg:mx-0 lg:text-xl"
             >
               Serendepify helps teams turn promising ideas into usable systems,
               from internal workflows to customer-facing products that are ready
               for pilots, launch, and growth.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <motion.div variants={itemVariants} className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <Button
                 asChild
                 size="lg"
-                className="group rounded-lg bg-slate-950 px-8 py-6 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200"
+                className="group w-full rounded-lg bg-slate-950 px-8 py-5 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 sm:w-auto sm:py-6"
               >
                 <a href="#products">
                   Explore products
@@ -83,7 +83,7 @@ export default function Hero() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-lg border-2 border-slate-300 bg-white px-8 py-6 text-base font-medium text-slate-900 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-white dark:hover:bg-slate-900"
+                className="w-full rounded-lg border-2 border-slate-300 bg-white px-8 py-5 text-base font-medium text-slate-900 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-white dark:hover:bg-slate-900 sm:w-auto sm:py-6"
               >
                 <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
                   Request demo
@@ -93,8 +93,8 @@ export default function Hero() {
 
           </div>
 
-          <motion.div variants={itemVariants} className="relative mx-auto w-full max-w-[32rem] lg:max-w-none">
-            <div className="relative mx-auto aspect-square w-full max-w-[34rem]">
+          <motion.div variants={itemVariants} className="relative mx-auto mt-2 w-full max-w-[18rem] sm:max-w-[24rem] lg:mt-0 lg:max-w-none">
+            <div className="relative mx-auto aspect-square w-full max-w-[18rem] sm:max-w-[24rem] lg:max-w-[34rem]">
               <div className="absolute inset-[9%] rounded-full border border-white/70 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.98),rgba(226,232,240,0.85)_45%,rgba(148,163,184,0.16)_100%)] shadow-[0_40px_120px_rgba(15,23,42,0.16)] dark:border-slate-700/60 dark:bg-[radial-gradient(circle_at_35%_30%,rgba(248,250,252,0.22),rgba(51,65,85,0.38)_45%,rgba(2,6,23,0.92)_100%)]" />
               <div className="absolute inset-[15%] rounded-full border border-slate-300/70 dark:border-slate-600/50" />
               <div className="absolute inset-[22%] rounded-full border border-slate-300/50 dark:border-slate-600/35" />
@@ -118,7 +118,7 @@ export default function Hero() {
                     'absolute left-[12%] bottom-[14%]',
                   ][index]}
                 >
-                  <div className="rounded-2xl border border-white/80 bg-white/85 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-sm dark:border-slate-700 dark:bg-slate-950/80 dark:text-slate-200">
+                  <div className="hidden rounded-2xl border border-white/80 bg-white/85 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-sm dark:border-slate-700 dark:bg-slate-950/80 dark:text-slate-200 sm:block">
                     {label}
                   </div>
                 </motion.div>

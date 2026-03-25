@@ -94,7 +94,7 @@ const itemVariants = {
 
 function ProductMedia({ image, imageAlt, name }: { image: string; imageAlt: string; name: string }) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-950">
+    <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.10)] sm:rounded-[2rem] dark:border-slate-800 dark:bg-slate-950">
       <div className="flex items-center gap-2 border-b border-slate-200 px-5 py-4 dark:border-slate-800">
         <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
         <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
@@ -103,9 +103,9 @@ function ProductMedia({ image, imageAlt, name }: { image: string; imageAlt: stri
           {name}
         </span>
       </div>
-      <div className="bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 dark:bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)] sm:p-6">
+      <div className="bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-3 dark:bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)] sm:p-6">
         <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 shadow-[0_18px_40px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900">
-          <img src={image} alt={imageAlt} className="h-[20rem] w-full object-cover object-top sm:h-[24rem]" />
+          <img src={image} alt={imageAlt} className="h-[14rem] w-full object-cover object-top sm:h-[18rem] lg:h-[24rem]" />
         </div>
       </div>
     </div>
@@ -133,18 +133,18 @@ function ProductCopy({
       <div className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
         {tag}
       </div>
-      <h3 className="mt-6 text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white lg:text-4xl">
+      <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-4xl">
         {name}
       </h3>
-      <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">{description}</p>
-      <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-4 text-sm leading-7 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+      <p className="mt-5 text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">{description}</p>
+      <div className="mt-5 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4 text-sm leading-6 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 sm:rounded-[1.5rem] sm:px-5 sm:leading-7">
         {context}
       </div>
-      <div className="mt-6 flex flex-wrap gap-2.5">
+      <div className="mt-5 flex flex-wrap gap-2">
         {tech.map((item) => (
           <span
             key={item}
-            className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
+            className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-600 sm:px-3.5 sm:text-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
           >
             {item}
           </span>
@@ -168,7 +168,7 @@ export default function Products() {
   const isExternalDemo = demoLink !== '#contact';
 
   return (
-    <section id="products" className="relative overflow-hidden bg-white py-24 dark:bg-slate-950 lg:py-32">
+    <section id="products" className="relative overflow-hidden bg-white py-20 dark:bg-slate-950 lg:py-32">
       <div className="pointer-events-none absolute inset-0 opacity-70">
         <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-slate-100 blur-3xl dark:bg-slate-800/30" />
         <div className="absolute bottom-0 right-8 h-80 w-80 rounded-full bg-slate-100/80 blur-3xl dark:bg-slate-900/40" />
@@ -180,15 +180,15 @@ export default function Products() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mx-auto mb-20 max-w-3xl text-center"
+          className="mx-auto mb-14 max-w-3xl text-center sm:mb-20"
         >
           <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
             Products
           </span>
-          <h2 className="mt-5 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products designed around real workflows.
           </h2>
-          <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">
+          <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
             Each product reflects a different kind of customer need, from data infrastructure to operational software and guided AI experiences.
           </p>
         </motion.div>
@@ -198,7 +198,7 @@ export default function Products() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="space-y-16 lg:space-y-24"
+          className="space-y-12 sm:space-y-16 lg:space-y-24"
         >
           {products.map((product) => {
             if (product.layout === 'stacked') {
