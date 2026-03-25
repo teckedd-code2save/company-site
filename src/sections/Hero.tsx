@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { resolveContactLink } from '@/lib/site-config';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -14,7 +15,7 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -25,201 +26,107 @@ const itemVariants = {
 };
 
 export default function Hero() {
+  const demoLink = resolveContactLink();
+  const isExternalDemo = demoLink !== '#contact';
+
   return (
-    <section className="relative min-h-screen bg-cyan-200 overflow-hidden pt-16 dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating pixel blocks - top right */}
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            rotate: [0, 3, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-20 right-10 w-32 h-32 opacity-80"
-        >
-          <img
-            src="/images/pixel-blocks.png"
-            alt=""
-            className="w-full h-full object-contain"
-          />
-        </motion.div>
-
-        {/* Main pixel art - left side */}
-        <motion.div
-          animate={{
-            y: [0, -10, 0],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-1/4 left-0 w-64 h-64 lg:w-96 lg:h-96 opacity-90"
-        >
-          <img
-            src="/images/hero-shapes.png"
-            alt=""
-            className="w-full h-full object-contain"
-          />
-        </motion.div>
-
-        {/* Scattered pixels - bottom right */}
-        <motion.div
-          animate={{
-            y: [0, -8, 0],
-            opacity: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-32 right-20 w-24 h-24"
-        >
-          <div className="grid grid-cols-3 gap-1">
-            {[...Array(9)].map((_, i) => (
-              <div
-                key={i}
-                className={`w-6 h-6 rounded-sm ${
-                  i % 3 === 0
-                    ? 'bg-purple-500'
-                    : i % 2 === 0
-                    ? 'bg-yellow-400'
-                    : 'bg-cyan-400'
-                }`}
-              />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Additional floating elements */}
-        <motion.div
-          animate={{
-            y: [0, -12, 0],
-            x: [0, 5, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-1/3 right-1/4 w-16 h-16 bg-yellow-300 rounded-lg opacity-60 rotate-12"
-        />
-
-        <motion.div
-          animate={{
-            y: [0, 10, 0],
-          }}
-          transition={{
-            duration: 4.5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-1/4 left-1/3 w-12 h-12 bg-purple-400 rounded-full opacity-50"
-        />
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#fcfcfd_0%,#f2f5f8_58%,#eef2f5_100%)] pt-16 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)]">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[-12rem] top-16 h-[28rem] w-[28rem] rounded-full bg-white/80 blur-3xl dark:bg-slate-800/20" />
+        <div className="absolute right-[-8rem] top-20 h-[24rem] w-[24rem] rounded-full bg-slate-200/45 blur-3xl dark:bg-slate-700/20" />
+        <div className="absolute inset-x-0 top-0 h-px bg-slate-200/70 dark:bg-slate-800/80" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-2xl"
+          className="grid min-h-[calc(100vh-4rem)] items-center gap-16 py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(24rem,0.95fr)] lg:py-24"
         >
-          {/* Eyebrow */}
-          <motion.div variants={itemVariants} className="mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-800 dark:bg-slate-900/80 dark:text-gray-200">
-              <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
-              AI Infrastructure for Developers
-            </span>
-          </motion.div>
+          <div className="max-w-2xl">
+            <motion.div variants={itemVariants} className="mb-6">
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/80 dark:text-slate-200">
+                <span className="h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-200" />
+                AI systems for real teams and real use cases
+              </span>
+            </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-black leading-[1.1] mb-6 dark:text-white"
-          >
-            Autonomous AI
-            <br />
-            platform for{' '}
-            <span className="relative">
-              builders
-              <svg
-                className="absolute -bottom-2 left-0 w-full"
-                viewBox="0 0 200 12"
-                fill="none"
+            <motion.h1
+              variants={itemVariants}
+              className="max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-7xl"
+            >
+              Build AI products people can trust, adopt, and pay for.
+            </motion.h1>
+
+            <motion.p
+              variants={itemVariants}
+              className="mt-7 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300 sm:text-xl"
+            >
+              Serendepify helps teams turn promising ideas into usable systems,
+              from internal workflows to customer-facing products that are ready
+              for pilots, launch, and growth.
+            </motion.p>
+
+            <motion.div variants={itemVariants} className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                className="group rounded-lg bg-slate-950 px-8 py-6 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200"
               >
-                <path
-                  d="M2 10C50 2 150 2 198 10"
-                  stroke="#A855F7"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-            .
-          </motion.h1>
+                <a href="#products">
+                  Explore products
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-lg border-2 border-slate-300 bg-white px-8 py-6 text-base font-medium text-slate-900 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-white dark:hover:bg-slate-900"
+              >
+                <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
+                  Request demo
+                </a>
+              </Button>
+            </motion.div>
 
-          {/* Subheadline */}
-          <motion.p
-            variants={itemVariants}
-            className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-8 max-w-xl dark:text-gray-300"
-          >
-            Customer-first AI tooling infrastructure, from database MCP servers
-            to autonomous agent platforms. Build, validate, and scale faster with
-            practical systems teams can adopt immediately.
-          </motion.p>
+          </div>
 
-          {/* CTAs */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4"
-          >
-            <Button
-              size="lg"
-              className="rounded-lg bg-black hover:bg-gray-800 text-white px-8 py-6 text-base font-medium group dark:bg-white dark:text-black dark:hover:bg-gray-200"
-            >
-              Get started
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-lg border-2 border-black hover:bg-black hover:text-white px-8 py-6 text-base font-medium transition-colors dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
-            >
-              Contact Sales
-            </Button>
-          </motion.div>
+          <motion.div variants={itemVariants} className="relative mx-auto w-full max-w-[32rem] lg:max-w-none">
+            <div className="relative mx-auto aspect-square w-full max-w-[34rem]">
+              <div className="absolute inset-[9%] rounded-full border border-white/70 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.98),rgba(226,232,240,0.85)_45%,rgba(148,163,184,0.16)_100%)] shadow-[0_40px_120px_rgba(15,23,42,0.16)] dark:border-slate-700/60 dark:bg-[radial-gradient(circle_at_35%_30%,rgba(248,250,252,0.22),rgba(51,65,85,0.38)_45%,rgba(2,6,23,0.92)_100%)]" />
+              <div className="absolute inset-[15%] rounded-full border border-slate-300/70 dark:border-slate-600/50" />
+              <div className="absolute inset-[22%] rounded-full border border-slate-300/50 dark:border-slate-600/35" />
+              <div className="absolute left-1/2 top-[12%] h-[76%] w-px -translate-x-1/2 bg-slate-300/80 dark:bg-slate-600/60" />
+              <div className="absolute left-[20%] top-1/2 h-px w-[60%] -translate-y-1/2 bg-slate-300/80 dark:bg-slate-600/60" />
+              <div className="absolute left-[24%] top-[30%] h-px w-[52%] rotate-[18deg] bg-slate-300/55 dark:bg-slate-600/40" />
+              <div className="absolute left-[26%] top-[64%] h-px w-[48%] -rotate-[14deg] bg-slate-300/45 dark:bg-slate-600/35" />
 
-          {/* Stats */}
-          <motion.div
-            variants={itemVariants}
-            className="mt-12 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
-          >
-            <div className="flex -space-x-2">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-cyan-200 dark:border-slate-900"
-                />
+              {[
+                'AI workflow design',
+                'Product delivery',
+                'Operational software',
+              ].map((label, index) => (
+                <motion.div
+                  key={label}
+                  animate={{ y: [0, index % 2 === 0 ? -8 : 8, 0] }}
+                  transition={{ duration: 6 + index, repeat: Infinity, ease: 'easeInOut' }}
+                  className={[
+                    'absolute left-[6%] top-[18%]',
+                    'absolute right-[4%] top-[44%]',
+                    'absolute left-[12%] bottom-[14%]',
+                  ][index]}
+                >
+                  <div className="rounded-2xl border border-white/80 bg-white/85 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-sm dark:border-slate-700 dark:bg-slate-950/80 dark:text-slate-200">
+                    {label}
+                  </div>
+                </motion.div>
               ))}
             </div>
-            <span>
-              Trusted by <strong className="text-black dark:text-white">50,000+</strong>{' '}
-              developers
-            </span>
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent dark:from-slate-900" />
     </section>
   );
 }

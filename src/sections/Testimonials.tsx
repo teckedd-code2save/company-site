@@ -1,30 +1,9 @@
+import { Activity, Database, Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { Quote } from 'lucide-react';
+import { useLiveProof } from '@/hooks/use-live-proof';
 
-const testimonials = [
-  {
-    quote:
-      "Serendepify's MCP tools have completely transformed how we interact with our databases. The AI-powered query generation is incredibly accurate.",
-    author: 'Morgan G.',
-    role: 'Senior Engineer at TechCorp',
-    avatar: 'MG',
-  },
-  {
-    quote:
-      'The b2dp CLI saved us weeks of setup time. What used to take days now happens in minutes. It is like having a senior backend engineer on demand.',
-    author: 'Sarah K.',
-    role: 'CTO at StartupXYZ',
-    avatar: 'SK',
-  },
-  {
-    quote:
-      "REACHY AI's multi-lingual support is groundbreaking. Being able to process Twi and Hausa opens up entirely new markets for us.",
-    author: 'David O.',
-    role: 'AI Researcher',
-    avatar: 'DO',
-  },
-];
+const icons = [Database, Activity, Github];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -49,65 +28,73 @@ const itemVariants = {
 };
 
 export default function Testimonials() {
+  const { cards, status } = useLiveProof();
+
   return (
-    <section className="py-24 lg:py-32 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section id="proof" className="bg-white py-24 dark:bg-slate-900 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4 dark:bg-purple-500/20 dark:text-purple-300">
-            Loved by Developers
+          <span className="inline-block rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
+            Real proof layer
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-black mb-4 tracking-tight dark:text-white">
-            What builders are saying
+          <h2 className="mb-4 mt-5 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
+            Public signals buyers can verify.
           </h2>
+          <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">
+            This section prefers live GitHub and NPM data. If those services are unavailable,
+            the layout stays intact and falls back gracefully.
+          </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
+        <div className="mb-8 flex justify-center">
+          <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-slate-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300">
+            {status === 'live' ? 'Live data loaded' : 'Fallback mode active'}
+          </span>
+        </div>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
-          {testimonials.map((testimonial, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-gray-200 dark:border-slate-700 dark:bg-slate-950">
-                <CardContent className="p-8">
-                  {/* Quote Icon */}
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mb-6">
-                    <Quote className="w-5 h-5 text-purple-600" />
-                  </div>
+          {cards.map((card, index) => {
+            const Icon = icons[index] || Activity;
 
-                  {/* Quote */}
-                  <p className="text-gray-700 leading-relaxed mb-6 dark:text-gray-300">
-                    "{testimonial.quote}"
-                  </p>
+            return (
+              <motion.div key={card.name} variants={itemVariants}>
+                <Card className="h-full border-slate-200 bg-white transition-shadow duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-950">
+                  <CardContent className="p-8">
+                    <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+                      <Icon className="h-5 w-5 text-slate-700 dark:text-slate-200" />
+                    </div>
 
-                  {/* Author */}
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-semibold">
-                      {testimonial.avatar}
+                    <div className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                      {card.eyebrow}
                     </div>
-                    <div>
-                      <div className="font-semibold text-black dark:text-white">
-                        {testimonial.author}
-                      </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        {testimonial.role}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                    <h3 className="text-2xl font-bold text-slate-950 dark:text-white">{card.headline}</h3>
+                    <p className="mb-6 mt-4 leading-relaxed text-slate-700 dark:text-slate-300">{card.detail}</p>
+
+                    <a
+                      href={card.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
+                    >
+                      {card.cta}
+                    </a>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

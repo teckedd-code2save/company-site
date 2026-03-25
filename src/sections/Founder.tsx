@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin, Globe, Award, Users, FlaskConical } from 'lucide-react';
 
 const stats = [
-  { icon: Users, value: '200+', label: 'Customer Discovery Calls' },
-  { icon: Award, value: '35+', label: 'Production Use Cases Shipped' },
-  { icon: FlaskConical, value: '12', label: 'R&D Experiments in Pipeline' },
+  { icon: Users, value: 'Customer-led', label: 'Start with real user friction and operating bottlenecks' },
+  { icon: Award, value: 'Delivery-minded', label: 'Tie every build to a usable release or commercial outcome' },
+  { icon: FlaskConical, value: 'R&D-aware', label: 'Prototype quickly, but only ship what teams can adopt' },
 ];
 
 const socialLinks = [
@@ -152,10 +152,10 @@ export default function Founder() {
                     <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-purple-500/20 flex items-center justify-center">
                       <Icon className="w-5 h-5 text-purple-400" />
                     </div>
-                    <div className="text-2xl font-bold text-white">
+                    <div className="text-lg font-bold text-white">
                       {stat.value}
                     </div>
-                    <div className="text-xs text-gray-500">{stat.label}</div>
+                    <div className="mt-2 text-xs leading-5 text-gray-500">{stat.label}</div>
                   </div>
                 );
               })}

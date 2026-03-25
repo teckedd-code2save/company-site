@@ -1,0 +1,9 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" fill="#052E2B"/>
+  <rect x="40" y="40" width="1120" height="620" rx="24" fill="#064E3B" stroke="#065F46"/>
+  <circle cx="220" cy="180" r="130" fill="#10B981" fill-opacity="0.24"/>
+  <circle cx="920" cy="520" r="170" fill="#34D399" fill-opacity="0.18"/>
+  <rect x="130" y="180" width="940" height="340" rx="20" fill="#022C22" stroke="#047857"/>
+  <text x="600" y="315" text-anchor="middle" fill="#ECFDF5" font-size="78" font-family="Inter, Arial, sans-serif" font-weight="700">REACHY AI</text>
+  <text x="600" y="390" text-anchor="middle" fill="#A7F3D0" font-size="34" font-family="Inter, Arial, sans-serif">Multilingual Speech Platform</text>
+</svg>

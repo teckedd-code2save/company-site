@@ -1,256 +1,255 @@
 import { motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowRight,
-  Terminal,
-  Database,
-  Mic,
-  Building2,
-  Bot,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { resolveContactLink } from '@/lib/site-config';
 
 const products = [
   {
     id: 'datafy',
-    tag: 'NPM Package',
-    name: '@teckedd-code2save/datafy',
+    tag: 'Self-serve infrastructure',
+    name: 'Datafy MCP',
     description:
-      'Zero-dependency, token-efficient Database MCP gateway connecting AI clients to PostgreSQL, MySQL, SQL Server, SQLite, MariaDB, Redis, and Elasticsearch.',
-    tech: ['MCP', 'Node.js', 'Multi-Database'],
-    icon: Database,
-    color: 'from-blue-500 to-cyan-500',
-    visualBg: 'from-blue-500/20 via-cyan-500/10 to-transparent',
-    image: '/images/products/datafy.svg',
-    href: 'https://www.npmjs.com/package/@teckedd-code2save/datafy',
-    ctaLabel: 'View on NPM',
+      'A database gateway that helps AI tools work with operational data across PostgreSQL, MySQL, SQL Server, SQLite, Redis, and Elasticsearch.',
+    context:
+      'Designed for organizations that need a reliable bridge between AI workflows and existing systems.',
+    tech: ['MCP', 'Multi-database', 'Operational data'],
+    image: 'https://opengraph.githubassets.com/1/teckedd-code2save/company-site',
+    imageAlt: 'Serendepify infrastructure preview',
+    layout: 'copy-left',
   },
   {
     id: 'b2dp',
-    tag: 'NPM Package',
-    name: '@teckedd-code2save/b2dp',
+    tag: 'Implementation workflow',
+    name: 'B2DP',
     description:
-      'Business-to-Data-Platform CLI that sets up the b2dp skill ecosystem across AI coding agents, including MCP server configuration and health checks.',
-    tech: ['CLI', 'AI Workflow', 'Orchestration'],
-    icon: Terminal,
-    color: 'from-purple-500 to-violet-500',
-    visualBg: 'from-purple-500/20 via-violet-500/10 to-transparent',
-    image: '/images/products/b2dp.svg',
-    href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
-    ctaLabel: 'View on NPM',
+      'A guided workflow for moving from business requirements to a usable backend and delivery foundation much faster.',
+    context:
+      'Useful when a team needs direction, structure, and momentum at the start of a product build.',
+    tech: ['Workflow design', 'Backend setup', 'Delivery acceleration'],
+    image: '/images/products/b2dp-surface.png',
+    imageAlt: 'Serendepify workflow preview',
+    layout: 'copy-right',
   },
   {
     id: 'reachy',
-    tag: 'Platform',
+    tag: 'Applied product',
     name: 'REACHY AI',
     description:
-      'Multi-lingual speech platform supporting English, French, Twi, and Hausa. Fine-tuned Whisper models for low-resource settings in healthcare and beyond.',
-    tech: ['Python', 'FastAPI', 'Whisper'],
-    icon: Mic,
-    color: 'from-green-500 to-emerald-500',
-    visualBg: 'from-green-500/20 via-emerald-500/10 to-transparent',
-    image: '/images/products/reachy.svg',
-    href: '#',
-    ctaLabel: 'Explore Project',
+      'A multilingual healthcare voice experience designed for teams serving users across lower-resource language environments.',
+    context:
+      'Well suited to organizations exploring voice, healthcare access, and guided AI interactions for real people.',
+    tech: ['Healthcare AI', 'Voice UI', 'Multilingual support'],
+    image: '/images/products/reachy-surface.png',
+    imageAlt: 'Reachy AI mobile product screens',
+    layout: 'stacked',
   },
   {
     id: 'agent-exchange',
-    tag: 'GitHub Project',
+    tag: 'Platform play',
     name: 'Agent Exchange',
     description:
-      'Marketplace and collaboration platform for autonomous agents, with reusable workflows and shared integrations for faster product delivery.',
-    tech: ['TypeScript', 'Automation', 'Marketplace'],
-    icon: Bot,
-    color: 'from-fuchsia-500 to-purple-600',
-    visualBg: 'from-fuchsia-500/20 via-purple-500/10 to-transparent',
-    image: '/images/products/agent-exchange.svg',
-    href: 'https://github.com/teckedd-code2save/agent-exchange',
-    ctaLabel: 'View on GitHub',
+      'A platform concept for reusable agent workflows, shared integrations, and coordinated automation across teams.',
+    context:
+      'A strong fit for teams thinking beyond a single feature and toward a broader automation layer.',
+    tech: ['Automation', 'Shared workflows', 'Platform design'],
+    image: 'https://opengraph.githubassets.com/1/teckedd-code2save/agent-exchange',
+    imageAlt: 'Agent Exchange product preview',
+    layout: 'copy-left',
   },
   {
     id: 'urbanize',
-    tag: 'GitHub Project',
+    tag: 'Vertical product',
     name: 'Urbanize',
     description:
-      'A customer-facing urban workflow product that helps teams manage planning, requests, and real-time engagement across city operations.',
-    tech: ['Web App', 'Operations', 'Civic Tech'],
-    icon: Building2,
-    color: 'from-cyan-500 to-blue-600',
-    visualBg: 'from-cyan-500/20 via-blue-500/10 to-transparent',
-    image: '/images/products/urbanize.svg',
-    href: 'https://github.com/teckedd-code2save/urbanize',
-    ctaLabel: 'View on GitHub',
+      'A city and operations product focused on planning, comparison, and decision support across urban workflows.',
+    context:
+      'A good fit for teams working on maps, planning interfaces, or operational visibility tools.',
+    tech: ['Maps', 'Planning tools', 'Decision support'],
+    image: '/images/products/urbanize-surface.png',
+    imageAlt: 'Urbanize time-travel comparison map interface',
+    layout: 'copy-right',
   },
-];
+] as const;
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
+      staggerChildren: 0.12,
+      delayChildren: 0.12,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 32 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.7,
+      duration: 0.65,
     },
   },
 };
 
-export default function Products() {
+function ProductMedia({ image, imageAlt, name }: { image: string; imageAlt: string; name: string }) {
   return (
-    <section id="products" className="py-24 lg:py-32 bg-white dark:bg-slate-900 relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 opacity-35">
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-gray-300/30 blur-3xl dark:bg-slate-700/30" />
-        <div className="absolute bottom-0 right-10 w-80 h-80 rounded-full bg-gray-200/30 blur-3xl dark:bg-slate-800/30" />
+    <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-950">
+      <div className="flex items-center gap-2 border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+        <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
+        <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
+        <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700" />
+        <span className="ml-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+          {name}
+        </span>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+      <div className="bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 dark:bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)] sm:p-6">
+        <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 shadow-[0_18px_40px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900">
+          <img src={image} alt={imageAlt} className="h-[20rem] w-full object-cover object-top sm:h-[24rem]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProductCopy({
+  tag,
+  name,
+  description,
+  context,
+  tech,
+}: {
+  tag: string;
+  name: string;
+  description: string;
+  context: string;
+  tech: readonly string[];
+}) {
+  const demoLink = resolveContactLink();
+  const isExternalDemo = demoLink !== '#contact';
+
+  return (
+    <div className="max-w-xl">
+      <div className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        {tag}
+      </div>
+      <h3 className="mt-6 text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white lg:text-4xl">
+        {name}
+      </h3>
+      <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">{description}</p>
+      <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-4 text-sm leading-7 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+        {context}
+      </div>
+      <div className="mt-6 flex flex-wrap gap-2.5">
+        {tech.map((item) => (
+          <span
+            key={item}
+            className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+      <a
+        href={demoLink}
+        target={isExternalDemo ? '_blank' : undefined}
+        rel={isExternalDemo ? 'noopener noreferrer' : undefined}
+        className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
+      >
+        Request demo
+        <ArrowRight className="h-4 w-4" />
+      </a>
+    </div>
+  );
+}
+
+export default function Products() {
+  const demoLink = resolveContactLink();
+  const isExternalDemo = demoLink !== '#contact';
+
+  return (
+    <section id="products" className="relative overflow-hidden bg-white py-24 dark:bg-slate-950 lg:py-32">
+      <div className="pointer-events-none absolute inset-0 opacity-70">
+        <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-slate-100 blur-3xl dark:bg-slate-800/30" />
+        <div className="absolute bottom-0 right-8 h-80 w-80 rounded-full bg-slate-100/80 blur-3xl dark:bg-slate-900/40" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="mx-auto mb-20 max-w-3xl text-center"
         >
-          <span className="inline-block px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium mb-4 dark:bg-slate-800 dark:text-gray-200">
-            Impact & Contributions
+          <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+            Products
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-black mb-4 tracking-tight dark:text-white">
-            Projects, tools, and packages
+          <h2 className="mt-5 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
+            Products designed around real workflows.
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
-            A focused set of production projects and open packages built around
-            developer workflows and customer outcomes.
+          <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">
+            Each product reflects a different kind of customer need, from data infrastructure to operational software and guided AI experiences.
           </p>
         </motion.div>
 
-        {/* Project Story Blocks */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="space-y-10 lg:space-y-12 max-w-5xl mx-auto"
+          className="space-y-16 lg:space-y-24"
         >
-          {products.map((product, index) => {
-            const Icon = product.icon;
-            const textOnRight = Math.floor(index / 2) % 2 === 0;
-            const visualOnLeft = textOnRight;
-            const imageInitial =
-              index % 3 === 0
-                ? { opacity: 0, x: 40, y: 40 }
-                : index % 3 === 1
-                ? { opacity: 0, x: -30, y: 30 }
-                : { opacity: 0, x: 30, y: -20 };
-            const textInitial =
-              index % 3 === 0
-                ? { opacity: 0, x: -40, y: -30 }
-                : index % 3 === 1
-                ? { opacity: 0, x: 30, y: -25 }
-                : { opacity: 0, x: -30, y: 20 };
+          {products.map((product) => {
+            if (product.layout === 'stacked') {
+              return (
+                <motion.article
+                  key={product.id}
+                  variants={itemVariants}
+                  className="grid gap-8 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900/60 lg:p-8"
+                >
+                  <ProductMedia image={product.image} imageAlt={product.imageAlt} name={product.name} />
+                  <div className="mx-auto max-w-2xl text-center lg:text-left">
+                    <ProductCopy {...product} />
+                  </div>
+                </motion.article>
+              );
+            }
+
+            const copyFirst = product.layout === 'copy-left';
+
             return (
-              <motion.div key={product.id} variants={itemVariants}>
-                <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center py-8 lg:py-10">
-                  <motion.div
-                    initial={imageInitial}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.7, delay: 0.05 }}
-                    className={visualOnLeft ? 'order-1' : 'order-2 lg:order-1'}
-                  >
-                    <div className="relative">
-                      <div className={`absolute -inset-4 bg-gradient-to-r ${product.visualBg} rounded-2xl blur-xl`} />
-                      <div className="relative bg-dark-surface rounded-xl overflow-hidden h-[240px] sm:h-[280px] lg:h-[320px] shadow-[0_20px_52px_rgba(0,0,0,0.28)] dark:shadow-[0_24px_66px_rgba(0,0,0,0.52)]">
-                        <img
-                          src={product.image}
-                          alt={`${product.name} preview`}
-                          className="absolute inset-0 w-full h-full object-cover opacity-90"
-                        />
-                        <div className="absolute inset-0 bg-black/20" />
-                        <div className="relative h-full flex items-center justify-center z-10">
-                          <div
-                            className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${product.color} flex items-center justify-center shadow-[0_20px_45px_rgba(0,0,0,0.35)]`}
-                          >
-                            <Icon className="w-12 h-12 text-white" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={textInitial}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.75, delay: 0.1 }}
-                    className={visualOnLeft ? 'order-2' : 'order-1 lg:order-2'}
-                  >
-                    <Badge
-                      variant="secondary"
-                      className="mb-4 bg-gray-100 text-gray-700 hover:bg-gray-100 dark:bg-slate-800 dark:text-gray-200 dark:hover:bg-slate-800"
-                    >
-                      {product.tag} · {String(index + 1).padStart(2, '0')}
-                    </Badge>
-
-                    <h3 className="text-3xl lg:text-4xl font-extrabold text-black mb-5 dark:text-white tracking-tight">
-                      {product.name}
-                    </h3>
-
-                    <p className="text-gray-700 mb-8 leading-relaxed dark:text-gray-300 text-lg font-medium">
-                      {product.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2.5 mb-8">
-                      {product.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3.5 py-1.5 bg-gray-50 text-gray-600 text-sm rounded-full dark:bg-slate-800 dark:text-gray-300"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    <a
-                      href={product.href}
-                      target={product.href.startsWith('http') ? '_blank' : undefined}
-                      rel={product.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center text-sm font-semibold text-black hover:text-gray-700 dark:text-white dark:hover:text-gray-300"
-                    >
-                      {product.ctaLabel}
-                      <ArrowRight className="ml-1.5 w-4 h-4" />
-                    </a>
-                  </motion.div>
+              <motion.article
+                key={product.id}
+                variants={itemVariants}
+                className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16"
+              >
+                <div className={copyFirst ? 'order-1' : 'order-2 lg:order-1'}>
+                  <ProductCopy {...product} />
                 </div>
-              </motion.div>
+                <div className={copyFirst ? 'order-2' : 'order-1 lg:order-2'}>
+                  <ProductMedia image={product.image} imageAlt={product.imageAlt} name={product.name} />
+                </div>
+              </motion.article>
             );
           })}
         </motion.div>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="mt-16 text-center"
         >
           <a
-            href="https://github.com/teckedd-code2save"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-black hover:text-gray-700 font-medium dark:text-white dark:hover:text-gray-300"
+            href={demoLink}
+            target={isExternalDemo ? '_blank' : undefined}
+            rel={isExternalDemo ? 'noopener noreferrer' : undefined}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
           >
-            See all projects on GitHub
-            <ArrowRight className="w-4 h-4" />
+            Need help choosing the right fit?
+            <ArrowRight className="h-4 w-4" />
           </a>
         </motion.div>
       </div>
