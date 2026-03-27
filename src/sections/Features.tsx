@@ -5,26 +5,26 @@ import { resolveContactLink } from '@/lib/site-config';
 const strengths = [
   {
     icon: Compass,
-    title: 'Sharper product direction',
-    description: 'We help narrow the use case, define the workflow, and focus the build on something customers will actually use.',
+    title: 'Products grounded in specific use cases',
+    description: 'Each product is framed around a concrete operational need, so customers can understand where it fits without decoding vague AI language.',
   },
   {
     icon: Wrench,
-    title: 'Working systems, not slide decks',
-    description: 'The goal is usable software, tested flows, and practical implementation decisions that move a team forward.',
+    title: 'Working systems customers can inspect',
+    description: 'Live apps, workflow sites, and demos make it easier for prospects to evaluate the work and decide whether it fits their environment.',
   },
   {
     icon: Rocket,
-    title: 'Support from first version to launch',
-    description: 'We help teams get from early concept to rollout with less confusion and fewer wasted cycles.',
+    title: 'A studio that can move from concept to delivery',
+    description: 'The work spans product framing, implementation structure, and usable surfaces that support pilots, internal adoption, or commercial rollout.',
   },
 ];
 
 const steps = [
-  'Clarify the use case and the buyer problem.',
-  'Design the right workflow and product scope.',
-  'Build, test, and prepare the first usable release.',
-  'Support rollout, demos, and the next iteration.',
+  'Identify the workflow or service that matters most to the customer.',
+  'Turn that need into a product shape that is easy to explain and evaluate.',
+  'Build the experience, tooling, or delivery system behind it.',
+  'Use working surfaces and demos to support the next customer conversation.',
 ];
 
 export default function Features() {
@@ -42,14 +42,15 @@ export default function Features() {
             transition={{ duration: 0.65 }}
           >
             <span className="inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
-              Why teams choose Serendepify
+              Why customers pay attention
             </span>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-              The right help from first idea to launch.
+              Clear product intent, credible execution, and something real to show.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
-              Serendepify works best when a team needs product thinking, technical delivery,
-              and a faster path to something real in front of users.
+              Serendepify AI is easier to understand when the products are presented
+              the way customers think: what problem is being solved, what the
+              system actually does, and why it is worth exploring further.
             </p>
 
             <div className="mt-10 space-y-6">
@@ -80,7 +81,7 @@ export default function Features() {
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-950 lg:p-8">
               <div className="border-b border-slate-200 pb-5 dark:border-slate-800">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">What working together looks like</p>
-                <p className="mt-2 text-2xl font-bold text-slate-950 dark:text-white">A clear process that keeps the work moving.</p>
+                <p className="mt-2 text-2xl font-bold text-slate-950 dark:text-white">A practical path from customer need to working system.</p>
               </div>
 
               <div className="mt-6 grid gap-4">
@@ -96,9 +97,9 @@ export default function Features() {
             </div>
 
             <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-[0_28px_80px_rgba(15,23,42,0.18)] dark:border-slate-800 lg:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Need a walkthrough?</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Interested in the fit?</p>
               <p className="mt-4 text-2xl font-semibold leading-9">
-                Request a demo to see which product or engagement fits your team.
+                Request a walkthrough and we can show which product direction fits your team, workflow, or commercial goal.
               </p>
               <a
                 href={demoLink}
@@ -106,7 +107,7 @@ export default function Features() {
                 rel={isExternalDemo ? 'noopener noreferrer' : undefined}
                 className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition-colors hover:text-white"
               >
-                Request demo
+                Request a walkthrough
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>

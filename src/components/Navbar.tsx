@@ -6,7 +6,7 @@ import { resolveContactLink } from '@/lib/site-config';
 
 const navLinks = [
   { label: 'Products', href: '#products' },
-  { label: 'Why Us', href: '#features' },
+  { label: 'How We Work', href: '#features' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -60,9 +60,9 @@ export default function Navbar() {
               <Sparkles className="h-5 w-5 text-white dark:text-black" />
             </div>
             <div>
-              <span className="block text-lg font-bold tracking-tight text-slate-950 dark:text-white">Serendepify</span>
+              <span className="block text-lg font-bold tracking-tight text-slate-950 dark:text-white">Serendepify AI</span>
               <span className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 sm:block">
-                AI systems studio
+                AI product studio
               </span>
             </div>
           </a>

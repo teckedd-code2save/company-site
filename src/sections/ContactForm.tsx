@@ -1,12 +1,17 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Mail, User, MessageSquare, Briefcase } from 'lucide-react';
+import { Mail, User, MessageSquare, Briefcase, Building2, Clock3, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '@/lib/site-config';
+
+const fitSignals = [
+  'You want to explore MPP Studio, B2DP, or Datafy for a real business workflow.',
+  'You need a product, workflow, or infrastructure direction customers can evaluate clearly.',
+];
 
 export default function ContactForm() {
   return (
     <section id="contact" className="bg-gray-50 py-24 dark:bg-slate-950 lg:py-28">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -15,19 +20,41 @@ export default function ContactForm() {
           className="mb-12 text-center"
         >
           <span className="mb-4 inline-block rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 dark:bg-slate-800 dark:text-gray-200">
-            Start a Revenue Conversation
+            Start a conversation
           </span>
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            Tell Serendepify what outcome you need
+            Tell Serendepify AI what your team is trying to solve
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-            Share the problem, the user, and the commercial goal. That makes it easier to scope something useful quickly.
+            Share the workflow, the customer need, or the system you want to improve.
+            That makes it easier to recommend the right product, demo, or implementation path.
           </p>
         </motion.div>
 
-        <motion.form
-          action={`https://formsubmit.co/${siteConfig.contactEmail}`}
-          method="POST"
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-[0_24px_70px_rgba(15,23,42,0.18)] dark:border dark:border-slate-800"
+          >
+            <h3 className="text-3xl font-semibold leading-tight">
+              Best for teams ready to evaluate a product seriously.
+            </h3>
+            <div className="mt-8 space-y-4">
+              {fitSignals.map((signal) => (
+                <div key={signal} className="flex gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-4">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-300" />
+                  <p className="text-sm leading-7 text-slate-300">{signal}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.form
+            action={`https://formsubmit.co/${siteConfig.contactEmail}`}
+            method="POST"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -69,7 +96,20 @@ export default function ContactForm() {
             </label>
           </div>
 
-          <div className="mb-5">
+          <div className="mb-5 grid gap-5 md:grid-cols-2">
+            <label className="block">
+              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                <Building2 className="mr-2 h-4 w-4" />
+                Company or startup
+              </span>
+              <input
+                type="text"
+                name="company"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                placeholder="Your company name"
+              />
+            </label>
+
             <label className="block">
               <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
                 <Briefcase className="mr-2 h-4 w-4" />
@@ -84,7 +124,7 @@ export default function ContactForm() {
             </label>
           </div>
 
-          <div className="mb-5">
+          <div className="mb-5 grid gap-5 md:grid-cols-2">
             <label className="block">
               <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
                 <Briefcase className="mr-2 h-4 w-4" />
@@ -95,6 +135,19 @@ export default function ContactForm() {
                 name="success_metric"
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                 placeholder="e.g. reduce support workload, launch MVP, improve data access speed"
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                <Clock3 className="mr-2 h-4 w-4" />
+                Timeline
+              </span>
+              <input
+                type="text"
+                name="timeline"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                placeholder="e.g. need pilot in 4-6 weeks"
               />
             </label>
           </div>
@@ -120,13 +173,11 @@ export default function ContactForm() {
               type="submit"
               className="rounded-lg bg-black px-7 py-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              Send Project Brief
+              Send project brief
             </Button>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Submissions go directly to {siteConfig.contactEmail} for a scoped follow-up.
-            </p>
           </div>
-        </motion.form>
+          </motion.form>
+        </div>
       </div>
     </section>
   );

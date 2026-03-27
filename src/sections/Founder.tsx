@@ -39,67 +39,32 @@ const itemVariants = {
 export default function Founder() {
   return (
     <section
-      id="rd-focus"
-      className="py-24 lg:py-32 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(180deg, #0A0A0A 0%, #1a1a2e 100%)',
-      }}
+      id="founder"
+      className="relative overflow-hidden bg-[linear-gradient(180deg,#fffaf5_0%,#ffffff_60%,#f8fafc_100%)] py-24 lg:py-32 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)]"
     >
-      {/* Background particle effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-500/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-        
-        {/* Connection lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-10">
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0" />
-              <stop offset="50%" stopColor="#8B5CF6" stopOpacity="1" />
-              <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {[...Array(5)].map((_, i) => (
-            <motion.line
-              key={i}
-              x1={`${20 + i * 15}%`}
-              y1="20%"
-              x2={`${40 + i * 10}%`}
-              y2="80%"
-              stroke="url(#lineGradient)"
-              strokeWidth="1"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.5 }}
-              transition={{
-                duration: 2,
-                delay: i * 0.3,
-                repeat: Infinity,
-                repeatType: 'reverse',
-              }}
-            />
-          ))}
-        </svg>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-0 top-16 h-64 w-64 rounded-full bg-amber-100/70 blur-3xl dark:bg-slate-800/40" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-slate-100 blur-3xl dark:bg-slate-900/40" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(18rem,0.75fr)_minmax(0,1fr)]">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.65 }}
+            className="mx-auto w-full max-w-md"
+          >
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-950">
+              <img
+                src="/images/ceo-photo.jpg"
+                alt="Serendepify founder portrait"
+                className="h-[28rem] w-full object-cover"
+              />
+            </div>
+          </motion.div>
+
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -108,60 +73,56 @@ export default function Founder() {
           >
             <motion.span
               variants={itemVariants}
-              className="inline-block px-4 py-2 bg-purple-500/10 text-purple-400 rounded-full text-sm font-medium mb-6"
+              className="inline-block rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200"
             >
-              How We Build
+              Founder-led execution
             </motion.span>
 
             <motion.h2
               variants={itemVariants}
-              className="text-4xl lg:text-5xl font-bold text-white mb-2 tracking-tight"
+              className="mb-3 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl"
             >
-              Customer insight{' '}
-              <span className="bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
-                meets R&D velocity
-              </span>
+              Build with someone who understands both the code and the commercial pressure.
             </motion.h2>
 
             <motion.p
               variants={itemVariants}
-              className="text-purple-300 text-lg mb-6"
+              className="mb-6 text-lg text-slate-600 dark:text-slate-300"
             >
-              Product Discovery · Applied AI Research · Platform Engineering
+              Product strategy · applied AI delivery · founder-style speed
             </motion.p>
 
             <motion.p
               variants={itemVariants}
-              className="text-gray-400 leading-relaxed mb-8"
+              className="mb-8 leading-relaxed text-slate-600 dark:text-slate-300"
             >
-              Every release starts with direct user pain points and ends with
-              measurable outcomes. We run focused R&D cycles, validate quickly
-              with customers, and ship practical AI tooling that teams can adopt
-              in days.
+              Serendepify is built around a simple belief: startups do not need
+              more vague innovation language, they need sharper positioning,
+              fast product decisions, and software they can put in front of
+              prospects. That is the operating style behind the work here.
             </motion.p>
 
-            {/* Stats */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-3 gap-6 mb-8"
+              className="mb-8 grid gap-4 sm:grid-cols-3"
             >
               {stats.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="text-center">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-purple-400" />
+                  <div
+                    key={stat.label}
+                    className="rounded-[1.5rem] border border-slate-200 bg-white p-5 text-left shadow-sm dark:border-slate-800 dark:bg-slate-950"
+                  >
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900">
+                      <Icon className="w-5 h-5 text-slate-700 dark:text-slate-200" />
                     </div>
-                    <div className="text-lg font-bold text-white">
-                      {stat.value}
-                    </div>
-                    <div className="mt-2 text-xs leading-5 text-gray-500">{stat.label}</div>
+                    <div className="text-lg font-bold text-slate-950 dark:text-white">{stat.value}</div>
+                    <div className="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">{stat.label}</div>
                   </div>
                 );
               })}
             </motion.div>
 
-            {/* Social Links */}
             <motion.div variants={itemVariants} className="flex gap-3">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
@@ -171,7 +132,7 @@ export default function Founder() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg bg-dark-surface border border-dark-border flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/50 transition-colors"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-950 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:text-white"
                     aria-label={link.label}
                   >
                     <Icon className="w-5 h-5" />

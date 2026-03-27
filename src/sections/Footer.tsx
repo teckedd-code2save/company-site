@@ -3,18 +3,17 @@ import { Sparkles, Github, Twitter, Linkedin, MessageCircle } from 'lucide-react
 
 const footerLinks = {
   products: [
+    { label: 'MPP Studio', href: '#products' },
     { label: 'Datafy MCP', href: '#products' },
     { label: 'B2DP', href: '#products' },
-    { label: 'REACHY AI', href: '#products' },
-    { label: 'Urbanize', href: '#products' },
   ],
   resources: [
-    { label: 'Company GitHub', href: 'https://github.com/teckedd-code2save' },
-    { label: 'Request Demo', href: '#contact' },
-    { label: 'Project Request', href: '#contact' },
+    { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
+    { label: 'AI Build Tools', href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
+    { label: 'Datafy Demo Video', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
   ],
   company: [
-    { label: 'Why Us', href: '#features' },
+    { label: 'How We Work', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'Contact', href: '#contact' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/edward-twumasi/' },
@@ -67,10 +66,10 @@ export default function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white">
                 <Sparkles className="h-5 w-5 text-slate-950" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">Serendepify</span>
+              <span className="text-lg font-bold tracking-tight text-white">Serendepify AI</span>
             </a>
             <p className="mb-6 max-w-xs text-sm text-slate-400">
-              Build practical AI systems, launch usable products, and move from idea to delivery with less friction.
+              Build practical AI systems, sharpen the offer, and turn build momentum into credible pilot conversations.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((link) => {
@@ -149,7 +148,7 @@ export default function Footer() {
           className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row"
         >
           <p className="text-sm text-slate-500">
-            © 2025 Serendepify AI. Built for teams turning ideas into usable products.
+            © 2026 Serendepify AI. Built for teams turning ideas into usable products.
           </p>
           <div className="flex gap-6">
             <a href="#pricing" className="text-sm text-slate-500 transition-colors hover:text-white">

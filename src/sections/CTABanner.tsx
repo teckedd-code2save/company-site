@@ -30,10 +30,10 @@ export default function CTABanner() {
           transition={{ duration: 0.7 }}
         >
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
-            Want to see which product fits your team?
+            Want to see which product is most relevant to your team?
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-slate-600 dark:text-gray-300">
-            Request a demo to walk through the products, ask questions, and decide where to start.
+            We can walk through the products, answer technical questions, and show the option that best matches your workflow or business need.
           </p>
 
           <motion.div
@@ -48,8 +48,8 @@ export default function CTABanner() {
               size="lg"
               className="group rounded-lg bg-slate-950 px-8 py-6 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
-              <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
-                Request demo
+                <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
+                Request a walkthrough
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>
@@ -59,7 +59,7 @@ export default function CTABanner() {
               className="rounded-lg border-2 border-slate-900 px-8 py-6 text-base font-medium text-slate-900 transition-colors hover:bg-slate-900 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black"
               asChild
             >
-              <a href="#contact">Contact sales</a>
+              <a href="#contact">Contact Serendepify AI</a>
             </Button>
           </motion.div>
         </motion.div>

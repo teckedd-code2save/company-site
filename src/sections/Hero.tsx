@@ -3,6 +3,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { resolveContactLink } from '@/lib/site-config';
 
+const momentumPoints = [
+  'Products shaped around real workflows and real commercial use cases.',
+  'From AI service infrastructure to business-to-backend delivery systems.',
+  'Built to help customers move from curiosity to implementation.',
+];
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -48,7 +54,7 @@ export default function Hero() {
             <motion.div variants={itemVariants} className="mb-6">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/80 dark:text-slate-200">
                 <span className="h-2 w-2 rounded-full bg-slate-900 dark:bg-slate-200" />
-                AI systems for real teams and real use cases
+                Product studio for teams building practical AI systems
               </span>
             </motion.div>
 
@@ -56,16 +62,16 @@ export default function Hero() {
               variants={itemVariants}
               className="max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
             >
-              Build AI products people can trust, adopt, and pay for.
+              Applied AI for real customer workflows.
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
               className="mx-auto mt-6 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8 lg:mx-0 lg:text-xl"
             >
-              Serendepify helps teams turn promising ideas into usable systems,
-              from internal workflows to customer-facing products that are ready
-              for pilots, launch, and growth.
+              Serendepify AI builds and packages applied AI products across service
+              infrastructure, backend delivery workflows, and real-data tools,
+              so customers can see something concrete, not just hear a pitch.
             </motion.p>
 
             <motion.div variants={itemVariants} className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -75,7 +81,7 @@ export default function Hero() {
                 className="group w-full rounded-lg bg-slate-950 px-8 py-5 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 sm:w-auto sm:py-6"
               >
                 <a href="#products">
-                  Explore products
+                  See products
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
@@ -85,10 +91,24 @@ export default function Hero() {
                 variant="outline"
                 className="w-full rounded-lg border-2 border-slate-300 bg-white px-8 py-5 text-base font-medium text-slate-900 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-white dark:hover:bg-slate-900 sm:w-auto sm:py-6"
               >
-                <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
-                  Request demo
+                  <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
+                  Start a conversation
                 </a>
               </Button>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="mt-8 grid gap-3 text-left sm:grid-cols-3"
+            >
+              {momentumPoints.map((point) => (
+                <div
+                  key={point}
+                  className="rounded-2xl border border-white/80 bg-white/80 px-4 py-4 text-sm leading-6 text-slate-600 shadow-sm backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-300"
+                >
+                  {point}
+                </div>
+              ))}
             </motion.div>
 
           </div>
@@ -104,9 +124,9 @@ export default function Hero() {
               <div className="absolute left-[26%] top-[64%] h-px w-[48%] -rotate-[14deg] bg-slate-300/45 dark:bg-slate-600/35" />
 
               {[
-                'AI workflow design',
-                'Product delivery',
-                'Operational software',
+                'Paid AI services',
+                'Backend orchestration',
+                'Real-data workflows',
               ].map((label, index) => (
                 <motion.div
                   key={label}
