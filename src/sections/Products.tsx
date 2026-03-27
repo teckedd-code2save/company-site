@@ -79,29 +79,21 @@ const itemVariants = {
 };
 
 function ProductCard({
-  tag,
   name,
-  description,
-  context,
   tech,
   mediaTitle,
   mediaCopy,
   mediaSrc,
   primaryLink,
   primaryLabel,
-  accent,
 }: {
-  tag: string;
   name: string;
-  description: string;
-  context: string;
   tech: readonly string[];
   mediaTitle: string;
   mediaCopy: string;
   mediaSrc: string;
   primaryLink: string;
   primaryLabel: string;
-  accent: string;
 }) {
   const demoLink = resolveContactLink();
   const isExternalDemo = demoLink !== '#contact';
