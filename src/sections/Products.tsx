@@ -93,17 +93,17 @@ function ProductCard({
   const Icon = kind === 'video' ? PlayCircle : ExternalLink;
 
   return (
-    <article className="group overflow-hidden rounded-[2.4rem] border border-white/40 bg-white/42 shadow-[0_32px_100px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-700/40 dark:bg-slate-900/52">
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-3 pb-0 sm:p-4 sm:pb-0">
-        <div className="overflow-hidden rounded-[2rem] bg-slate-100/70 dark:bg-slate-800/70">
+    <article className="group overflow-hidden rounded-[2.3rem] border border-white/26 bg-white/18 shadow-[0_26px_90px_rgba(15,23,42,0.10)] backdrop-blur-3xl dark:border-slate-700/28 dark:bg-slate-900/28">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-2 sm:p-2.5">
+        <div className="overflow-hidden rounded-[1.9rem] bg-white/18 dark:bg-slate-900/30">
           <img
             src={image}
             alt={name}
-            className={`h-[22rem] w-full object-cover sm:h-[28rem] lg:h-[34rem] ${imageClassName}`}
+            className={`h-[21rem] w-full object-cover sm:h-[27rem] lg:h-[33rem] ${imageClassName}`}
           />
         </div>
       </a>
-      <div className="p-5 sm:p-6 lg:p-7">
+      <div className="px-5 pb-5 pt-3 sm:px-6 sm:pb-6 sm:pt-4 lg:px-7 lg:pb-7">
         <p className="text-[10px] uppercase tracking-[0.26em] text-slate-400 dark:text-slate-500">{meta}</p>
         <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">{name}</h3>
         <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
@@ -251,7 +251,7 @@ export default function Products() {
         >
           <div
             ref={scrollRef}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[8%] pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[10%] lg:px-[12%]"
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[6vw] pb-6 [scroll-padding-inline:6vw] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[9vw] sm:[scroll-padding-inline:9vw] lg:px-[10vw] lg:[scroll-padding-inline:10vw]"
           >
             {products.map((product, index) => (
               <motion.div
@@ -260,7 +260,7 @@ export default function Products() {
                 ref={(node) => {
                   cardRefs.current[index] = node;
                 }}
-                className={`w-[84vw] max-w-5xl shrink-0 snap-center transition-all duration-300 sm:w-[76vw] lg:w-[72vw] ${
+                className={`w-[88vw] max-w-[72rem] shrink-0 snap-center transition-all duration-300 sm:w-[78vw] lg:w-[70vw] ${
                   index === activeIndex ? 'opacity-100 scale-[1]' : 'opacity-70 scale-[0.96]'
                 }`}
               >

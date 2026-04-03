@@ -21,7 +21,7 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
@@ -33,35 +33,29 @@ const itemVariants = {
 
 export default function TrustLogos() {
   return (
-    <section className="border-b border-gray-100 bg-white py-12 dark:border-slate-800 dark:bg-slate-950">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#ebe7df_0%,#f5f1e9_58%,#f7f3ec_100%)] py-12 dark:bg-[linear-gradient(180deg,#0f172a_0%,#0b1220_100%)]">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-[12%] top-0 h-44 w-44 rounded-full bg-white/60 blur-3xl dark:bg-slate-500/10" />
+        <div className="absolute right-[10%] bottom-0 h-40 w-40 rounded-full bg-amber-100/55 blur-3xl dark:bg-sky-500/10" />
+      </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center text-sm text-gray-500 dark:text-gray-400"
-        >
-          Core platform stack
-        </motion.p>
-
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="flex flex-wrap items-center justify-center gap-8 md:gap-14"
+          className="relative flex flex-wrap items-center justify-center gap-x-8 gap-y-5 rounded-full border border-white/32 bg-white/12 px-6 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur-2xl dark:border-slate-700/28 dark:bg-slate-900/18 md:gap-x-12"
         >
           {logos.map((logo) => (
             <motion.div
               key={logo.name}
               variants={itemVariants}
-              className="group flex cursor-default items-center gap-2 text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+              className="flex cursor-default items-center gap-2.5 text-slate-600 dark:text-slate-300"
             >
-              <span className="text-2xl font-bold transition-transform group-hover:scale-110">
+              <span className="text-xl font-bold text-slate-700 dark:text-slate-200">
                 {logo.icon}
               </span>
-              <span className="text-lg font-semibold">{logo.name}</span>
+              <span className="text-base font-semibold">{logo.name}</span>
             </motion.div>
           ))}
         </motion.div>
