@@ -39,12 +39,21 @@ export default function TrustLogos() {
         <div className="absolute right-[10%] bottom-0 h-40 w-40 rounded-full bg-amber-100/55 blur-3xl dark:bg-sky-500/10" />
       </div>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 text-center text-base font-semibold tracking-tight text-slate-700 dark:text-slate-200"
+        >
+          Building with
+        </motion.h3>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="relative flex flex-wrap items-center justify-center gap-x-8 gap-y-5 rounded-full border border-white/32 bg-white/12 px-6 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur-2xl dark:border-slate-700/28 dark:bg-slate-900/18 md:gap-x-12"
+          className="relative flex flex-wrap items-center justify-center gap-x-8 gap-y-5 px-2 py-2 md:gap-x-12"
         >
           {logos.map((logo) => (
             <motion.div

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ExternalLink, PlayCircle } from 'lucide-react';
+import { ExternalLink, PlayCircle } from 'lucide-react';
 
 const products = [
   {
@@ -91,30 +91,37 @@ function ProductCard({
   kind: 'app' | 'site' | 'video';
 }) {
   const Icon = kind === 'video' ? PlayCircle : ExternalLink;
+  const isAnimatedMedia = image.endsWith('.gif') || image.endsWith('.webm') || image.endsWith('.mp4');
 
   return (
-    <article className="group overflow-hidden rounded-[2.3rem] border border-white/26 bg-white/18 shadow-[0_26px_90px_rgba(15,23,42,0.10)] backdrop-blur-3xl dark:border-slate-700/28 dark:bg-slate-900/28">
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-2 sm:p-2.5">
-        <div className="overflow-hidden rounded-[1.9rem] bg-white/18 dark:bg-slate-900/30">
-          <img
-            src={image}
-            alt={name}
-            className={`h-[21rem] w-full object-cover sm:h-[27rem] lg:h-[33rem] ${imageClassName}`}
-          />
+    <article className="group overflow-hidden rounded-[1.7rem] border border-white/18 bg-white/12 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl dark:border-slate-700/22 dark:bg-slate-900/22">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-1.5 sm:p-2">
+        <div className="overflow-hidden rounded-[1.35rem] bg-white/14 dark:bg-slate-900/24">
+          {isAnimatedMedia ? (
+            <video
+              src={image}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className={`h-[20rem] w-full object-cover sm:h-[25rem] lg:h-[31rem] ${imageClassName}`}
+            />
+          ) : (
+            <img
+              src={image}
+              alt={name}
+              className={`h-[20rem] w-full object-cover sm:h-[25rem] lg:h-[31rem] ${imageClassName}`}
+            />
+          )}
         </div>
       </a>
-      <div className="px-5 pb-5 pt-3 sm:px-6 sm:pb-6 sm:pt-4 lg:px-7 lg:pb-7">
+      <div className="px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4 lg:px-6 lg:pb-6">
         <p className="text-[10px] uppercase tracking-[0.26em] text-slate-400 dark:text-slate-500">{meta}</p>
-        <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">{name}</h3>
-        <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
+        <h3 className="mt-2.5 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-[2.5rem]">{name}</h3>
+        <p className="mt-2.5 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base sm:leading-7">
           {summary}
         </p>
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300"
-        >
+        <a href={link} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300">
           {cta}
           <Icon className="h-4 w-4" />
         </a>
@@ -157,6 +164,8 @@ export default function Products() {
     };
 
     handleScroll();
+    container.style.scrollSnapType = 'x mandatory';
+    container.style.scrollBehavior = 'smooth';
     container.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => container.removeEventListener('scroll', handleScroll);
@@ -178,14 +187,6 @@ export default function Products() {
     });
 
     setActiveIndex(index);
-  };
-
-  const goPrevious = () => {
-    scrollToIndex((activeIndex - 1 + products.length) % products.length);
-  };
-
-  const goNext = () => {
-    scrollToIndex((activeIndex + 1) % products.length);
   };
 
   return (
@@ -222,24 +223,6 @@ export default function Products() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products
           </h2>
-          <div className="mt-6 hidden items-center justify-center gap-3 md:flex">
-            <button
-              type="button"
-              onClick={goPrevious}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/45 bg-white/40 text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors hover:bg-white/70 dark:border-slate-700/45 dark:bg-slate-900/40 dark:text-slate-200 dark:hover:bg-slate-900/70"
-              aria-label="Previous product"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/45 bg-white/40 text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors hover:bg-white/70 dark:border-slate-700/45 dark:bg-slate-900/40 dark:text-slate-200 dark:hover:bg-slate-900/70"
-              aria-label="Next product"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
         </motion.div>
 
         <motion.div
@@ -251,7 +234,7 @@ export default function Products() {
         >
           <div
             ref={scrollRef}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[6vw] pb-6 [scroll-padding-inline:6vw] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[9vw] sm:[scroll-padding-inline:9vw] lg:px-[10vw] lg:[scroll-padding-inline:10vw]"
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[6vw] pb-6 [scroll-padding-inline:6vw] [scroll-snap-type:x_mandatory] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[9vw] sm:[scroll-padding-inline:9vw] lg:px-[10vw] lg:[scroll-padding-inline:10vw]"
           >
             {products.map((product, index) => (
               <motion.div
@@ -266,6 +249,22 @@ export default function Products() {
               >
                 <ProductCard {...product} />
               </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-7 flex items-center justify-center gap-2">
+            {products.map((product, index) => (
+              <button
+                key={product.id}
+                type="button"
+                onClick={() => scrollToIndex(index)}
+                aria-label={`View ${product.name}`}
+                className={`h-2.5 rounded-full transition-all ${
+                  index === activeIndex
+                    ? 'w-8 bg-slate-900 dark:bg-white'
+                    : 'w-2.5 bg-slate-300/90 hover:bg-slate-400 dark:bg-slate-700 dark:hover:bg-slate-500'
+                }`}
+              />
             ))}
           </div>
         </motion.div>

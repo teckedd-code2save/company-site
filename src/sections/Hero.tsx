@@ -14,8 +14,7 @@ export default function Hero() {
         <div className="absolute left-[8%] top-24 h-64 w-64 rounded-full bg-white/95 blur-3xl dark:bg-slate-700/20" />
         <div className="absolute right-[10%] top-20 h-72 w-72 rounded-full bg-amber-100/70 blur-3xl dark:bg-sky-400/10" />
         <div className="absolute left-1/2 top-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/75 blur-3xl dark:bg-slate-600/10" />
-        <div className="absolute left-1/2 top-[16%] h-[30rem] w-[60rem] -translate-x-1/2 rounded-[3.5rem] border border-white/50 bg-white/30 shadow-[0_56px_200px_rgba(15,23,42,0.18)] backdrop-blur-3xl dark:border-slate-700/40 dark:bg-slate-900/18" />
-        <div className="absolute left-1/2 top-[23%] h-[20rem] w-[44rem] -translate-x-1/2 rounded-[2.8rem] border border-white/45 bg-white/22 backdrop-blur-3xl dark:border-slate-700/30 dark:bg-slate-900/14" />
+        <div className="absolute left-1/2 top-[18%] h-[24rem] w-[52rem] -translate-x-1/2 rounded-full bg-white/35 blur-[120px] dark:bg-slate-700/10" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
