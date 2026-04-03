@@ -108,15 +108,9 @@ export default function Pricing() {
           transition={{ duration: 0.7 }}
           className="mb-10 text-center sm:mb-12"
         >
-          <span className="mb-4 inline-block rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
-            Pricing
-          </span>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
-            Clear ways to start working together
+            Pricing
           </h2>
-          <p className="mx-auto max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
-            Checkout is already wired for paid plans. If a Stripe price is not configured yet, the flow falls back to the direct contact path.
-          </p>
         </motion.div>
 
         <motion.div
@@ -132,7 +126,7 @@ export default function Pricing() {
                 className={`relative h-full ${
                   plan.popular
                     ? 'border-2 border-slate-900 shadow-xl dark:border-white'
-                    : 'border-gray-200 dark:border-slate-700'
+                    : 'border-white/80 dark:border-slate-800/80'
                 }`}
               >
                 {plan.popular && (
@@ -144,7 +138,7 @@ export default function Pricing() {
                   </div>
                 )}
 
-                <CardContent className="p-6 sm:p-8">
+                <CardContent className="rounded-[1.8rem] bg-white/72 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-slate-950/60 sm:p-8">
                   <h3 className="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">{plan.name}</h3>
                   <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">{plan.description}</p>
 

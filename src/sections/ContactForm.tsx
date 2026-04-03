@@ -19,16 +19,9 @@ export default function ContactForm() {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 dark:bg-slate-800 dark:text-gray-200">
-            Start a conversation
-          </span>
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            Tell us what your team is trying to build or fix
+            Contact
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-            Share the workflow, customer problem, or system you want to improve.
-            That is enough to recommend the best product or next step.
-          </p>
         </motion.div>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
@@ -37,14 +30,14 @@ export default function ContactForm() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-[0_24px_70px_rgba(15,23,42,0.18)] dark:border dark:border-slate-800"
+            className="rounded-[2rem] border border-white/70 bg-white/16 p-8 text-white shadow-[0_24px_70px_rgba(15,23,42,0.14)] backdrop-blur-2xl dark:border dark:border-slate-800/70 dark:bg-slate-950/38"
           >
             <h3 className="text-3xl font-semibold leading-tight">
               Best for teams with a real use case in front of them.
             </h3>
             <div className="mt-8 space-y-4">
               {fitSignals.map((signal) => (
-                <div key={signal} className="flex gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-4">
+                <div key={signal} className="flex gap-3 rounded-2xl border border-white/20 bg-white/8 px-4 py-4 dark:border-slate-800 dark:bg-slate-900/40">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-300" />
                   <p className="text-sm leading-7 text-slate-300">{signal}</p>
                 </div>
@@ -59,7 +52,7 @@ export default function ContactForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.05 }}
-          className="rounded-2xl bg-white p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] dark:bg-slate-900 dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)] sm:p-8 lg:p-10"
+          className="rounded-[2rem] border border-white/80 bg-white/72 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-900/68 dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)] sm:p-8 lg:p-10"
         >
           <input type="hidden" name="_subject" value="New project request from serendepifywebsite" />
           <input type="hidden" name="_captcha" value="false" />

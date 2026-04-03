@@ -87,37 +87,26 @@ function ProductCard({
 
   return (
     <article className="group overflow-hidden rounded-[2.5rem] border border-white/80 bg-white/72 shadow-[0_28px_90px_rgba(15,23,42,0.08)] backdrop-blur-2xl transition-transform duration-300 hover:-translate-y-1 dark:border-slate-800/80 dark:bg-slate-950/65">
-      <div className="grid min-h-[38rem] lg:grid-cols-[minmax(0,1.28fr)_minmax(20rem,0.72fr)]">
-        <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-5">
-          <div className="h-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
-            <img
-              src={image}
-              alt={name}
-              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-          </div>
-        </a>
-
-        <div className="flex flex-1 flex-col justify-between px-6 pb-7 pt-2 sm:px-8 sm:pb-8 lg:px-8 lg:pb-8 lg:pt-8">
-          <div className="space-y-4">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="relative block min-h-[42rem] overflow-hidden">
+        <img
+          src={image}
+          alt={name}
+          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,rgba(15,23,42,0)_0%,rgba(15,23,42,0.18)_26%,rgba(15,23,42,0.42)_100%)] p-5 sm:p-6">
+          <div className="rounded-[2rem] border border-white/70 bg-white/56 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-2xl dark:border-slate-800/70 dark:bg-slate-950/55">
             <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">{meta}</p>
-            <h3 className="text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{name}</h3>
-            <p className="max-w-sm text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
+            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{name}</h3>
+            <p className="mt-3 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
               {summary}
             </p>
+            <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors group-hover:text-slate-600 dark:text-white dark:group-hover:text-slate-300">
+              {cta}
+              <Icon className="h-4 w-4" />
+            </div>
           </div>
-
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
-          >
-            {cta}
-            <Icon className="h-4 w-4" />
-          </a>
         </div>
-      </div>
+      </a>
     </article>
   );
 }
@@ -141,9 +130,6 @@ export default function Products() {
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products
           </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
-            Working surfaces, not concepts.
-          </p>
         </motion.div>
 
         <motion.div

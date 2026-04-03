@@ -34,16 +34,9 @@ export default function Features() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.65 }}
           >
-            <span className="inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
-              Capabilities
-            </span>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-              What Serendepify brings to a product conversation.
+              Capabilities
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
-              The work is strongest when it connects a clear customer problem,
-              a usable product surface, and a delivery path your team can act on.
-            </p>
           </motion.div>
         </div>
 
@@ -60,9 +53,9 @@ export default function Features() {
             return (
               <div
                 key={item.title}
-                className="rounded-[1.8rem] border border-slate-200 bg-white p-7 shadow-[0_20px_60px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-950"
+                className="rounded-[1.8rem] border border-white/80 bg-white/72 p-7 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/60"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-200">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100/80 text-slate-700 dark:bg-slate-900/70 dark:text-slate-200">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 text-xl font-semibold text-slate-950 dark:text-white">{item.title}</h3>
