@@ -86,31 +86,37 @@ function ProductCard({
   const Icon = kind === 'video' ? PlayCircle : ExternalLink;
 
   return (
-    <article className="group flex h-full min-h-[34rem] w-[22rem] shrink-0 snap-start flex-col overflow-hidden rounded-[2.25rem] border border-white/80 bg-white/78 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 dark:border-slate-800/80 dark:bg-slate-950/65 sm:w-[26rem] lg:w-[30rem]">
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-4 pb-0">
-        <div className="overflow-hidden rounded-[1.6rem] border border-slate-200/80 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
-          <img
-            src={image}
-            alt={name}
-            className="aspect-[16/11] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        </div>
-      </a>
-      <div className="flex flex-1 flex-col justify-between space-y-6 p-6 sm:p-7">
-        <div className="space-y-2">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">{meta}</p>
-          <h3 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">{name}</h3>
-          <p className="text-base text-slate-600 dark:text-slate-300">{summary}</p>
-        </div>
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
-        >
-          {cta}
-          <Icon className="h-4 w-4" />
+    <article className="group overflow-hidden rounded-[2.5rem] border border-white/80 bg-white/72 shadow-[0_28px_90px_rgba(15,23,42,0.08)] backdrop-blur-2xl transition-transform duration-300 hover:-translate-y-1 dark:border-slate-800/80 dark:bg-slate-950/65">
+      <div className="grid min-h-[38rem] lg:grid-cols-[minmax(0,1.28fr)_minmax(20rem,0.72fr)]">
+        <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-5">
+          <div className="h-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
+            <img
+              src={image}
+              alt={name}
+              className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
         </a>
+
+        <div className="flex flex-1 flex-col justify-between px-6 pb-7 pt-2 sm:px-8 sm:pb-8 lg:px-8 lg:pb-8 lg:pt-8">
+          <div className="space-y-4">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">{meta}</p>
+            <h3 className="text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{name}</h3>
+            <p className="max-w-sm text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
+              {summary}
+            </p>
+          </div>
+
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-600 dark:text-white dark:hover:text-slate-300"
+          >
+            {cta}
+            <Icon className="h-4 w-4" />
+          </a>
+        </div>
       </div>
     </article>
   );
@@ -145,15 +151,13 @@ export default function Products() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="overflow-x-auto pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="space-y-8 lg:space-y-10"
         >
-          <div className="flex gap-5 pr-4 sm:gap-6 lg:gap-8 lg:pr-24">
-            {products.map((product) => (
-              <motion.div key={product.id} variants={itemVariants}>
-                <ProductCard {...product} />
-              </motion.div>
-            ))}
-          </div>
+          {products.map((product) => (
+            <motion.div key={product.id} variants={itemVariants}>
+              <ProductCard {...product} />
+            </motion.div>
+          ))}
         </motion.div>
 
       </div>

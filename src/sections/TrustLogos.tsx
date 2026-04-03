@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 
 const logos = [
+  { name: 'Stripe', icon: 'S' },
+  { name: 'Vercel', icon: '▲' },
+  { name: 'Supabase', icon: '◐' },
+  { name: 'GitHub', icon: '◌' },
   { name: 'OpenAI', icon: '◎' },
   { name: 'Anthropic', icon: 'A' },
-  { name: 'Vercel', icon: '▲' },
-  { name: 'Stripe', icon: 'S' },
-  { name: 'Supabase', icon: '◐' },
-  { name: 'Linear', icon: 'L' },
 ];
 
 const containerVariants = {
@@ -42,7 +42,7 @@ export default function TrustLogos() {
           transition={{ duration: 0.5 }}
           className="mb-8 text-center text-sm text-gray-500 dark:text-gray-400"
         >
-          Built with the modern tools teams already trust for AI, infrastructure, and payments
+          What we ship with
         </motion.p>
 
         <motion.div
@@ -50,7 +50,7 @@ export default function TrustLogos() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="flex flex-wrap items-center justify-center gap-8 md:gap-16"
+          className="flex flex-wrap items-center justify-center gap-8 md:gap-14"
         >
           {logos.map((logo) => (
             <motion.div

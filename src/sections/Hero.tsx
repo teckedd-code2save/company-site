@@ -3,8 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { resolveContactLink } from '@/lib/site-config';
 
-const shippedWith = ['Payments', 'Data', 'Delivery systems'];
-
 export default function Hero() {
   const demoLink = resolveContactLink();
   const isExternalDemo = demoLink !== '#contact';
@@ -16,16 +14,18 @@ export default function Hero() {
         <div className="absolute left-[8%] top-24 h-64 w-64 rounded-full bg-white/95 blur-3xl dark:bg-slate-700/20" />
         <div className="absolute right-[10%] top-20 h-72 w-72 rounded-full bg-sky-100/80 blur-3xl dark:bg-sky-400/10" />
         <div className="absolute left-1/2 top-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/70 blur-3xl dark:bg-slate-600/10" />
+        <div className="absolute left-1/2 top-[18%] h-[26rem] w-[52rem] -translate-x-1/2 rounded-[3rem] border border-white/60 bg-white/18 shadow-[0_40px_140px_rgba(15,23,42,0.10)] backdrop-blur-3xl dark:border-slate-800/40 dark:bg-slate-900/10" />
+        <div className="absolute left-1/2 top-[24%] h-[18rem] w-[40rem] -translate-x-1/2 rounded-[2.5rem] border border-white/55 bg-white/14 backdrop-blur-2xl dark:border-slate-800/35 dark:bg-slate-900/8" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative flex min-h-[calc(100vh-4rem)] items-center py-14 sm:py-16 lg:py-24">
-          <div className="max-w-xl text-center lg:text-left">
+        <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center py-14 sm:py-16 lg:py-24">
+          <div className="max-w-3xl text-center">
             <motion.h1
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.05 }}
-              className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
+              className="mx-auto max-w-5xl text-4xl font-semibold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
             >
               Applied AI for real customer workflows.
             </motion.h1>
@@ -34,7 +34,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.1 }}
-              className="mx-auto mt-5 max-w-lg text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8 lg:mx-0"
+              className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8"
             >
               Products for teams turning AI into something customers can actually use.
             </motion.p>
@@ -43,7 +43,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.15 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center"
             >
               <Button
                 asChild
@@ -66,40 +66,8 @@ export default function Hero() {
                 </a>
               </Button>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.2 }}
-              className="mt-10 inline-flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/80 bg-white/60 px-5 py-3 text-sm text-slate-600 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl dark:border-slate-800/70 dark:bg-slate-950/35 dark:text-slate-300 lg:justify-start"
-            >
-              <span className="font-medium text-slate-900 dark:text-white">Shipping across</span>
-              {shippedWith.map((item, index) => (
-                <span key={item} className="inline-flex items-center gap-3">
-                  {index > 0 ? <span className="h-1 w-1 rounded-full bg-slate-400 dark:bg-slate-500" /> : null}
-                  {item}
-                </span>
-              ))}
-            </motion.div>
           </div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="pointer-events-none absolute inset-x-0 bottom-10 hidden px-4 lg:block"
-        >
-          <div className="mx-auto max-w-7xl">
-            <div className="ml-auto h-40 max-w-3xl rounded-[2rem] border border-white/75 bg-white/30 shadow-[0_30px_120px_rgba(15,23,42,0.10)] backdrop-blur-2xl dark:border-slate-800/60 dark:bg-slate-950/18">
-              <div className="grid h-full grid-cols-3 gap-4 p-6">
-                <div className="rounded-[1.4rem] border border-white/70 bg-white/45 dark:border-slate-800/50 dark:bg-slate-900/30" />
-                <div className="rounded-[1.4rem] border border-white/70 bg-white/35 dark:border-slate-800/50 dark:bg-slate-900/22" />
-                <div className="rounded-[1.4rem] border border-white/70 bg-white/25 dark:border-slate-800/50 dark:bg-slate-900/15" />
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

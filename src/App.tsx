@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar';
 import CheckoutNotice from './components/CheckoutNotice';
 import Hero from './sections/Hero';
+import TrustLogos from './sections/TrustLogos';
 import Products from './sections/Products';
 import Features from './sections/Features';
 import Pricing from './sections/Pricing';
@@ -14,6 +15,7 @@ function App() {
       <Navbar />
       <main>
         <Hero />
+        <TrustLogos />
         <Products />
         <Features />
         <Pricing />
