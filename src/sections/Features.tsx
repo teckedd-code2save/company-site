@@ -25,8 +25,13 @@ export default function Features() {
   const isExternalDemo = demoLink !== '#contact';
 
   return (
-    <section id="features" className="bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] py-20 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)] lg:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="features" className="relative overflow-hidden bg-[linear-gradient(180deg,#f7f8fa_0%,#eef1f4_48%,#e7ebf0_100%)] py-24 dark:bg-[linear-gradient(180deg,#0a1628_0%,#0f172a_100%)] lg:py-36">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute right-[4%] top-16 h-[26rem] w-[26rem] rounded-full bg-slate-200/45 blur-[100px] dark:bg-violet-900/15" />
+        <div className="absolute left-[6%] top-1/2 h-[22rem] w-[22rem] -translate-y-1/2 rounded-full bg-zinc-200/40 blur-[90px] dark:bg-indigo-900/15" />
+        <div className="absolute left-1/2 bottom-0 h-[18rem] w-[40rem] -translate-x-1/2 rounded-full bg-white/70 blur-[100px] dark:bg-sky-900/10" />
+      </div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -53,7 +58,7 @@ export default function Features() {
             return (
               <div
                 key={item.title}
-                className="rounded-[1.8rem] border border-white/80 bg-white/72 p-7 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/60"
+                className="rounded-[1.8rem] border border-white/55 bg-white/90 p-7 shadow-[0_28px_80px_rgba(15,23,42,0.13)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/78"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100/80 text-slate-700 dark:bg-slate-900/70 dark:text-slate-200">
                   <Icon className="h-5 w-5" />

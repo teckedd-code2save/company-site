@@ -126,14 +126,13 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#e4ecf5_0%,#ebf1f8_45%,#eff4f9_100%)] py-24 dark:bg-[linear-gradient(180deg,#020617_0%,#0a1628_100%)] lg:py-36"
+      className="relative overflow-hidden bg-[linear-gradient(180deg,#efe8dd_0%,#f6f1e8_40%,#fcfaf6_100%)] py-24 dark:bg-[linear-gradient(180deg,#020617_0%,#0a1628_100%)] lg:py-36"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* colour blobs — site primaries */}
-        <div className="absolute left-[3%] top-24 h-[36rem] w-[36rem] rounded-full bg-indigo-200/50 blur-[130px] dark:bg-indigo-900/20" />
-        <div className="absolute right-[4%] top-[22%] h-[30rem] w-[30rem] rounded-full bg-sky-200/60 blur-[110px] dark:bg-sky-900/20" />
-        <div className="absolute bottom-32 left-[30%] h-[26rem] w-[44rem] rounded-full bg-violet-100/50 blur-[120px] dark:bg-violet-950/15" />
-        <div className="absolute right-[12%] bottom-12 h-[20rem] w-[20rem] rounded-full bg-blue-200/40 blur-[90px] dark:bg-blue-900/15" />
+        <div className="absolute left-[3%] top-24 h-[36rem] w-[36rem] rounded-full bg-rose-100/45 blur-[130px] dark:bg-indigo-900/20" />
+        <div className="absolute right-[4%] top-[22%] h-[30rem] w-[30rem] rounded-full bg-amber-100/55 blur-[110px] dark:bg-sky-900/20" />
+        <div className="absolute bottom-32 left-[30%] h-[26rem] w-[44rem] rounded-full bg-stone-100/60 blur-[120px] dark:bg-violet-950/15" />
+        <div className="absolute right-[12%] bottom-12 h-[20rem] w-[20rem] rounded-full bg-sky-100/35 blur-[90px] dark:bg-blue-900/15" />
         {/* decorative rings */}
         <svg className="absolute left-[2%] top-[10%] h-[28rem] w-[28rem] text-indigo-400/20 dark:text-indigo-500/10" viewBox="0 0 448 448" fill="none">
           <circle cx="224" cy="224" r="100" stroke="currentColor" strokeWidth="1" />

@@ -8,14 +8,14 @@ export default function Hero() {
   const isExternalDemo = demoLink !== '#contact';
 
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f8fafc_0%,#edf3f8_42%,#e6edf5_100%)] pt-16 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)]">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#fbfbf8_0%,#f3f1ec_44%,#ebe7df_100%)] pt-16 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)]">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.94),rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.18),rgba(15,23,42,0)_70%)]" />
         <div className="absolute left-[8%] top-24 h-64 w-64 rounded-full bg-white/95 blur-3xl dark:bg-slate-700/20" />
-        <div className="absolute right-[10%] top-20 h-72 w-72 rounded-full bg-sky-100/80 blur-3xl dark:bg-sky-400/10" />
-        <div className="absolute left-1/2 top-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/70 blur-3xl dark:bg-slate-600/10" />
-        <div className="absolute left-1/2 top-[16%] h-[30rem] w-[60rem] -translate-x-1/2 rounded-[3.5rem] border border-white/60 bg-white/22 shadow-[0_44px_170px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-800/40 dark:bg-slate-900/12" />
-        <div className="absolute left-1/2 top-[23%] h-[20rem] w-[44rem] -translate-x-1/2 rounded-[2.8rem] border border-white/55 bg-white/16 backdrop-blur-2xl dark:border-slate-800/35 dark:bg-slate-900/10" />
+        <div className="absolute right-[10%] top-20 h-72 w-72 rounded-full bg-amber-100/70 blur-3xl dark:bg-sky-400/10" />
+        <div className="absolute left-1/2 top-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/75 blur-3xl dark:bg-slate-600/10" />
+        <div className="absolute left-1/2 top-[16%] h-[30rem] w-[60rem] -translate-x-1/2 rounded-[3.5rem] border border-white/50 bg-white/30 shadow-[0_56px_200px_rgba(15,23,42,0.18)] backdrop-blur-3xl dark:border-slate-700/40 dark:bg-slate-900/18" />
+        <div className="absolute left-1/2 top-[23%] h-[20rem] w-[44rem] -translate-x-1/2 rounded-[2.8rem] border border-white/45 bg-white/22 backdrop-blur-3xl dark:border-slate-700/30 dark:bg-slate-900/14" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
