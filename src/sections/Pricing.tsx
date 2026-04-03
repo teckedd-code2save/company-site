@@ -7,36 +7,39 @@ import { resolveContactLink, resolvePaymentLink } from '@/lib/site-config';
 
 const plans = [
   {
+    key: 'starter',
     name: 'Starter',
-    description: 'A simple entry point for teams who want to try the product direction and see fit quickly.',
+    description: 'A small paid entry point for teams that want to validate fit quickly.',
     price: 20,
     features: [
-      'Entry-level access to get started',
-      'A low-risk way to evaluate the workflow',
-      'Good fit for early exploration and testing',
+      'Low-friction evaluation',
+      'Fast path into a product conversation',
+      'Useful when you need a concrete starting point',
     ],
-    cta: 'Try it',
+    cta: 'Buy starter access',
     popular: false,
   },
   {
+    key: 'delivery',
     name: 'Delivery',
-    description: 'For teams that want help shaping, building, and getting a usable product into the world.',
+    description: 'For teams that want help shaping, building, and shipping a usable product.',
     price: 50,
     features: [
       'Product direction and implementation support',
-      'Faster movement from idea to usable release',
-      'Best fit for teams preparing a real launch',
+      'Best fit for pilots and launch work',
+      'Can route to checkout or a direct conversation',
     ],
-    cta: 'Request demo',
+    cta: 'Start delivery',
     popular: true,
   },
   {
+    key: 'enterprise',
     name: 'Enterprise',
-    description: 'For organizations that need broader scope, governance, integrations, or a tailored engagement.',
+    description: 'For broader rollouts, internal platforms, integrations, or custom commercial scope.',
     price: null,
     features: [
-      'Custom rollout and internal workflow planning',
-      'Larger implementation scope',
+      'Custom scope and governance',
+      'Larger implementation surface',
       'Tailored commercial engagement',
     ],
     cta: 'Talk to sales',
@@ -67,19 +70,18 @@ const itemVariants = {
 };
 
 export default function Pricing() {
-  const handleCheckout = async (planName: string) => {
+  const handleCheckout = async (planKey: 'starter' | 'delivery' | 'enterprise') => {
     const demoLink = resolveContactLink();
+    const fallbackHref = resolvePaymentLink(planKey, demoLink);
 
-    if (planName === 'Delivery' || planName === 'Enterprise') {
-      window.location.href = demoLink;
+    if (planKey === 'enterprise') {
+      window.location.href = fallbackHref;
       return;
     }
 
-    const fallbackHref = resolvePaymentLink('starter', demoLink);
-
     try {
       const result = await startCheckout({
-        plan: 'starter',
+        plan: planKey,
         billingMode: 'project',
       });
 
@@ -103,10 +105,10 @@ export default function Pricing() {
             Pricing
           </span>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
-            Simple ways to get started
+            Clear ways to start working together
           </h2>
           <p className="mx-auto max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
-            Choose a starting point, request a demo, or talk to us about a broader engagement.
+            Checkout is already wired for paid plans. If a Stripe price is not configured yet, the flow falls back to the direct contact path.
           </p>
         </motion.div>
 
@@ -156,7 +158,7 @@ export default function Pricing() {
                         ? 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200'
                         : 'bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200'
                     }`}
-                    onClick={() => void handleCheckout(plan.name)}
+                    onClick={() => void handleCheckout(plan.key)}
                   >
                     {plan.cta}
                   </Button>

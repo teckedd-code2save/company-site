@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Sparkles, Sun, Moon, ArrowRight } from 'lucide-react';
+import { Menu, X, Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { resolveContactLink } from '@/lib/site-config';
 
 const navLinks = [
   { label: 'Products', href: '#products' },
-  { label: 'How We Work', href: '#features' },
+  { label: 'Capabilities', href: '#features' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -14,7 +14,6 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const demoLink = resolveContactLink();
   const isExternalDemo = demoLink !== '#contact';
 
@@ -25,22 +24,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    const shouldUseDark = storedTheme ? storedTheme === 'dark' : false;
-    setIsDark(shouldUseDark);
-    document.documentElement.classList.toggle('dark', shouldUseDark);
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDark((prev) => {
-      const next = !prev;
-      document.documentElement.classList.toggle('dark', next);
-      localStorage.setItem('theme', next ? 'dark' : 'light');
-      return next;
-    });
-  };
 
   return (
     <motion.header
@@ -55,14 +38,14 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <a href="#" className="group flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black transition-transform group-hover:scale-105 dark:bg-white">
-              <Sparkles className="h-5 w-5 text-white dark:text-black" />
+          <a href="#" className="group flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950 transition-transform group-hover:scale-105 dark:bg-white">
+              <Sparkles className="h-4 w-4 text-white dark:text-black" />
             </div>
             <div>
-              <span className="block text-lg font-bold tracking-tight text-slate-950 dark:text-white">Serendepify AI</span>
-              <span className="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 sm:block">
-                AI product studio
+              <span className="block text-lg font-semibold tracking-tight text-slate-950 dark:text-white">Serendepify AI</span>
+              <span className="hidden text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 sm:block">
+                Applied AI products
               </span>
             </div>
           </a>
@@ -81,27 +64,12 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <Button
-              variant="outline"
-              className="rounded-lg border-slate-300 bg-white hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-slate-200 dark:hover:bg-slate-900"
-              asChild
-            >
-              <a href="#contact">Contact Sales</a>
-            </Button>
-            <Button className="rounded-lg bg-black text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200" asChild>
+            <Button className="rounded-full bg-slate-950 px-5 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200" asChild>
               <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
-                Request Demo
+                Book intro
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-              aria-label="Toggle theme"
-            >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
           </div>
 
           <button
@@ -131,27 +99,12 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="flex flex-col gap-2 border-t border-slate-200 pt-4 dark:border-slate-800">
-                <Button
-                  variant="outline"
-                  className="w-full rounded-lg border-slate-300 dark:border-slate-700 dark:bg-transparent dark:text-slate-200"
-                  asChild
-                >
-                  <a href="#contact">Contact Sales</a>
-                </Button>
-                <Button className="w-full rounded-lg bg-black text-white hover:bg-slate-800 dark:bg-white dark:text-black" asChild>
+                <Button className="w-full rounded-full bg-slate-950 text-white hover:bg-slate-800 dark:bg-white dark:text-black" asChild>
                   <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
-                    Request Demo
+                    Book intro
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </Button>
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
-                >
-                  {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                  {isDark ? 'Light mode' : 'Dark mode'}
-                </button>
               </div>
             </nav>
           </motion.div>

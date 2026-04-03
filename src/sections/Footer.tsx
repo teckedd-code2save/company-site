@@ -4,11 +4,13 @@ import { Sparkles, Github, Twitter, Linkedin, MessageCircle } from 'lucide-react
 const footerLinks = {
   products: [
     { label: 'MPP Studio', href: '#products' },
+    { label: 'Shipd', href: '#products' },
     { label: 'Datafy MCP', href: '#products' },
     { label: 'B2DP', href: '#products' },
   ],
   resources: [
     { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
+    { label: 'Shipd', href: 'https://shipd-eight.vercel.app/' },
     { label: 'AI Build Tools', href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
     { label: 'Datafy Demo Video', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
   ],
@@ -69,7 +71,7 @@ export default function Footer() {
               <span className="text-lg font-bold tracking-tight text-white">Serendepify AI</span>
             </a>
             <p className="mb-6 max-w-xs text-sm text-slate-400">
-              Build practical AI systems, sharpen the offer, and turn build momentum into credible pilot conversations.
+              Build applied AI products with clearer commercial shape, stronger product surfaces, and a path to real customer use.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((link) => {

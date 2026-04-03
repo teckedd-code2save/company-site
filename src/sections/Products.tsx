@@ -5,54 +5,47 @@ import { resolveContactLink } from '@/lib/site-config';
 const products = [
   {
     id: 'mpp-studio',
-    tag: 'Main product surface',
     name: 'MPP Studio',
-    description:
-      'Infrastructure for providers who want to launch paid AI services with a safer path from testing to real payment flows.',
-    context:
-      'MPP Studio is built around provider sandboxing, machine-readable service discovery, and payment-aware API flows so teams can test, trust, and operationalize paid AI endpoints.',
-    tech: ['HTTP 402 flows', 'Discovery surface', 'Sandbox to live payments'],
-    primaryLink: 'https://agent-exchange-web.vercel.app/',
-    primaryLabel: 'Explore MPP Studio',
-    mediaTitle: 'Paid API infrastructure for agent-ready services',
-    mediaCopy:
-      'The live product shows how a provider can register a service, expose a machine-readable contract, and move from sandbox testing to real payment flows.',
-    mediaSrc: '/images/products/mpp-studio-surface.png',
-    accent: 'from-amber-200 via-orange-100 to-white',
+    summary: 'Paid API infrastructure for agent-ready services.',
+    proof: 'Sandboxed provider onboarding, machine-readable discovery, and a path from test calls to real payments.',
+    tech: ['Payments', 'API contracts', 'Provider sandbox'],
+    link: 'https://agent-exchange-web.vercel.app/',
+    cta: 'Explore MPP Studio',
+    image: '/images/products/mpp-studio-surface.png',
+    kind: 'app',
+  },
+  {
+    id: 'shipd',
+    name: 'Shipd',
+    summary: 'Deployment planning that starts from the repo, not guesswork.',
+    proof: 'Connect a GitHub repository, inspect deployment signals, compare realistic platforms, and generate a plan before touching infra.',
+    tech: ['GitHub sync', 'Platform comparison', 'Deployment planning'],
+    link: 'https://shipd-eight.vercel.app/',
+    cta: 'See Shipd',
+    image: '/images/products/shipd-surface.png',
+    kind: 'app',
   },
   {
     id: 'b2dp',
-    tag: 'Implementation workflow',
     name: 'B2DP',
-    description:
-      'A business-to-backend workflow that helps turn product requirements into structured implementation output your team can actually build on.',
-    context:
-      'B2DP translates business ideas into entities, workflows, schemas, contracts, and scaffolding, which makes it useful for startups, agencies, and teams that want less drift between the product idea and the build.',
-    tech: ['Business analysis', 'Schema generation', 'Delivery scaffolding'],
-    primaryLink: 'https://teckedd-code2save.github.io/ai-build-tools/',
-    primaryLabel: 'Open workflow site',
-    mediaTitle: 'From business idea to delivery-ready backend structure',
-    mediaCopy:
-      'The site explains the workflow clearly: model the business, generate the stack, and produce the artifacts needed for real implementation work.',
-    mediaSrc: '/images/products/b2dp-surface.png',
-    accent: 'from-sky-200 via-cyan-100 to-white',
+    summary: 'Business requirements translated into build-ready backend structure.',
+    proof: 'Shapes product ideas into entities, workflows, schemas, contracts, and scaffolding for actual implementation work.',
+    tech: ['Business analysis', 'Schema design', 'Delivery scaffolding'],
+    link: 'https://teckedd-code2save.github.io/ai-build-tools/',
+    cta: 'Explore B2DP',
+    image: '/images/products/b2dp-surface.png',
+    kind: 'site',
   },
   {
     id: 'datafy',
-    tag: 'Developer product',
     name: 'Datafy MCP',
-    description:
-      'A real-data bridge that helps AI tools and assistants work with operational databases instead of disconnected mock inputs.',
-    context:
-      'The demo shows Datafy powering Claude-based visualizations with real customer data, which is a stronger signal than a static product mockup because the value is immediately visible.',
-    tech: ['Claude workflows', 'Operational databases', 'Real-data visualizations'],
-    primaryLink: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
-    primaryLabel: 'Watch Datafy in action',
-    mediaTitle: 'Claude visualizations powered by your real data',
-    mediaCopy:
-      'The walkthrough focuses on a concrete outcome customers care about: getting useful AI output from their own live data, not a synthetic demo dataset.',
-    mediaSrc: 'https://i.ytimg.com/vi/eUEZqX97i6I/maxresdefault.jpg',
-    accent: 'from-emerald-200 via-lime-100 to-white',
+    summary: 'AI outputs grounded in operational data instead of mock inputs.',
+    proof: 'The demo shows Claude generating useful visualizations from live customer data, which is the real value proposition.',
+    tech: ['Claude workflows', 'Operational data', 'Visual analytics'],
+    link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
+    cta: 'Watch Datafy in action',
+    image: 'https://i.ytimg.com/vi/eUEZqX97i6I/maxresdefault.jpg',
+    kind: 'video',
   },
 ] as const;
 
@@ -80,77 +73,73 @@ const itemVariants = {
 
 function ProductCard({
   name,
+  summary,
+  proof,
   tech,
-  mediaTitle,
-  mediaCopy,
-  mediaSrc,
-  primaryLink,
-  primaryLabel,
+  image,
+  link,
+  cta,
+  kind,
 }: {
   name: string;
+  summary: string;
+  proof: string;
   tech: readonly string[];
-  mediaTitle: string;
-  mediaCopy: string;
-  mediaSrc: string;
-  primaryLink: string;
-  primaryLabel: string;
+  image: string;
+  link: string;
+  cta: string;
+  kind: 'app' | 'site' | 'video';
 }) {
   const demoLink = resolveContactLink();
   const isExternalDemo = demoLink !== '#contact';
-  const isVideo = primaryLabel.toLowerCase().includes('watch');
+  const Icon = kind === 'video' ? PlayCircle : ExternalLink;
 
   return (
-    <article className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.10)] sm:rounded-[2rem] dark:border-slate-800 dark:bg-slate-950">
-      <a
-        href={primaryLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative block h-[34rem] overflow-hidden sm:h-[42rem]"
-      >
+    <article className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-950">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="group block overflow-hidden">
         <img
-          src={mediaSrc}
+          src={image}
           alt={name}
-          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          className="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
         />
-        <div className="absolute inset-x-0 bottom-0">
-          <div className="bg-[linear-gradient(180deg,rgba(2,6,23,0)_0%,rgba(2,6,23,0.78)_22%,rgba(2,6,23,0.95)_100%)] px-6 pb-5 pt-8 sm:px-8 sm:pb-6 sm:pt-10">
-            <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85 backdrop-blur">
-              {name}
-            </div>
-            <h3 className="mt-3 max-w-2xl text-xl font-bold tracking-tight text-white sm:text-3xl">
-            {mediaTitle}
-            </h3>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-white/80">
-              {mediaCopy}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {tech.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] text-white/80 backdrop-blur"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur">
-                {primaryLabel}
-                {isVideo ? <PlayCircle className="h-4 w-4" /> : <ExternalLink className="h-4 w-4" />}
-              </div>
-              <a
-                href={demoLink}
-                target={isExternalDemo ? '_blank' : undefined}
-                rel={isExternalDemo ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-sm font-semibold text-white/80 backdrop-blur transition-colors hover:text-white"
-              >
-                Request demo
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </div>
       </a>
+      <div className="space-y-5 p-6 sm:p-7">
+        <div>
+          <h3 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">{name}</h3>
+          <p className="mt-2 text-base text-slate-600 dark:text-slate-300">{summary}</p>
+          <p className="mt-3 text-sm leading-7 text-slate-500 dark:text-slate-400">{proof}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {tech.map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200"
+          >
+            {cta}
+            <Icon className="h-4 w-4" />
+          </a>
+          <a
+            href={demoLink}
+            target={isExternalDemo ? '_blank' : undefined}
+            rel={isExternalDemo ? 'noopener noreferrer' : undefined}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:text-slate-950 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:text-white"
+          >
+            Discuss fit
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
     </article>
   );
 }
@@ -178,10 +167,10 @@ export default function Products() {
             Products
           </span>
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-            Products built around real customer needs.
+            Built products with something real to inspect.
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8">
-            These products are presented through the strongest proof available for each one: a live app, a workflow site, or a real usage demo.
+            Each one is shown through the surface a customer would actually judge: a live app, a workflow site, or a real usage demo.
           </p>
         </motion.div>
 
@@ -190,7 +179,7 @@ export default function Products() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="space-y-12 sm:space-y-16 lg:space-y-20"
+          className="grid gap-8 lg:grid-cols-2"
         >
           {products.map((product) => (
             <motion.div key={product.id} variants={itemVariants}>

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Mail, User, MessageSquare, Briefcase, Building2, Clock3, CheckCircle2 } from 'lucide-react';
+import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '@/lib/site-config';
 
 const fitSignals = [
-  'You want to explore MPP Studio, B2DP, or Datafy for a real business workflow.',
-  'You need a product, workflow, or infrastructure direction customers can evaluate clearly.',
+  'You want to evaluate MPP Studio, Shipd, B2DP, or Datafy for a real workflow.',
+  'You need a product direction that can move into implementation, not just concepting.',
 ];
 
 export default function ContactForm() {
@@ -23,11 +23,11 @@ export default function ContactForm() {
             Start a conversation
           </span>
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            Tell Serendepify AI what your team is trying to solve
+            Tell us what your team is trying to build or fix
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-            Share the workflow, the customer need, or the system you want to improve.
-            That makes it easier to recommend the right product, demo, or implementation path.
+            Share the workflow, customer problem, or system you want to improve.
+            That is enough to recommend the best product or next step.
           </p>
         </motion.div>
 
@@ -40,7 +40,7 @@ export default function ContactForm() {
             className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-[0_24px_70px_rgba(15,23,42,0.18)] dark:border dark:border-slate-800"
           >
             <h3 className="text-3xl font-semibold leading-tight">
-              Best for teams ready to evaluate a product seriously.
+              Best for teams with a real use case in front of them.
             </h3>
             <div className="mt-8 space-y-4">
               {fitSignals.map((signal) => (
@@ -113,18 +113,18 @@ export default function ContactForm() {
             <label className="block">
               <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
                 <Briefcase className="mr-2 h-4 w-4" />
-                Project type
+                Product or focus area
               </span>
               <input
                 type="text"
                 name="project_type"
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="e.g. internal AI workflow, customer-facing product, data platform"
+                placeholder="e.g. MPP Studio, Shipd, internal AI workflow, data product"
               />
             </label>
           </div>
 
-          <div className="mb-5 grid gap-5 md:grid-cols-2">
+          <div className="mb-5">
             <label className="block">
               <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
                 <Briefcase className="mr-2 h-4 w-4" />
@@ -135,19 +135,6 @@ export default function ContactForm() {
                 name="success_metric"
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                 placeholder="e.g. reduce support workload, launch MVP, improve data access speed"
-              />
-            </label>
-
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <Clock3 className="mr-2 h-4 w-4" />
-                Timeline
-              </span>
-              <input
-                type="text"
-                name="timeline"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="e.g. need pilot in 4-6 weeks"
               />
             </label>
           </div>
@@ -163,7 +150,7 @@ export default function ContactForm() {
                 required
                 rows={6}
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="Describe the customer problem, the workflow you want to improve, your timeline, and what success should look like."
+                placeholder="Describe the workflow, current bottleneck, and what success should look like."
               />
             </label>
           </div>
