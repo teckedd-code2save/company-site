@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, PlayCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, PlayCircle } from 'lucide-react';
 
 const products = [
   {
@@ -123,6 +124,70 @@ function ProductCard({
 }
 
 export default function Products() {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const handleScroll = () => {
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(cardCenter - containerCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    };
+
+    handleScroll();
+    container.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    const container = scrollRef.current;
+    const card = cardRefs.current[index];
+
+    if (!container || !card) {
+      return;
+    }
+
+    const left = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+
+    container.scrollTo({
+      left,
+      behavior: 'smooth',
+    });
+
+    setActiveIndex(index);
+  };
+
+  const goPrevious = () => {
+    scrollToIndex((activeIndex - 1 + products.length) % products.length);
+  };
+
+  const goNext = () => {
+    scrollToIndex((activeIndex + 1) % products.length);
+  };
+
   return (
     <section
       id="products"
@@ -157,6 +222,24 @@ export default function Products() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products
           </h2>
+          <div className="mt-6 hidden items-center justify-center gap-3 md:flex">
+            <button
+              type="button"
+              onClick={goPrevious}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/45 bg-white/40 text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors hover:bg-white/70 dark:border-slate-700/45 dark:bg-slate-900/40 dark:text-slate-200 dark:hover:bg-slate-900/70"
+              aria-label="Previous product"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/45 bg-white/40 text-slate-700 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors hover:bg-white/70 dark:border-slate-700/45 dark:bg-slate-900/40 dark:text-slate-200 dark:hover:bg-slate-900/70"
+              aria-label="Next product"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </motion.div>
 
         <motion.div
@@ -164,13 +247,27 @@ export default function Products() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          className="space-y-10 lg:space-y-14"
+          className="relative"
         >
-          {products.map((product) => (
-            <motion.div key={product.id} variants={itemVariants}>
-              <ProductCard {...product} />
-            </motion.div>
-          ))}
+          <div
+            ref={scrollRef}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[8%] pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[10%] lg:px-[12%]"
+          >
+            {products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                variants={itemVariants}
+                ref={(node) => {
+                  cardRefs.current[index] = node;
+                }}
+                className={`w-[84vw] max-w-5xl shrink-0 snap-center transition-all duration-300 sm:w-[76vw] lg:w-[72vw] ${
+                  index === activeIndex ? 'opacity-100 scale-[1]' : 'opacity-70 scale-[0.96]'
+                }`}
+              >
+                <ProductCard {...product} />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
