@@ -22,7 +22,10 @@ export async function startCheckout(payload: CheckoutPayload) {
     }),
   });
 
-  const data = (await response.json()) as CheckoutResponse;
+  const contentType = response.headers.get('content-type') || '';
+  const data = contentType.includes('application/json')
+    ? ((await response.json()) as CheckoutResponse)
+    : ({ error: 'Unexpected checkout response' } as CheckoutResponse);
 
   if (!response.ok) {
     throw data;

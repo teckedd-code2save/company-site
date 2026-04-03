@@ -10,8 +10,10 @@ export const siteConfig = {
   },
 };
 
+export type PaymentTier = keyof typeof siteConfig.paymentLinks;
+
 export function resolvePaymentLink(
-  tier: keyof typeof siteConfig.paymentLinks,
+  tier: PaymentTier,
   fallback = '#contact'
 ) {
   return siteConfig.paymentLinks[tier] || fallback;
@@ -19,4 +21,20 @@ export function resolvePaymentLink(
 
 export function resolveContactLink() {
   return siteConfig.calendlyUrl || '#contact';
+}
+
+export function hasDirectPaymentLink(tier: PaymentTier) {
+  return Boolean(siteConfig.paymentLinks[tier]);
+}
+
+export function getPlanAction(tier: PaymentTier) {
+  if (tier === 'enterprise') {
+    return 'contact' as const;
+  }
+
+  if (hasDirectPaymentLink(tier)) {
+    return 'pay' as const;
+  }
+
+  return 'checkout' as const;
 }

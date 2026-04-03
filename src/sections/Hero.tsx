@@ -3,12 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { resolveContactLink } from '@/lib/site-config';
 
-const proofPoints = [
-  '4 product surfaces',
-  'Live apps and demos',
-  'Payments, delivery, and data workflows',
-];
-
 export default function Hero() {
   const demoLink = resolveContactLink();
   const isExternalDemo = demoLink !== '#contact';
@@ -21,8 +15,8 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid min-h-[calc(100vh-4rem)] items-center gap-12 py-14 sm:py-16 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:py-24">
-          <div className="max-w-2xl text-center lg:text-left">
+        <div className="grid min-h-[calc(100vh-4rem)] items-center gap-10 py-14 sm:py-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12 lg:py-24">
+          <div className="max-w-xl text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -48,11 +42,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.1 }}
-              className="mx-auto mt-6 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8 lg:mx-0 lg:text-xl"
+              className="mx-auto mt-5 max-w-lg text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8 lg:mx-0"
             >
-              Serendepify builds products that make AI easier to buy, deploy, and
-              use, from paid service infrastructure to delivery workflows and
-              real-data tooling.
+              Products for teams turning AI into something customers can actually use.
             </motion.p>
 
             <motion.div
@@ -82,19 +74,6 @@ export default function Hero() {
                 </a>
               </Button>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.2 }}
-              className="mt-8 flex flex-wrap justify-center gap-3 text-left lg:justify-start"
-            >
-              {proofPoints.map((point) => (
-                <div key={point} className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-600 shadow-sm dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-300">
-                  {point}
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           <motion.div
@@ -103,34 +82,12 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.12 }}
             className="relative mx-auto w-full max-w-3xl lg:max-w-none"
           >
-            <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_14rem]">
-              <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-3 shadow-[0_30px_90px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-950">
-                <img
-                  src="/images/products/mpp-studio-surface.png"
-                  alt="MPP Studio interface"
-                  className="aspect-[16/11] w-full rounded-[1.4rem] object-cover object-top"
-                />
-                <div className="px-2 pb-1 pt-4">
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">Featured product</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-950 dark:text-white">MPP Studio</p>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Paid API infrastructure for agent-ready services.</p>
-                </div>
-              </div>
-
-              <div className="grid gap-4">
-                <div className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white p-3 shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-950">
-                  <img
-                    src="/images/products/shipd-surface.png"
-                    alt="Shipd dashboard"
-                    className="aspect-[4/5] w-full rounded-[1.1rem] object-cover object-top"
-                  />
-                </div>
-                <div className="rounded-[1.6rem] border border-slate-200 bg-white px-5 py-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-950">
-                  <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">Also shipping</p>
-                  <p className="mt-2 text-lg font-semibold text-slate-950 dark:text-white">Shipd</p>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Deployment planning before code or infra changes.</p>
-                </div>
-              </div>
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-3 shadow-[0_30px_90px_rgba(15,23,42,0.10)] dark:border-slate-800 dark:bg-slate-950">
+              <img
+                src="/images/products/mpp-studio-surface.png"
+                alt="MPP Studio interface"
+                className="aspect-[16/11] w-full rounded-[1.4rem] object-cover object-top"
+              />
             </div>
           </motion.div>
         </div>

@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, Sparkles } from 'lucide-react';
+import { Check, LoaderCircle, Sparkles } from 'lucide-react';
 import { startCheckout } from '@/lib/checkout';
-import { resolveContactLink, resolvePaymentLink } from '@/lib/site-config';
+import { getPlanAction, resolveContactLink, resolvePaymentLink } from '@/lib/site-config';
 
 const plans = [
   {
@@ -70,24 +71,30 @@ const itemVariants = {
 };
 
 export default function Pricing() {
+  const [pendingPlan, setPendingPlan] = useState<string | null>(null);
+
   const handleCheckout = async (planKey: 'starter' | 'delivery' | 'enterprise') => {
     const demoLink = resolveContactLink();
     const fallbackHref = resolvePaymentLink(planKey, demoLink);
+    const action = getPlanAction(planKey);
 
-    if (planKey === 'enterprise') {
-      window.location.href = fallbackHref;
+    if (action === 'contact' || action === 'pay') {
+      window.location.assign(fallbackHref);
       return;
     }
 
     try {
+      setPendingPlan(planKey);
       const result = await startCheckout({
         plan: planKey,
         billingMode: 'project',
       });
 
-      window.location.href = result.url || result.fallbackUrl || fallbackHref;
+      window.location.assign(result.url || result.fallbackUrl || fallbackHref);
     } catch {
-      window.location.href = fallbackHref;
+      window.location.assign(fallbackHref);
+    } finally {
+      setPendingPlan(null);
     }
   };
 
@@ -158,9 +165,17 @@ export default function Pricing() {
                         ? 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200'
                         : 'bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200'
                     }`}
+                    disabled={pendingPlan === plan.key}
                     onClick={() => void handleCheckout(plan.key)}
                   >
-                    {plan.cta}
+                    {pendingPlan === plan.key ? (
+                      <>
+                        <LoaderCircle className="h-4 w-4 animate-spin" />
+                        Redirecting
+                      </>
+                    ) : (
+                      plan.cta
+                    )}
                   </Button>
 
                   <ul className="space-y-3">
