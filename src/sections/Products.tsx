@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, PlayCircle, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, PlayCircle } from 'lucide-react';
 
 const products = [
   {
@@ -8,12 +8,11 @@ const products = [
     name: 'MPP Studio',
     category: 'API Infrastructure',
     status: 'Live' as const,
-    summary: 'Turn AI-generated outputs into paid services. MPP Studio gives teams the API infrastructure to monetize agent workflows — from sandbox testing through to live production payments.',
-    meta: 'Sandbox to live payments',
+    summary: 'Charge for AI. The payment layer that makes agent outputs and API services billable.',
     highlights: [
-      'Stripe-integrated payment layer, ready out of the box',
-      'Sandbox environment that mirrors production exactly',
+      'Stripe-integrated — sandbox to production in one surface',
       'Built for agent-ready service delivery and API monetization',
+      'Live checkout without backend complexity',
     ],
     link: 'https://agent-exchange-web.vercel.app/',
     cta: 'Open MPP Studio',
@@ -26,12 +25,11 @@ const products = [
     name: 'Shipd',
     category: 'Developer Tooling',
     status: 'Live' as const,
-    summary: 'Deployment decisions that start with your codebase, not assumptions. Shipd reads repo signals to surface the right platforms, tradeoffs, and rollout paths — no guesswork required.',
-    meta: 'Repo signals and platform comparison',
+    summary: 'Know exactly how to deploy any repo.',
     highlights: [
-      'Repo-aware analysis that reads your actual stack',
-      'Platform comparison with cost and complexity scoring',
-      'From codebase to deploy plan in one session',
+      'Scan your codebase — get the right platform recommendation',
+      'Compare tradeoffs across cost, complexity, and scale',
+      'Step-by-step deployment plan, no guesswork',
     ],
     link: 'https://shipd-seven.vercel.app/',
     cta: 'See Shipd',
@@ -44,12 +42,11 @@ const products = [
     name: 'B2DP',
     category: 'Product Design',
     status: 'Active' as const,
-    summary: 'Translate business requirements into a build-ready backend architecture before a single line of code is written. B2DP bridges the gap between business intent and technical execution.',
-    meta: 'From idea to implementation structure',
+    summary: 'Turn a business brief into a build-ready backend structure.',
     highlights: [
-      'Business logic mapped directly to data models and services',
-      'AI-guided architecture scaffolding from plain language input',
-      'Output teams can hand off to engineers or use to build immediately',
+      'Business logic mapped to data models and service boundaries',
+      'AI-guided architecture from plain language input',
+      'Output engineers can act on immediately',
     ],
     link: 'https://teckedd-code2save.github.io/ai-build-tools/',
     cta: 'Explore B2DP',
@@ -62,12 +59,11 @@ const products = [
     name: 'Datafy MCP',
     category: 'AI Grounding',
     status: 'Beta' as const,
-    summary: 'Ground AI outputs in operational data instead of mock inputs. Datafy MCP connects AI workflows to live data through the Model Context Protocol — reducing hallucination at the source.',
-    meta: 'Operational data for AI workflows',
+    summary: 'Connect AI to real operational data. No more mock inputs.',
     highlights: [
-      'MCP-native data grounding layer for AI agents',
-      'Replaces static mock data with live operational signals',
-      'Directly reduces AI hallucination at the input level',
+      'MCP-native grounding layer — live data in, real outputs out',
+      'Replaces static mocks with operational signals',
+      'Reduces hallucination at the source, not after the fact',
     ],
     link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
     cta: 'Watch Datafy in action',
@@ -87,22 +83,13 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.14,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.14, delayChildren: 0.1 },
   },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-    },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 };
 
 function ProductCard({
@@ -110,7 +97,6 @@ function ProductCard({
   category,
   status,
   summary,
-  meta,
   highlights,
   image,
   imageClassName,
@@ -122,7 +108,6 @@ function ProductCard({
   category: string;
   status: 'Live' | 'Active' | 'Beta';
   summary: string;
-  meta: string;
   highlights: readonly string[];
   image: string;
   imageClassName: string;
@@ -132,10 +117,18 @@ function ProductCard({
 }) {
   const Icon = kind === 'video' ? PlayCircle : ExternalLink;
   const isAnimatedMedia = image.endsWith('.gif') || image.endsWith('.webm') || image.endsWith('.mp4');
+  const [activeHighlight, setActiveHighlight] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveHighlight((i) => (i + 1) % highlights.length);
+    }, 2800);
+    return () => clearInterval(timer);
+  }, [highlights.length]);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-white/18 bg-white/12 shadow-[0_8px_32px_rgba(15,23,42,0.07)] backdrop-blur-2xl dark:border-slate-700/22 dark:bg-slate-900/22">
-      {/* Full-bleed image — no inner padding or rounding */}
+      {/* Full-bleed image */}
       <a href={link} target="_blank" rel="noopener noreferrer" className="relative block overflow-hidden">
         {isAnimatedMedia ? (
           <video
@@ -144,16 +137,15 @@ function ProductCard({
             muted
             loop
             playsInline
-            className={`h-[26rem] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] sm:h-[28rem] lg:h-[34rem] ${imageClassName}`}
+            className={`h-[24rem] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] sm:h-[27rem] lg:h-[32rem] ${imageClassName}`}
           />
         ) : (
           <img
             src={image}
             alt={name}
-            className={`h-[26rem] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] sm:h-[28rem] lg:h-[34rem] ${imageClassName}`}
+            className={`h-[24rem] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] sm:h-[27rem] lg:h-[32rem] ${imageClassName}`}
           />
         )}
-        {/* Status badge */}
         <div className="absolute left-3 top-3">
           <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm ${statusColors[status]}`}>
             <span className="h-1.5 w-1.5 rounded-full bg-current" />
@@ -163,35 +155,62 @@ function ProductCard({
       </a>
 
       {/* Content */}
-      <div className="px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
-        <div className="flex items-center gap-2">
-          <span className="rounded bg-slate-100/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:bg-slate-800/70 dark:text-slate-400">
-            {category}
-          </span>
-        </div>
+      <div className="px-5 pb-6 pt-5 sm:px-7 sm:pb-7">
+        {/* Category */}
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+          {category}
+        </span>
 
-        <h3 className="mt-2.5 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+        {/* Name */}
+        <h3 className="mt-1.5 text-[1.75rem] font-bold leading-tight tracking-tight text-slate-950 dark:text-white sm:text-4xl">
           {name}
         </h3>
 
-        <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300 sm:line-clamp-none sm:text-base sm:leading-7">
+        {/* Summary — punchy tagline */}
+        <p className="mt-2 text-base font-normal leading-snug text-slate-500 dark:text-slate-400 sm:text-lg">
           {summary}
         </p>
 
-        <ul className="mt-4 hidden space-y-2 sm:block">
-          {highlights.map((point) => (
-            <li key={point} className="flex items-start gap-2.5">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-400 dark:text-slate-500" />
-              <span className="text-sm leading-6 text-slate-600 dark:text-slate-300">{point}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Cycling highlight */}
+        <div className="mt-5 border-t border-slate-200/60 pt-4 dark:border-slate-700/40">
+          <div className="flex items-start gap-3 overflow-hidden" style={{ minHeight: '1.6rem' }}>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeHighlight}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="text-sm leading-snug text-slate-600 dark:text-slate-300"
+              >
+                {highlights[activeHighlight]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+          {/* Dot indicators */}
+          <div className="mt-3 flex gap-1.5">
+            {highlights.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActiveHighlight(i)}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  i === activeHighlight
+                    ? 'w-5 bg-slate-600 dark:bg-slate-300'
+                    : 'w-1.5 bg-slate-300 dark:bg-slate-600'
+                }`}
+                aria-label={`Highlight ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
 
+        {/* CTA */}
         <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300"
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-400"
         >
           {cta}
           <Icon className="h-4 w-4" />
@@ -208,23 +227,17 @@ export default function Products() {
 
   useEffect(() => {
     const container = scrollRef.current;
-
-    if (!container) {
-      return;
-    }
+    if (!container) return;
 
     const handleScroll = () => {
       const containerCenter = container.scrollLeft + container.clientWidth / 2;
-
       let closestIndex = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
 
       cardRefs.current.forEach((card, index) => {
         if (!card) return;
-
         const cardCenter = card.offsetLeft + card.clientWidth / 2;
         const distance = Math.abs(cardCenter - containerCenter);
-
         if (distance < closestDistance) {
           closestDistance = distance;
           closestIndex = index;
@@ -238,25 +251,17 @@ export default function Products() {
     container.style.scrollSnapType = 'x mandatory';
     container.style.scrollBehavior = 'smooth';
     container.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToIndex = (index: number) => {
     const container = scrollRef.current;
     const card = cardRefs.current[index];
-
-    if (!container || !card) {
-      return;
-    }
-
-    const left = card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
-
+    if (!container || !card) return;
     container.scrollTo({
-      left,
+      left: card.offsetLeft - (container.clientWidth - card.clientWidth) / 2,
       behavior: 'smooth',
     });
-
     setActiveIndex(index);
   };
 
@@ -269,7 +274,6 @@ export default function Products() {
         <div className="absolute left-[3%] top-24 h-[36rem] w-[36rem] rounded-full bg-rose-100/45 blur-[130px] dark:bg-indigo-900/20" />
         <div className="absolute right-[4%] top-[22%] h-[30rem] w-[30rem] rounded-full bg-amber-100/55 blur-[110px] dark:bg-sky-900/20" />
         <div className="absolute bottom-32 left-[30%] h-[26rem] w-[44rem] rounded-full bg-stone-100/60 blur-[120px] dark:bg-violet-950/15" />
-        <div className="absolute right-[12%] bottom-12 h-[20rem] w-[20rem] rounded-full bg-sky-100/35 blur-[90px] dark:bg-blue-900/15" />
         <svg className="absolute left-[2%] top-[10%] h-[28rem] w-[28rem] text-indigo-400/20 dark:text-indigo-500/10" viewBox="0 0 448 448" fill="none">
           <circle cx="224" cy="224" r="100" stroke="currentColor" strokeWidth="1" />
           <circle cx="224" cy="224" r="160" stroke="currentColor" strokeWidth="1" />
@@ -293,9 +297,6 @@ export default function Products() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
-            Four focused tools — each targeting a different layer of the AI build stack. All live, all accessible today.
-          </p>
         </motion.div>
 
         <motion.div
@@ -307,17 +308,15 @@ export default function Products() {
         >
           <div
             ref={scrollRef}
-            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[6vw] pb-6 [scroll-padding-inline:6vw] [scroll-snap-type:x_mandatory] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[9vw] sm:[scroll-padding-inline:9vw] lg:px-[10vw] lg:[scroll-padding-inline:10vw]"
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[6vw] pb-6 [-ms-overflow-style:none] [scroll-padding-inline:6vw] [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[9vw] sm:[scroll-padding-inline:9vw] lg:px-[10vw] lg:[scroll-padding-inline:10vw]"
           >
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
                 variants={itemVariants}
-                ref={(node) => {
-                  cardRefs.current[index] = node;
-                }}
-                className={`w-[88vw] max-w-[72rem] shrink-0 snap-center transition-all duration-300 sm:w-[78vw] lg:w-[70vw] ${
-                  index === activeIndex ? 'opacity-100 scale-[1]' : 'opacity-70 scale-[0.96]'
+                ref={(node) => { cardRefs.current[index] = node; }}
+                className={`w-[88vw] max-w-[68rem] shrink-0 snap-center transition-all duration-300 sm:w-[76vw] lg:w-[66vw] ${
+                  index === activeIndex ? 'scale-[1] opacity-100' : 'scale-[0.96] opacity-65'
                 }`}
               >
                 <ProductCard {...product} />
@@ -325,6 +324,7 @@ export default function Products() {
             ))}
           </div>
 
+          {/* Dot nav */}
           <div className="mt-7 flex items-center justify-center gap-2">
             {products.map((product, index) => (
               <button
@@ -332,10 +332,10 @@ export default function Products() {
                 type="button"
                 onClick={() => scrollToIndex(index)}
                 aria-label={`View ${product.name}`}
-                className={`h-2.5 rounded-full transition-all ${
+                className={`h-2 rounded-full transition-all duration-300 ${
                   index === activeIndex
-                    ? 'w-8 bg-slate-900 dark:bg-white'
-                    : 'w-2.5 bg-slate-300/90 hover:bg-slate-400 dark:bg-slate-700 dark:hover:bg-slate-500'
+                    ? 'w-7 bg-slate-900 dark:bg-white'
+                    : 'w-2 bg-slate-300/90 hover:bg-slate-400 dark:bg-slate-700 dark:hover:bg-slate-500'
                 }`}
               />
             ))}
