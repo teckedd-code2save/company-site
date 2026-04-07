@@ -134,58 +134,51 @@ function ProductCard({
   const isAnimatedMedia = image.endsWith('.gif') || image.endsWith('.webm') || image.endsWith('.mp4');
 
   return (
-    <article className="group overflow-hidden rounded-[1.7rem] border border-white/18 bg-white/12 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl dark:border-slate-700/22 dark:bg-slate-900/22">
-      {/* Image area */}
-      <a href={link} target="_blank" rel="noopener noreferrer" className="relative block overflow-hidden p-1.5 sm:p-2">
-        <div className="relative overflow-hidden rounded-[1.35rem] bg-white/14 dark:bg-slate-900/24">
-          {isAnimatedMedia ? (
-            <video
-              src={image}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className={`h-[20rem] w-full object-cover sm:h-[25rem] lg:h-[31rem] ${imageClassName}`}
-            />
-          ) : (
-            <img
-              src={image}
-              alt={name}
-              className={`h-[20rem] w-full object-cover sm:h-[25rem] lg:h-[31rem] ${imageClassName}`}
-            />
-          )}
-          {/* Status badge over image */}
-          <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
-            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${statusColors[status]}`}>
-              <span className="h-1.5 w-1.5 rounded-full bg-current" />
-              {status}
-            </span>
-          </div>
+    <article className="group overflow-hidden rounded-2xl border border-white/18 bg-white/12 shadow-[0_8px_32px_rgba(15,23,42,0.07)] backdrop-blur-2xl dark:border-slate-700/22 dark:bg-slate-900/22">
+      {/* Full-bleed image — no inner padding or rounding */}
+      <a href={link} target="_blank" rel="noopener noreferrer" className="relative block overflow-hidden">
+        {isAnimatedMedia ? (
+          <video
+            src={image}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`h-[26rem] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] sm:h-[28rem] lg:h-[34rem] ${imageClassName}`}
+          />
+        ) : (
+          <img
+            src={image}
+            alt={name}
+            className={`h-[26rem] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] sm:h-[28rem] lg:h-[34rem] ${imageClassName}`}
+          />
+        )}
+        {/* Status badge */}
+        <div className="absolute left-3 top-3">
+          <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm ${statusColors[status]}`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-current" />
+            {status}
+          </span>
         </div>
       </a>
 
-      {/* Content area */}
-      <div className="px-4 pb-5 pt-4 sm:px-5 sm:pb-6 lg:px-6 lg:pb-7">
-        {/* Category + meta row */}
+      {/* Content */}
+      <div className="px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
         <div className="flex items-center gap-2">
-          <span className="rounded-md bg-slate-100/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:bg-slate-800/70 dark:text-slate-400">
+          <span className="rounded bg-slate-100/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:bg-slate-800/70 dark:text-slate-400">
             {category}
           </span>
-          <span className="text-[10px] uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">· {meta}</span>
         </div>
 
-        {/* Name */}
-        <h3 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-[2.4rem]">
+        <h3 className="mt-2.5 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
           {name}
         </h3>
 
-        {/* Summary */}
-        <p className="mt-2.5 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base sm:leading-7">
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300 sm:line-clamp-none sm:text-base sm:leading-7">
           {summary}
         </p>
 
-        {/* Highlights */}
-        <ul className="mt-5 space-y-2.5">
+        <ul className="mt-4 hidden space-y-2 sm:block">
           {highlights.map((point) => (
             <li key={point} className="flex items-start gap-2.5">
               <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-400 dark:text-slate-500" />
@@ -194,12 +187,11 @@ function ProductCard({
           ))}
         </ul>
 
-        {/* CTA link */}
         <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300"
         >
           {cta}
           <Icon className="h-4 w-4" />

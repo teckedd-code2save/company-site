@@ -5,18 +5,18 @@ import { resolveContactLink } from '@/lib/site-config';
 const strengths = [
   {
     icon: Compass,
-    title: 'Revenue-ready from day one',
-    description: 'Every product is scoped around a workflow customers can understand, evaluate, and pay for. No vague prototypes, no innovation theater — just software with a clear commercial purpose.',
+    title: 'Starts from what you have',
+    description: 'Shipd reads your repo. Datafy reads your operational data. The tools work with real systems from the start — not idealised inputs or blank-slate assumptions.',
   },
   {
     icon: Wrench,
-    title: 'Live software you can put in front of people',
-    description: 'MPP Studio, Shipd, B2DP, and Datafy are all accessible today. Show your team, your customers, or your investors something real — not a slide deck.',
+    title: 'Clear scope, clear output',
+    description: 'Each product has a defined input and a defined output. You know what you are getting before you start — no open-ended loops or vague deliverables.',
   },
   {
     icon: Rocket,
-    title: 'End-to-end delivery, not just concepting',
-    description: 'Serendepify moves from idea shaping through architecture, build, launch support, and product hardening — all under one engagement, without handoff gaps.',
+    title: 'From prototype to production',
+    description: 'Serendepify moves from concept through build to launch support under one engagement, without handoff gaps or scope that evaporates after the first call.',
   },
 ];
 
