@@ -26,7 +26,7 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.05 }}
               className="mx-auto max-w-5xl text-4xl font-semibold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
             >
-              Applied AI for real customer workflows.
+              AI-native products built for teams that ship.
             </motion.h1>
 
             <motion.p
@@ -35,7 +35,7 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.1 }}
               className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8"
             >
-              Products for teams turning AI into something customers can actually use.
+              Revenue-connected tooling across API monetization, deployment planning, product architecture, and AI data grounding — built to generate real commercial outcomes.
             </motion.p>
 
             <motion.div

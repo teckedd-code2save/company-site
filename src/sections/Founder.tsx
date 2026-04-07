@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin, Globe, Award, Users, FlaskConical } from 'lucide-react';
 
 const stats = [
-  { icon: Users, value: 'Customer-led', label: 'Start with real user friction and operating bottlenecks' },
-  { icon: Award, value: 'Delivery-minded', label: 'Tie every build to a usable release or commercial outcome' },
-  { icon: FlaskConical, value: 'R&D-aware', label: 'Prototype quickly, but only ship what teams can adopt' },
+  { icon: Users, value: 'Customer-led', label: 'Grounded in real user friction and operator workflows, not market assumptions' },
+  { icon: Award, value: 'Delivery-minded', label: 'Every build tied to a usable release, a revenue outcome, or a measurable result' },
+  { icon: FlaskConical, value: 'R&D-aware', label: 'Prototype fast, validate early, and only ship what teams can actually adopt' },
 ];
 
 const socialLinks = [
@@ -82,7 +82,7 @@ export default function Founder() {
               variants={itemVariants}
               className="mb-3 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl"
             >
-              Build with someone who understands both the code and the commercial pressure.
+              Built by a founder who works at the intersection of code and commercial reality.
             </motion.h2>
 
             <motion.p
@@ -96,10 +96,11 @@ export default function Founder() {
               variants={itemVariants}
               className="mb-8 leading-relaxed text-slate-600 dark:text-slate-300"
             >
-              Serendepify is built around a simple belief: startups do not need
-              more vague innovation language, they need sharper positioning,
-              fast product decisions, and software they can put in front of
-              prospects. That is the operating style behind the work here.
+              Serendepify is built around a single operating principle: early-stage teams
+              do not need more vague innovation language — they need sharper positioning,
+              fast product decisions, and software they can put in front of real customers.
+              Every product here is a direct expression of that belief: live, scoped, and
+              built to generate outcomes, not just impressions.
             </motion.p>
 
             <motion.div

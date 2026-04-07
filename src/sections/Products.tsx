@@ -1,53 +1,87 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, PlayCircle } from 'lucide-react';
+import { ExternalLink, PlayCircle, CheckCircle2 } from 'lucide-react';
 
 const products = [
   {
     id: 'mpp-studio',
     name: 'MPP Studio',
-    summary: 'Paid API infrastructure for agent-ready services.',
+    category: 'API Infrastructure',
+    status: 'Live' as const,
+    summary: 'Turn AI-generated outputs into paid services. MPP Studio gives teams the API infrastructure to monetize agent workflows — from sandbox testing through to live production payments.',
     meta: 'Sandbox to live payments',
+    highlights: [
+      'Stripe-integrated payment layer, ready out of the box',
+      'Sandbox environment that mirrors production exactly',
+      'Built for agent-ready service delivery and API monetization',
+    ],
     link: 'https://agent-exchange-web.vercel.app/',
-    cta: 'Explore MPP Studio',
+    cta: 'Open MPP Studio',
     image: '/images/products/mpp-studio-surface.png',
     imageClassName: 'object-top',
-    kind: 'app',
+    kind: 'app' as const,
   },
   {
     id: 'shipd',
     name: 'Shipd',
-    summary: 'Deployment planning that starts from the repo, not guesswork.',
+    category: 'Developer Tooling',
+    status: 'Live' as const,
+    summary: 'Deployment decisions that start with your codebase, not assumptions. Shipd reads repo signals to surface the right platforms, tradeoffs, and rollout paths — no guesswork required.',
     meta: 'Repo signals and platform comparison',
+    highlights: [
+      'Repo-aware analysis that reads your actual stack',
+      'Platform comparison with cost and complexity scoring',
+      'From codebase to deploy plan in one session',
+    ],
     link: 'https://shipd-eight.vercel.app/',
     cta: 'See Shipd',
     image: '/images/products/shipd-surface.png',
     imageClassName: 'object-top',
-    kind: 'app',
+    kind: 'app' as const,
   },
   {
     id: 'b2dp',
     name: 'B2DP',
-    summary: 'Business requirements translated into build-ready backend structure.',
+    category: 'Product Design',
+    status: 'Active' as const,
+    summary: 'Translate business requirements into a build-ready backend architecture before a single line of code is written. B2DP bridges the gap between business intent and technical execution.',
     meta: 'From idea to implementation structure',
+    highlights: [
+      'Business logic mapped directly to data models and services',
+      'AI-guided architecture scaffolding from plain language input',
+      'Output teams can hand off to engineers or use to build immediately',
+    ],
     link: 'https://teckedd-code2save.github.io/ai-build-tools/',
     cta: 'Explore B2DP',
     image: '/images/products/b2dp-surface.png',
     imageClassName: 'object-top',
-    kind: 'site',
+    kind: 'site' as const,
   },
   {
     id: 'datafy',
     name: 'Datafy MCP',
-    summary: 'AI outputs grounded in operational data instead of mock inputs.',
+    category: 'AI Grounding',
+    status: 'Beta' as const,
+    summary: 'Ground AI outputs in operational data instead of mock inputs. Datafy MCP connects AI workflows to live data through the Model Context Protocol — reducing hallucination at the source.',
     meta: 'Operational data for AI workflows',
+    highlights: [
+      'MCP-native data grounding layer for AI agents',
+      'Replaces static mock data with live operational signals',
+      'Directly reduces AI hallucination at the input level',
+    ],
     link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
     cta: 'Watch Datafy in action',
     image: 'https://i.ytimg.com/vi/eUEZqX97i6I/maxresdefault.jpg',
     imageClassName: 'object-center',
-    kind: 'video',
+    kind: 'video' as const,
   },
 ] as const;
+
+const statusColors = {
+  Live: 'bg-emerald-500/15 text-emerald-700 border-emerald-300/60 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/30',
+  Active: 'bg-sky-500/15 text-sky-700 border-sky-300/60 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30',
+  Beta: 'bg-amber-500/15 text-amber-700 border-amber-300/60 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/30',
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -73,8 +107,11 @@ const itemVariants = {
 
 function ProductCard({
   name,
+  category,
+  status,
   summary,
   meta,
+  highlights,
   image,
   imageClassName,
   link,
@@ -82,8 +119,11 @@ function ProductCard({
   kind,
 }: {
   name: string;
+  category: string;
+  status: 'Live' | 'Active' | 'Beta';
   summary: string;
   meta: string;
+  highlights: readonly string[];
   image: string;
   imageClassName: string;
   link: string;
@@ -95,8 +135,9 @@ function ProductCard({
 
   return (
     <article className="group overflow-hidden rounded-[1.7rem] border border-white/18 bg-white/12 shadow-[0_20px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl dark:border-slate-700/22 dark:bg-slate-900/22">
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden p-1.5 sm:p-2">
-        <div className="overflow-hidden rounded-[1.35rem] bg-white/14 dark:bg-slate-900/24">
+      {/* Image area */}
+      <a href={link} target="_blank" rel="noopener noreferrer" className="relative block overflow-hidden p-1.5 sm:p-2">
+        <div className="relative overflow-hidden rounded-[1.35rem] bg-white/14 dark:bg-slate-900/24">
           {isAnimatedMedia ? (
             <video
               src={image}
@@ -113,15 +154,53 @@ function ProductCard({
               className={`h-[20rem] w-full object-cover sm:h-[25rem] lg:h-[31rem] ${imageClassName}`}
             />
           )}
+          {/* Status badge over image */}
+          <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
+            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${statusColors[status]}`}>
+              <span className="h-1.5 w-1.5 rounded-full bg-current" />
+              {status}
+            </span>
+          </div>
         </div>
       </a>
-      <div className="px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4 lg:px-6 lg:pb-6">
-        <p className="text-[10px] uppercase tracking-[0.26em] text-slate-400 dark:text-slate-500">{meta}</p>
-        <h3 className="mt-2.5 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-[2.5rem]">{name}</h3>
-        <p className="mt-2.5 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base sm:leading-7">
+
+      {/* Content area */}
+      <div className="px-4 pb-5 pt-4 sm:px-5 sm:pb-6 lg:px-6 lg:pb-7">
+        {/* Category + meta row */}
+        <div className="flex items-center gap-2">
+          <span className="rounded-md bg-slate-100/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:bg-slate-800/70 dark:text-slate-400">
+            {category}
+          </span>
+          <span className="text-[10px] uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">· {meta}</span>
+        </div>
+
+        {/* Name */}
+        <h3 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-3xl lg:text-[2.4rem]">
+          {name}
+        </h3>
+
+        {/* Summary */}
+        <p className="mt-2.5 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base sm:leading-7">
           {summary}
         </p>
-        <a href={link} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300">
+
+        {/* Highlights */}
+        <ul className="mt-5 space-y-2.5">
+          {highlights.map((point) => (
+            <li key={point} className="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-400 dark:text-slate-500" />
+              <span className="text-sm leading-6 text-slate-600 dark:text-slate-300">{point}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA link */}
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition-colors hover:text-slate-500 dark:text-white dark:hover:text-slate-300"
+        >
           {cta}
           <Icon className="h-4 w-4" />
         </a>
@@ -199,7 +278,6 @@ export default function Products() {
         <div className="absolute right-[4%] top-[22%] h-[30rem] w-[30rem] rounded-full bg-amber-100/55 blur-[110px] dark:bg-sky-900/20" />
         <div className="absolute bottom-32 left-[30%] h-[26rem] w-[44rem] rounded-full bg-stone-100/60 blur-[120px] dark:bg-violet-950/15" />
         <div className="absolute right-[12%] bottom-12 h-[20rem] w-[20rem] rounded-full bg-sky-100/35 blur-[90px] dark:bg-blue-900/15" />
-        {/* decorative rings */}
         <svg className="absolute left-[2%] top-[10%] h-[28rem] w-[28rem] text-indigo-400/20 dark:text-indigo-500/10" viewBox="0 0 448 448" fill="none">
           <circle cx="224" cy="224" r="100" stroke="currentColor" strokeWidth="1" />
           <circle cx="224" cy="224" r="160" stroke="currentColor" strokeWidth="1" />
@@ -223,6 +301,9 @@ export default function Products() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
             Products
           </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
+            Four focused tools — each targeting a different layer of the AI build stack. All live, all accessible today.
+          </p>
         </motion.div>
 
         <motion.div
