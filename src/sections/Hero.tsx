@@ -35,7 +35,7 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.1 }}
               className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8"
             >
-              Products for teams turning AI into something customers can actually use.
+              Four live products across API monetization, deployment tooling, architecture design, and AI data grounding. Built to ship, not to demo.
             </motion.p>
 
             <motion.div

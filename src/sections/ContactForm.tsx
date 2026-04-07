@@ -4,8 +4,9 @@ import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2 } from 'l
 import { siteConfig } from '@/lib/site-config';
 
 const fitSignals = [
-  'You want to evaluate MPP Studio, Shipd, B2DP, or Datafy for a real workflow.',
-  'You need a product direction that can move into implementation, not just concepting.',
+  'You want to evaluate MPP Studio, Shipd, B2DP, or Datafy MCP for a real workflow or integration.',
+  'You need a product direction that can move into implementation — not just concepting or workshopping.',
+  'You are a startup, operator, or grant-funded team building AI into a product with real end users.',
 ];
 
 export default function ContactForm() {
@@ -37,7 +38,7 @@ export default function ContactForm() {
             className="rounded-[2rem] border border-slate-200 bg-white p-8 text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl dark:border-slate-800/70 dark:bg-slate-950/38 dark:text-white"
           >
             <h3 className="text-3xl font-semibold leading-tight">
-              Best for teams with a real use case in front of them.
+              Best for teams with a real problem and a clear outcome in mind.
             </h3>
             <div className="mt-8 space-y-4">
               {fitSignals.map((signal) => (

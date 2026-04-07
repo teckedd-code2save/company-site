@@ -5,18 +5,18 @@ import { resolveContactLink } from '@/lib/site-config';
 const strengths = [
   {
     icon: Compass,
-    title: 'Clear commercial shape',
-    description: 'Products are framed around workflows customers can understand, evaluate, and pay for.',
+    title: 'Revenue-ready from day one',
+    description: 'Every product is scoped around a workflow customers can understand, evaluate, and pay for. No vague prototypes, no innovation theater — just software with a clear commercial purpose.',
   },
   {
     icon: Wrench,
-    title: 'Working surfaces',
-    description: 'Live apps, demos, and repo-aware tools make the work easier to inspect than a pitch deck ever could.',
+    title: 'Live software you can put in front of people',
+    description: 'MPP Studio, Shipd, B2DP, and Datafy are all accessible today. Show your team, your customers, or your investors something real — not a slide deck.',
   },
   {
     icon: Rocket,
-    title: 'From concept to rollout',
-    description: 'Serendepify can move from idea shaping into implementation, launch support, and product hardening.',
+    title: 'End-to-end delivery, not just concepting',
+    description: 'Serendepify moves from idea shaping through architecture, build, launch support, and product hardening — all under one engagement, without handoff gaps.',
   },
 ];
 
@@ -40,7 +40,7 @@ export default function Features() {
             transition={{ duration: 0.65 }}
           >
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
-              Capabilities
+              How we work
             </h2>
           </motion.div>
         </div>
