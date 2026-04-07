@@ -33,7 +33,7 @@ const products = [
       'Platform comparison with cost and complexity scoring',
       'From codebase to deploy plan in one session',
     ],
-    link: 'https://shipd-eight.vercel.app/',
+    link: 'https://shipd-seven.vercel.app/',
     cta: 'See Shipd',
     image: '/images/products/shipd-surface.png',
     imageClassName: 'object-top',
