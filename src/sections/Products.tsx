@@ -32,7 +32,7 @@ const products = [
       'Platform comparison with cost and complexity scored',
       'From codebase to deploy plan in one session',
     ],
-    link: 'https://shipd-eight.vercel.app/',
+    link: 'https://shipd-seven.vercel.app/',
     cta: 'See Shipd',
     image: '/images/products/shipd-surface.png',
     kind: 'app' as const,
@@ -188,6 +188,7 @@ export default function Products() {
 
   useEffect(() => {
     const container = scrollRef.current;
+    if (!container) return;
     if (!container) return;
 
     const handleScroll = () => {
