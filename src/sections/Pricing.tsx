@@ -189,8 +189,11 @@ export default function Pricing() {
           transition={{ duration: 0.7 }}
           className="mb-10 text-center sm:mb-12"
         >
-          <h2 className="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
             Pricing
+          </p>
+          <h2 className="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
+            Simple, transparent pricing.
           </h2>
           <p className="mx-auto max-w-lg text-base text-slate-600 dark:text-slate-400 sm:text-lg">
             Transparent, entry-level pricing designed for teams that want to move fast without a long procurement process.

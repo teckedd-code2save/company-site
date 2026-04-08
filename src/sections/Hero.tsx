@@ -1,73 +1,98 @@
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import { resolveContactLink } from '@/lib/site-config';
+import { ArrowDown } from 'lucide-react';
+import { useModal } from '@/lib/modal-context';
 
 export default function Hero() {
-  const demoLink = resolveContactLink();
-  const isExternalDemo = demoLink !== '#contact';
+  const { openContact } = useModal();
 
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#fbfbf8_0%,#f3f1ec_44%,#ebe7df_100%)] pt-16 dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)]">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.94),rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.18),rgba(15,23,42,0)_70%)]" />
-        <div className="absolute left-[8%] top-24 h-64 w-64 rounded-full bg-white/95 blur-3xl dark:bg-slate-700/20" />
-        <div className="absolute right-[10%] top-20 h-72 w-72 rounded-full bg-amber-100/70 blur-3xl dark:bg-sky-400/10" />
-        <div className="absolute left-1/2 top-10 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/75 blur-3xl dark:bg-slate-600/10" />
-        <div className="absolute left-1/2 top-[18%] h-[24rem] w-[52rem] -translate-x-1/2 rounded-full bg-white/35 blur-[120px] dark:bg-slate-700/10" />
-      </div>
+    <section className="relative overflow-hidden bg-white dark:bg-slate-950">
+      {/* Subtle dot grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.06]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #0f172a 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+      {/* Fade at bottom */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white dark:from-slate-950" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center py-14 sm:py-16 lg:py-24">
-          <div className="max-w-3xl text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.05 }}
-              className="mx-auto max-w-5xl text-4xl font-semibold leading-[1.02] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-7xl"
-            >
-              Applied AI for real customer workflows.
-            </motion.h1>
 
+        {/* ── Text block ── */}
+        <div className="flex min-h-[65vh] items-end pb-16 pt-32 sm:pb-20 sm:pt-36">
+          <div className="max-w-4xl">
+
+            {/* Eyebrow */}
             <motion.p
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.1 }}
-              className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-8"
+              transition={{ duration: 0.45 }}
+              className="mb-6 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500"
             >
-              Four live products across API monetization, deployment tooling, architecture design, and AI data grounding. Built to ship, not to demo.
+              Serendepify AI · Applied AI Practice
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
+            {/* H1 */}
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.15 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center"
+              transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className="text-5xl font-bold leading-[1.04] tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-8xl"
             >
-              <Button
-                asChild
-                size="lg"
-                className="group w-full rounded-full bg-slate-950 px-8 py-5 text-base font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200 sm:w-auto sm:py-6"
+              Engineering applied AI
+              <br />
+              <span className="font-light italic text-slate-400 dark:text-slate-500">
+                for productivity and autonomy.
+              </span>
+            </motion.h1>
+
+            {/* Sub */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.14 }}
+              className="mt-6 max-w-lg text-lg leading-7 text-slate-500 dark:text-slate-400"
+            >
+              Software that deploys itself. Services that charge themselves.
+              AI that stays grounded. We're building towards that future — starting now.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.22 }}
+              className="mt-8 flex flex-wrap items-center gap-4"
+            >
+              <a
+                href="#products"
+                className="bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 dark:bg-white dark:text-slate-950"
               >
-                <a href="#products">
-                  View products
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="w-full rounded-full border-2 border-slate-300 bg-white px-8 py-5 text-base font-medium text-slate-900 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:bg-transparent dark:text-white dark:hover:bg-slate-900 sm:w-auto sm:py-6"
+                See what we build
+              </a>
+              <button
+                onClick={openContact}
+                className="text-sm font-medium text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
               >
-                <a href={demoLink} target={isExternalDemo ? '_blank' : undefined} rel={isExternalDemo ? 'noopener noreferrer' : undefined}>
-                  Book intro
-                </a>
-              </Button>
+                Book intro
+              </button>
             </motion.div>
           </div>
         </div>
+
       </div>
+
+      {/* Scroll hint */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
+      >
+        <ArrowDown className="h-3.5 w-3.5 animate-bounce text-slate-300 dark:text-slate-600" />
+      </motion.div>
     </section>
   );
 }

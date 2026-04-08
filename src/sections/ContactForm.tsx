@@ -24,9 +24,15 @@ export default function ContactForm() {
           transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
+            Get in touch
+          </p>
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            Contact
+            We'd love to hear from you.
           </h2>
+          <p className="mx-auto max-w-md text-base text-slate-500 dark:text-slate-400">
+            Always open to new ideas, partnerships, and opportunities.
+          </p>
         </motion.div>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
