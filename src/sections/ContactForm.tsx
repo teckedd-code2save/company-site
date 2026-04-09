@@ -1,13 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2 } from 'lucide-react';
+import { Mail, User, MessageSquare, Briefcase, Building2 } from 'lucide-react';
 import { siteConfig } from '@/lib/site-config';
-
-const fitSignals = [
-  'You want to evaluate MPP Studio, Shipd, B2DP, or Datafy MCP for a real workflow or integration.',
-  'You need a product direction that can move into implementation — not just concepting or workshopping.',
-  'You are a startup, operator, or grant-funded team building AI into a product with real end users.',
-];
 
 export default function ContactForm() {
   return (
@@ -16,17 +10,23 @@ export default function ContactForm() {
         <div className="absolute right-[6%] top-16 h-[20rem] w-[20rem] rounded-full bg-white/80 blur-[90px] dark:bg-slate-700/20" />
         <div className="absolute left-[4%] bottom-10 h-[18rem] w-[18rem] rounded-full bg-stone-100/65 blur-[80px] dark:bg-sky-900/10" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
+          className="mb-10 text-center"
         >
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
+            Get in touch
+          </p>
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            Contact
+            We'd love to hear from you.
           </h2>
+          <p className="mx-auto max-w-md text-base text-slate-500 dark:text-slate-400">
+            Always open to new ideas, partnerships, and opportunities.
+          </p>
         </motion.div>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
@@ -50,14 +50,14 @@ export default function ContactForm() {
             </div>
           </motion.div>
 
-          <motion.form
-            action={`https://formsubmit.co/${siteConfig.contactEmail}`}
-            method="POST"
+        <motion.form
+          action={`https://formsubmit.co/${siteConfig.contactEmail}`}
+          method="POST"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.05 }}
-          className="rounded-[2rem] border border-white/55 bg-white/92 p-6 shadow-[0_36px_100px_rgba(15,23,42,0.16)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/80 dark:shadow-[0_36px_100px_rgba(0,0,0,0.55)] sm:p-8 lg:p-10"
+          className="rounded-2xl border border-white/55 bg-white/92 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/80 sm:p-8"
         >
           <input type="hidden" name="_subject" value="New project request from serendepifywebsite" />
           <input type="hidden" name="_captcha" value="false" />
@@ -125,21 +125,6 @@ export default function ContactForm() {
           <div className="mb-5">
             <label className="block">
               <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <Briefcase className="mr-2 h-4 w-4" />
-                Success metric
-              </span>
-              <input
-                type="text"
-                name="success_metric"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="e.g. reduce support workload, launch MVP, improve data access speed"
-              />
-            </label>
-          </div>
-
-          <div className="mb-7">
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
                 <MessageSquare className="mr-2 h-4 w-4" />
                 Message
               </span>
@@ -162,7 +147,6 @@ export default function ContactForm() {
             </Button>
           </div>
           </motion.form>
-        </div>
       </div>
     </section>
   );

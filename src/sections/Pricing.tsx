@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Check, LoaderCircle, Sparkles, Receipt, RefreshCw } from 'lucide-react';
+import { Check, LoaderCircle, Sparkles, RefreshCw } from 'lucide-react';
 import { startCheckout } from '@/lib/checkout';
 import { getPlanAction, resolveContactLink, resolvePaymentLink } from '@/lib/site-config';
 
@@ -148,26 +148,30 @@ export default function Pricing() {
 
   const activePlans = plans[billingMode];
 
+  const navigate = (href: string) => {
+    if (href.startsWith('#')) {
+      document.getElementById(href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.assign(href);
+    }
+  };
+
   const handleCheckout = async (planKey: 'starter' | 'delivery' | 'enterprise') => {
     const demoLink = resolveContactLink();
     const fallbackHref = resolvePaymentLink(planKey, demoLink);
     const action = getPlanAction(planKey);
 
     if (action === 'contact' || action === 'pay') {
-      window.location.assign(fallbackHref);
+      navigate(fallbackHref);
       return;
     }
 
     try {
       setPendingPlan(planKey);
-      const result = await startCheckout({
-        plan: planKey,
-        billingMode,
-      });
-
-      window.location.assign(result.url || result.fallbackUrl || fallbackHref);
+      const result = await startCheckout({ plan: planKey, billingMode });
+      navigate(result.url || result.fallbackUrl || fallbackHref);
     } catch {
-      window.location.assign(fallbackHref);
+      navigate(fallbackHref);
     } finally {
       setPendingPlan(null);
     }
@@ -189,12 +193,12 @@ export default function Pricing() {
           transition={{ duration: 0.7 }}
           className="mb-10 text-center sm:mb-12"
         >
-          <h2 className="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
             Pricing
-          </h2>
-          <p className="mx-auto max-w-lg text-base text-slate-600 dark:text-slate-400 sm:text-lg">
-            Transparent, entry-level pricing designed for teams that want to move fast without a long procurement process.
           </p>
+          <h2 className="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
+            Simple, transparent pricing.
+          </h2>
 
           {/* Billing mode toggle */}
           <div className="mt-8 inline-flex items-center gap-1 rounded-2xl border border-slate-200/80 bg-white/80 p-1.5 shadow-sm backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
@@ -241,28 +245,22 @@ export default function Pricing() {
                   </span>
                 </div>
               )}
-              <div className={`relative flex h-full flex-col rounded-[1.8rem] border bg-white/90 p-6 shadow-[0_32px_90px_rgba(15,23,42,0.14)] backdrop-blur-3xl dark:bg-slate-900/80 sm:p-8 ${
+              <div className={`relative flex h-full flex-col rounded-2xl border bg-white/90 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.10)] backdrop-blur-3xl dark:bg-slate-900/80 ${
                 plan.popular
                   ? 'border-indigo-300/70 ring-2 ring-indigo-400/30 dark:border-indigo-600/50 dark:ring-indigo-500/20'
                   : 'border-white/55 dark:border-slate-700/50'
               }`}>
-                <h3 className="mb-2 text-xl font-bold text-slate-950 dark:text-white sm:text-2xl">{plan.name}</h3>
-                <p className="mb-6 text-sm leading-6 text-slate-500 dark:text-slate-400">{plan.description}</p>
+                <h3 className="mb-1.5 text-lg font-bold text-slate-950 dark:text-white">{plan.name}</h3>
+                <p className="mb-5 text-sm leading-6 text-slate-500 dark:text-slate-400">{plan.description}</p>
 
-                <div className="mb-6">
+                <div className="mb-5">
                   {plan.price !== null ? (
-                    <div>
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="text-4xl font-bold tracking-tight text-slate-950 dark:text-white">${plan.price}</span>
-                        <span className="text-sm text-slate-500 dark:text-slate-400">{plan.priceNote}</span>
-                      </div>
-                      <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Starting from · final price confirmed before checkout</p>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-slate-950 dark:text-white">${plan.price}</span>
+                      <span className="text-sm text-slate-400 dark:text-slate-500">{plan.priceNote} · starting from</span>
                     </div>
                   ) : (
-                    <div>
-                      <div className="text-3xl font-bold text-slate-950 dark:text-white sm:text-4xl">Custom</div>
-                      <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Scoped to your requirements</p>
-                    </div>
+                    <div className="text-2xl font-bold text-slate-950 dark:text-white">Custom</div>
                   )}
                 </div>
 
@@ -294,29 +292,15 @@ export default function Pricing() {
           ))}
         </motion.div>
 
-        {/* Reassurance note */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.3 }}
-          className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-6"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-8 text-center text-sm text-slate-400 dark:text-slate-500"
         >
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-            <Receipt className="h-4 w-4 flex-shrink-0" />
-            <span>Receipt and invoice issued on every payment</span>
-          </div>
-          <span className="hidden h-4 w-px bg-slate-300 dark:bg-slate-700 sm:block" />
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-            <Check className="h-4 w-4 flex-shrink-0 text-indigo-500 dark:text-indigo-400" />
-            <span>Stripe-secured checkout · no account required</span>
-          </div>
-          <span className="hidden h-4 w-px bg-slate-300 dark:bg-slate-700 sm:block" />
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-            <Sparkles className="h-4 w-4 flex-shrink-0" />
-            <span>Not sure which plan fits? <a href="#contact" className="font-medium underline underline-offset-2 hover:text-slate-700 dark:hover:text-white">Send a message</a></span>
-          </div>
-        </motion.div>
+          Stripe-secured · receipt issued on payment · <a href="#contact" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">not sure which plan? get in touch</a>
+        </motion.p>
       </div>
     </section>
   );

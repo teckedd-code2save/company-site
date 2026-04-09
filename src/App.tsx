@@ -1,28 +1,33 @@
+import { ModalProvider } from './lib/modal-context';
+import PricingModal from './components/PricingModal';
+import ContactModal from './components/ContactModal';
 import Navbar from './components/Navbar';
 import CheckoutNotice from './components/CheckoutNotice';
 import Hero from './sections/Hero';
 import TrustLogos from './sections/TrustLogos';
-import Products from './sections/Products';
+import ProductFlow from './sections/ProductFlow';
 import Features from './sections/Features';
-import Pricing from './sections/Pricing';
-import ContactForm from './sections/ContactForm';
+import CTASection from './sections/CTASection';
 import Footer from './sections/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-white text-foreground transition-colors dark:bg-slate-950">
-      <CheckoutNotice />
-      <Navbar />
-      <main>
-        <Hero />
-        <TrustLogos />
-        <Products />
-        <Features />
-        <Pricing />
-        <ContactForm />
-      </main>
-      <Footer />
-    </div>
+    <ModalProvider>
+      <div className="min-h-screen bg-white text-foreground dark:bg-slate-950">
+        <CheckoutNotice />
+        <Navbar />
+        <main>
+          <Hero />
+          <TrustLogos />
+          <ProductFlow />
+          <Features />
+          <CTASection />
+        </main>
+        <Footer />
+        <PricingModal />
+        <ContactModal />
+      </div>
+    </ModalProvider>
   );
 }
 

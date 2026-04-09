@@ -1,130 +1,112 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Github, Twitter, Linkedin, MessageCircle } from 'lucide-react';
+import { Github, Twitter, Linkedin } from 'lucide-react';
+import { useModal } from '@/lib/modal-context';
 
 const footerLinks = {
   products: [
-    { label: 'MPP Studio', href: '#products' },
-    { label: 'Shipd', href: '#products' },
-    { label: 'Datafy MCP', href: '#products' },
-    { label: 'B2DP', href: '#products' },
-  ],
-  resources: [
     { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
-    { label: 'Shipd', href: 'https://shipd-eight.vercel.app/' },
-    { label: 'AI Build Tools', href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
-    { label: 'Datafy Demo Video', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
+    { label: 'Shipd',      href: 'https://shipd-eight.vercel.app/' },
+    { label: 'B2DP',       href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
+    { label: 'Datafy MCP', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
   ],
   company: [
-    { label: 'How We Work', href: '#features' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/edward-twumasi/' },
-    { label: 'Portfolio', href: 'https://edward-entire.vercel.app/' },
+    { label: 'How we work', href: '#features' },
+    { label: 'LinkedIn',    href: 'https://www.linkedin.com/in/edward-twumasi/' },
+    { label: 'Portfolio',   href: 'https://edward-entire.vercel.app/' },
   ],
 };
 
-const socialLinks = [
-  { icon: Github, href: 'https://github.com/teckedd-code2save', label: 'GitHub' },
-  { icon: Twitter, href: 'https://twitter.com/EdwardsTwums', label: 'Twitter' },
+const socials = [
+  { icon: Github,   href: 'https://github.com/teckedd-code2save', label: 'GitHub' },
+  { icon: Twitter,  href: 'https://twitter.com/EdwardsTwums',      label: 'Twitter' },
   { icon: Linkedin, href: 'https://www.linkedin.com/in/edward-twumasi/', label: 'LinkedIn' },
-  { icon: MessageCircle, href: '#contact', label: 'Contact' },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5 as const,
-    },
-  },
-};
-
 export default function Footer() {
-  return (
-    <footer className="border-t border-slate-800 bg-slate-950">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-12"
-        >
-          <motion.div variants={itemVariants} className="col-span-2 lg:col-span-2">
-            <a href="#" className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white">
-                <Sparkles className="h-5 w-5 text-slate-950" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white">Serendepify AI</span>
-            </a>
-            <p className="mb-6 max-w-xs text-sm text-slate-400">
-              Build applied AI products with clearer commercial shape, stronger product surfaces, and a path to real customer use.
-            </p>
-            <div className="flex gap-3">
-              {socialLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 transition-colors hover:border-slate-600 hover:text-white"
-                    aria-label={link.label}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
-          </motion.div>
+  const { openContact, openPricing } = useModal();
 
-          <motion.div variants={itemVariants}>
-            <h4 className="mb-4 font-semibold text-white">Products</h4>
+  return (
+    <footer className="border-t border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-950">
+
+      {/* Contact sales strip */}
+      <div className="border-b border-slate-100 dark:border-slate-800">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <div>
+            <p className="text-lg font-semibold text-slate-950 dark:text-white">
+              Let's figure out if we're the right fit.
+            </p>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              Open to new work, partnerships, and grant collaborations.
+            </p>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={openContact}
+            className="shrink-0 bg-slate-950 px-7 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 dark:bg-white dark:text-slate-950"
+          >
+            Contact sales
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Main footer */}
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-2">
+            <a href="#" className="mb-4 flex items-center gap-2.5">
+              <div className="h-5 w-5 bg-slate-950 dark:bg-white" />
+              <span className="text-sm font-semibold tracking-tight text-slate-950 dark:text-white">
+                Serendepify AI
+              </span>
+            </a>
+            <p className="max-w-xs text-sm leading-6 text-slate-500 dark:text-slate-400">
+              Autonomous AI, engineered. APIs that charge. Systems that deploy. Architecture that writes itself.
+            </p>
+            <div className="mt-5 flex gap-3">
+              {socials.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-8 w-8 items-center justify-center border border-slate-200 text-slate-400 transition-colors hover:border-slate-400 hover:text-slate-950 dark:border-slate-800 dark:hover:border-slate-600 dark:hover:text-white"
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Products */}
+          <div>
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 dark:text-white">
+              Products
+            </h4>
             <ul className="space-y-3">
               {footerLinks.products.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm text-slate-400 transition-colors hover:text-white">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <h4 className="mb-4 font-semibold text-white">Resources</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.label}>
                   <a
                     href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="text-sm text-slate-400 transition-colors hover:text-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants}>
-            <h4 className="mb-4 font-semibold text-white">Company</h4>
+          {/* Company */}
+          <div>
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 dark:text-white">
+              Company
+            </h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
@@ -132,35 +114,44 @@ export default function Footer() {
                     href={link.href}
                     target={link.href.startsWith('http') ? '_blank' : undefined}
                     rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="text-sm text-slate-400 transition-colors hover:text-white"
+                    className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={openPricing}
+                  className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                >
+                  Pricing
+                </button>
+              </li>
             </ul>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row"
-        >
-          <p className="text-sm text-slate-500">
-            © 2026 Serendepify AI. Built for teams turning ideas into usable products.
-          </p>
-          <div className="flex gap-6">
-            <a href="#pricing" className="text-sm text-slate-500 transition-colors hover:text-white">
-              Pricing
-            </a>
-            <a href="#contact" className="text-sm text-slate-500 transition-colors hover:text-white">
-              Contact
-            </a>
           </div>
-        </motion.div>
+        </div>
+
+        {/* Bottom */}
+        <div className="mt-10 flex flex-col gap-2 border-t border-slate-100 pt-8 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-slate-400">
+            © 2026 Serendepify AI. Autonomous AI, engineered.
+          </p>
+          <div className="flex gap-5">
+            <button
+              onClick={openPricing}
+              className="text-xs text-slate-400 transition-colors hover:text-slate-950 dark:hover:text-white"
+            >
+              Pricing
+            </button>
+            <button
+              onClick={openContact}
+              className="text-xs text-slate-400 transition-colors hover:text-slate-950 dark:hover:text-white"
+            >
+              Contact
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   );
