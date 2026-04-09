@@ -6,7 +6,7 @@ const products = [
     id: 'mpp-studio',
     eyebrow: 'API Infrastructure · Live',
     name: 'MPP Studio',
-    headline: 'Your API charges itself.',
+    headline: 'Your API handles payments itself.',
     sub: 'MPP Studio handles discovery, sandbox testing, and payment autonomously. Your workflow becomes a paid service without touching the billing layer.',
     cta: 'Open MPP Studio',
     link: 'https://agent-exchange-web.vercel.app/',
@@ -199,7 +199,7 @@ export default function ProductFlow() {
                   <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
                     {product.eyebrow}
                   </p>
-                  <h2 className="text-3xl font-bold leading-tight tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+                  <h2 className="text-3xl font-medium leading-tight tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
                     {product.headline}
                   </h2>
                   <p className="mt-5 text-base leading-7 text-slate-500 dark:text-slate-400">

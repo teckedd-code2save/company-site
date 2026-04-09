@@ -44,9 +44,9 @@ export default function Features() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
               How we work
             </p>
-            <h2 className="text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-              Three principles.{' '}
-              <span className="font-light text-slate-400 dark:text-slate-500">No exceptions.</span>
+            <h2 className="text-4xl font-medium tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+              Strong principles.{' '}
+              <span className="font-light text-slate-400 dark:text-slate-500">No Compromises.</span>
             </h2>
           </div>
           <button
@@ -67,13 +67,11 @@ export default function Features() {
         >
           {/* Large identity card — spans full row on mobile, 2 cols on lg */}
           <div className="col-span-1 bg-slate-950 p-8 text-white dark:bg-slate-900 sm:p-10 lg:col-span-2 lg:row-span-2">
-            <p className="mb-8 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Serendepify AI
-            </p>
+            
             <p className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              An applied AI practice.{' '}
+              The applied AI lads.{' '}
               <span className="font-light text-slate-500">
-                We build, we ship, we stay.
+                We build, we ship, we scale.
               </span>
             </p>
             <p className="mt-6 max-w-md text-base leading-7 text-slate-400">
