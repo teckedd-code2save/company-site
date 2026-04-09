@@ -24,22 +24,12 @@ export default function Hero() {
         <div className="flex min-h-[65vh] items-end pb-16 pt-32 sm:pb-20 sm:pt-36">
           <div className="max-w-4xl">
 
-            {/* Eyebrow */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="mb-6 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500"
-            >
-              Serendepify AI · Applied AI Practice
-            </motion.p>
-
             {/* H1 */}
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="text-5xl font-bold leading-[1.04] tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-8xl"
+              className="text-4xl font-bold leading-[1.04] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl"
             >
               Engineering applied AI
               <br />
@@ -53,10 +43,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.14 }}
-              className="mt-6 max-w-lg text-lg leading-7 text-slate-500 dark:text-slate-400"
+              className="mt-6 max-w-lg text-base leading-7 text-slate-500 dark:text-slate-400"
             >
-              Software that deploys itself. Services that charge themselves.
-              AI that stays grounded. We're building towards that future — starting now.
+              Agents that handle payments. AI grounded in your own data.
+              Deployment decisions made without guesswork. We're building towards that future — right now.
             </motion.p>
 
             {/* CTAs */}

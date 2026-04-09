@@ -4,9 +4,9 @@ import { useModal } from '@/lib/modal-context';
 const principles = [
   {
     num: '01',
-    tag: 'Commercial clarity',
-    title: 'Built to charge, not to impress.',
-    body: 'Every product is scoped around something a customer will pay for. No innovation theater, no phase-two promises.',
+    tag: 'Four capabilities',
+    title: 'API monetization, deployment, architecture, grounding.',
+    body: 'Each product targets a distinct layer of the AI build stack — live today, not roadmapped.',
   },
   {
     num: '02',
@@ -71,13 +71,13 @@ export default function Features() {
               Serendepify AI
             </p>
             <p className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Not a consultancy.{' '}
+              An applied AI practice.{' '}
               <span className="font-light text-slate-500">
-                Not an agency.
+                We build, we ship, we stay.
               </span>
             </p>
             <p className="mt-6 max-w-md text-base leading-7 text-slate-400">
-              An applied AI practice that ships software and stays until it works. The products are live proof of that.
+              The products are live proof of that.
             </p>
             <button
               onClick={openContact}

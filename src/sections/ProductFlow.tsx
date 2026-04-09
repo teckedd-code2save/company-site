@@ -21,7 +21,7 @@ const products = [
     id: 'shipd',
     eyebrow: 'Deployment Intelligence · Live',
     name: 'Shipd',
-    headline: 'Deploys to the right platform.',
+    headline: 'Find the right deployment path.',
     sub: 'Point it at your repo. Shipd reads your stack, scores the platforms, and returns a deployment plan — without guesswork.',
     cta: 'See Shipd',
     link: 'https://shipd-eight.vercel.app/',
@@ -59,12 +59,91 @@ const products = [
     flip: true,
     proof: {
       verb: 'Grounded by',
-      statement: 'Live data. No hallucinated context. AI that knows exactly what\'s true.',
+      statement: 'Analysis grounded in your own data.',
     },
   },
 ] as const;
 
-function ProofStrip({ verb, name, statement }: { verb: string; name: string; statement: string }) {
+// Pill tag grid for B2DP proof
+const b2dpTags = [
+  'MPP Studio', 'Agent Workflows', 'Data Models', 'Service Contracts',
+  'Serendepify Platform', 'API Service Layer', 'Event Schemas', 'DB Architecture',
+];
+
+// Compact service cards for Shipd proof
+const shipdServices = [
+  { name: 'MPP Studio', tags: ['Next.js', 'Vercel'] },
+  { name: 'Shipd', tags: ['Vite', 'Vercel'] },
+  { name: 'B2DP', tags: ['GitHub Pages'] },
+  { name: 'Datafy MCP', tags: ['Node.js', 'MCP'] },
+];
+
+function ProofStrip({ id, verb, name, statement }: { id: string; verb: string; name: string; statement: string }) {
+  // B2DP — pill tag grid
+  if (id === 'b2dp') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="border-t border-slate-100 bg-slate-50/60 dark:border-slate-800/60 dark:bg-slate-900/30"
+      >
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mb-5 flex items-baseline gap-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{verb}</p>
+            <p className="text-lg font-bold tracking-tight text-slate-950 dark:text-white">{name}</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {b2dpTags.map((tag, i) => (
+              <span
+                key={tag}
+                className={`inline-flex items-center border border-slate-200 px-3 py-1 text-xs font-medium tracking-wide text-slate-600 dark:border-slate-700 dark:text-slate-400 ${
+                  i % 3 === 0 ? 'bg-slate-950 text-white border-slate-950 dark:bg-white dark:text-slate-950 dark:border-white' : 'bg-white dark:bg-transparent'
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Shipd — compact service cards
+  if (id === 'shipd') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="border-t border-slate-100 bg-slate-50/60 dark:border-slate-800/60 dark:bg-slate-900/30"
+      >
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mb-5 flex items-baseline gap-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{verb}</p>
+            <p className="text-lg font-bold tracking-tight text-slate-950 dark:text-white">{name}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-px bg-slate-200/70 dark:bg-slate-700/40 sm:grid-cols-4">
+            {shipdServices.map((svc) => (
+              <div key={svc.name} className="bg-white px-4 py-4 dark:bg-slate-900">
+                <p className="text-sm font-semibold text-slate-950 dark:text-white">{svc.name}</p>
+                <div className="mt-1.5 flex flex-wrap gap-1">
+                  {svc.tags.map((t) => (
+                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Default — simple strip (MPP Studio, Datafy)
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -168,6 +247,7 @@ export default function ProductFlow() {
 
           {/* ── Proof strip ── */}
           <ProofStrip
+            id={product.id}
             verb={product.proof.verb}
             name={product.name}
             statement={product.proof.statement}

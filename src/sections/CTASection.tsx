@@ -2,19 +2,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
 
-const tickerItems = [
-  { product: 'MPP Studio',  event: 'Service registered, sandbox payment flow verified' },
-  { product: 'Shipd',       event: 'Deployment plan generated from Next.js monorepo' },
-  { product: 'B2DP',        event: 'Architecture scaffold exported from plain-language brief' },
-  { product: 'Datafy MCP',  event: 'Agent context grounded with live operational data' },
-  { product: 'MPP Studio',  event: 'Provider contract promoted from testnet to live' },
-  { product: 'Shipd',       event: 'Multi-cloud platform comparison scored and returned' },
-  { product: 'B2DP',        event: 'Data model handed off to engineering team' },
-  { product: 'Datafy MCP',  event: 'Stale mock data replaced with live signal feed' },
-];
-
-const allItems = [...tickerItems, ...tickerItems];
-
 export default function CTASection() {
   const { openContact } = useModal();
 
@@ -76,28 +63,6 @@ export default function CTASection() {
         </div>
       </div>
 
-      {/* Live ticker */}
-      <div className="relative mt-20 border-t border-white/5 pt-6">
-        <div className="mb-3 flex items-center gap-2 px-6 sm:px-10">
-          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-emerald-400" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-600">
-            Live system activity
-          </span>
-          <span className="h-px flex-1 bg-white/5" />
-        </div>
-        <div className="pause-on-hover overflow-hidden">
-          <div className="animate-ticker flex w-max">
-            {allItems.map((item, i) => (
-              <div key={i} className="flex shrink-0 items-center gap-3 px-5 py-1">
-                <span className="text-[11px] font-semibold text-slate-500">{item.product}</span>
-                <span className="h-1 w-1 rounded-full bg-slate-700" />
-                <span className="text-[11px] text-slate-600">{item.event}</span>
-                <span className="ml-4 h-3 w-px bg-white/5" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
