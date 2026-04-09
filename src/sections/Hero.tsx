@@ -29,11 +29,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="text-6xl font-medium leading-[1.04] tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl"
+              className="text-6xl font-medium leading-[0.98] tracking-tight text-slate-950 dark:text-white sm:text-7xl lg:text-[5.6rem]"
             >
               Engineering applied AI
               <br />
-              <span className="font-light italic text-4xl text-slate-400 dark:text-slate-500">
+              <span className="font-light italic text-4xl text-slate-400 dark:text-slate-500 sm:text-5xl lg:text-[3.65rem]">
                 for productivity and autonomy.
               </span>
             </motion.h1>

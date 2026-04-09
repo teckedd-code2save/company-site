@@ -1,7 +1,13 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Mail, User, MessageSquare, Briefcase, Building2 } from 'lucide-react';
+import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '@/lib/site-config';
+
+const fitSignals = [
+  'You have a live workflow, internal process, or product surface that needs to become usable.',
+  'You want an implementation partner who can work from product thinking through engineering detail.',
+  'You need something grounded in actual systems, not another speculative AI demo.',
+] as const;
 
 export default function ContactForm() {
   return (
@@ -50,103 +56,104 @@ export default function ContactForm() {
             </div>
           </motion.div>
 
-        <motion.form
-          action={`https://formsubmit.co/${siteConfig.contactEmail}`}
-          method="POST"
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, delay: 0.05 }}
-          className="rounded-2xl border border-white/55 bg-white/92 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/80 sm:p-8"
-        >
-          <input type="hidden" name="_subject" value="New project request from serendepifywebsite" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+          <motion.form
+            action={`https://formsubmit.co/${siteConfig.contactEmail}`}
+            method="POST"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.7, delay: 0.05 }}
+            className="rounded-2xl border border-white/55 bg-white/92 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/80 sm:p-8"
+          >
+            <input type="hidden" name="_subject" value="New project request from serendepifywebsite" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
-          <div className="mb-5 grid gap-5 md:grid-cols-2">
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <User className="mr-2 h-4 w-4" />
-                Full name
-              </span>
-              <input
-                type="text"
-                name="name"
-                required
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="Your name"
-              />
-            </label>
+            <div className="mb-5 grid gap-5 md:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <User className="mr-2 h-4 w-4" />
+                  Full name
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                  placeholder="Your name"
+                />
+              </label>
 
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <Mail className="mr-2 h-4 w-4" />
-                Email
-              </span>
-              <input
-                type="email"
-                name="email"
-                required
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="you@company.com"
-              />
-            </label>
-          </div>
+              <label className="block">
+                <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Email
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                  placeholder="you@company.com"
+                />
+              </label>
+            </div>
 
-          <div className="mb-5 grid gap-5 md:grid-cols-2">
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <Building2 className="mr-2 h-4 w-4" />
-                Company or startup
-              </span>
-              <input
-                type="text"
-                name="company"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="Your company name"
-              />
-            </label>
+            <div className="mb-5 grid gap-5 md:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <Building2 className="mr-2 h-4 w-4" />
+                  Company or startup
+                </span>
+                <input
+                  type="text"
+                  name="company"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                  placeholder="Your company name"
+                />
+              </label>
 
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <Briefcase className="mr-2 h-4 w-4" />
-                Product or focus area
-              </span>
-              <input
-                type="text"
-                name="project_type"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="e.g. MPP Studio, Shipd, internal AI workflow, data product"
-              />
-            </label>
-          </div>
+              <label className="block">
+                <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <Briefcase className="mr-2 h-4 w-4" />
+                  Product or focus area
+                </span>
+                <input
+                  type="text"
+                  name="project_type"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                  placeholder="e.g. MPP Studio, Shipd, internal AI workflow, data product"
+                />
+              </label>
+            </div>
 
-          <div className="mb-5">
-            <label className="block">
-              <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
-                <MessageSquare className="mr-2 h-4 w-4" />
-                Message
-              </span>
-              <textarea
-                name="message"
-                required
-                rows={6}
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
-                placeholder="Describe the workflow, current bottleneck, and what success should look like."
-              />
-            </label>
-          </div>
+            <div className="mb-5">
+              <label className="block">
+                <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  Message
+                </span>
+                <textarea
+                  name="message"
+                  required
+                  rows={6}
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
+                  placeholder="Describe the workflow, current bottleneck, and what success should look like."
+                />
+              </label>
+            </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Button
-              type="submit"
-              className="rounded-lg bg-black px-7 py-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
-            >
-              Send project brief
-            </Button>
-          </div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button
+                type="submit"
+                className="rounded-lg bg-black px-7 py-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              >
+                Send project brief
+              </Button>
+            </div>
           </motion.form>
+        </div>
       </div>
     </section>
   );

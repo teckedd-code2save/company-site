@@ -11,6 +11,8 @@ type CheckoutResponse = {
 };
 
 export async function startCheckout(payload: CheckoutPayload) {
+  // TODO: `/api/checkout` is only available behind the deployed serverless runtime.
+  // Keep client callers ready to fall back to a direct payment/contact link in local-only environments.
   const response = await fetch('/api/checkout', {
     method: 'POST',
     headers: {

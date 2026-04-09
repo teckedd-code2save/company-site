@@ -8,8 +8,8 @@ const products = [
     name: 'MPP Studio',
     category: 'API Infrastructure',
     status: 'Live' as const,
-    tagline: 'Your AI service. Paid.',
-    summary: 'You built the workflow. MPP Studio turns it into a service agents can discover, test in sandbox, and pay for — without you wiring up a single payment form.',
+    tagline: 'Your API charges itself.',
+    summary: 'You built the workflow. MPP Studio turns it into a service agents can discover, test in sandbox, and pay for with a real Stripe-backed checkout path.',
     highlights: [
       'HTTP 402 flows, Stripe-integrated, ready out of the box',
       'Sandbox that mirrors production exactly',
@@ -140,7 +140,7 @@ function ProductCard({
         </div>
 
         {/* Name — bold */}
-        <h3 className="text-3xl font-bold leading-tight tracking-tight text-slate-950 dark:text-white lg:text-4xl">
+        <h3 className="text-3xl font-medium leading-tight tracking-tight text-slate-950 dark:text-white lg:text-4xl">
           {name}
         </h3>
 
@@ -247,14 +247,14 @@ export default function Products() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
             Live products
           </p>
-          <h2 className="text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
-            Four tools.{' '}
+          <h2 className="text-4xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
+            The tools exist.{' '}
             <span className="font-light text-slate-400 dark:text-slate-500">
-              Every layer covered.
+              Use them.
             </span>
           </h2>
           <p className="mt-5 max-w-xl text-base leading-7 text-slate-500 dark:text-slate-400 sm:text-lg">
-            API monetization, deployment intelligence, architecture scaffolding, and AI data grounding. Not prototypes — open right now.
+            Four live products. No waitlist. No pitch. No procurement loop. Built to earn their place in your stack.
           </p>
         </motion.div>
       </div>

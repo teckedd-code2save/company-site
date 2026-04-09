@@ -30,11 +30,11 @@ export default function CTASection() {
               Ready to ship
             </p>
             <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              The tools exist.{' '}
-              <span className="font-light italic text-slate-500">Use them.</span>
+              We are alert,{' '}
+              <span className="font-light italic text-slate-500">make the call and update.</span>
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-slate-400">
-              Four live products. No waitlist. No pitch. No procurement loop. Built to earn their place in your stack.
+              Live tools to spot the signal, make the call, and update fast.
             </p>
           </motion.div>
 
