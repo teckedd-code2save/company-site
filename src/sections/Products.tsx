@@ -17,7 +17,7 @@ const products = [
     ],
     link: 'https://agent-exchange-web.vercel.app/',
     cta: 'Open MPP Studio',
-    image: '/images/products/mpp-studio-surface.png',
+    image: '/images/products/mpp-studio-surface.gif',
     kind: 'app' as const,
   },
   {
@@ -34,7 +34,7 @@ const products = [
     ],
     link: 'https://shipd-seven.vercel.app/',
     cta: 'See Shipd',
-    image: '/images/products/shipd-surface.png',
+    image: '/images/products/shipd-surface.gif',
     kind: 'app' as const,
   },
   {
@@ -51,7 +51,7 @@ const products = [
     ],
     link: 'https://teckedd-code2save.github.io/ai-build-tools/',
     cta: 'Explore B2DP',
-    image: '/images/products/b2dp-surface.png',
+    image: '/images/products/b2dp-surface.gif',
     kind: 'site' as const,
   },
   {
@@ -108,18 +108,19 @@ function ProductCard({
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative block overflow-hidden bg-[#0f1117] px-5 pt-5"
+        className="group relative block overflow-hidden bg-[#0b1018] p-4 sm:p-5"
         style={{ borderRadius: '1.6rem 1.6rem 0 0' }}
       >
-        <img
-          src={image}
-          alt={name}
-          className="w-full rounded-xl object-cover object-top transition-transform duration-700 group-hover:scale-[1.025]"
-          style={{
-            height: '22rem',
-            boxShadow: '0 -4px 40px rgba(0,0,0,0.35)',
-          }}
-        />
+        <div className="flex h-[20rem] items-center justify-center rounded-[1.3rem] bg-[#0f1117] sm:h-[24rem] lg:h-[27rem]">
+          <img
+            src={image}
+            alt={name}
+            className="h-full w-full rounded-xl object-contain object-center transition-transform duration-700 group-hover:scale-[1.02]"
+            style={{
+              boxShadow: '0 -4px 40px rgba(0,0,0,0.35)',
+            }}
+          />
+        </div>
       </a>
 
       {/* ── Divider ── */}

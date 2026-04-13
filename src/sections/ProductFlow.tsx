@@ -10,7 +10,7 @@ const products = [
     sub: 'MPP Studio handles discovery, sandbox testing, and payment autonomously. Your workflow becomes a paid service without touching the billing layer.',
     cta: 'Open MPP Studio',
     link: 'https://agent-exchange-web.vercel.app/',
-    image: '/images/products/mpp-studio-surface.png',
+    image: '/images/products/mpp-studio-surface.gif',
     flip: false,
     proof: {
       verb: 'Monetized with',
@@ -25,7 +25,7 @@ const products = [
     sub: 'Point it at your repo. Shipd reads your stack, scores the platforms, and returns a deployment plan — without guesswork.',
     cta: 'See Shipd',
     link: 'https://shipd-eight.vercel.app/',
-    image: '/images/products/shipd-surface.png',
+    image: '/images/products/shipd-surface.gif',
     flip: true,
     proof: {
       verb: 'Shipped with',
@@ -40,7 +40,7 @@ const products = [
     sub: 'Describe what you\'re building in plain language. B2DP generates data models, services, and structure — ready to hand off or build from immediately.',
     cta: 'Explore B2DP',
     link: 'https://teckedd-code2save.github.io/ai-build-tools/',
-    image: '/images/products/b2dp-surface.png',
+    image: '/images/products/b2dp-surface.gif',
     flip: false,
     proof: {
       verb: 'Designed with',
@@ -228,14 +228,13 @@ export default function ProductFlow() {
                     href={product.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block"
+                    className="group block rounded-[1.75rem] bg-[#0b1018] p-4 sm:p-5"
                   >
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full rounded-xl object-cover object-top transition-transform duration-700 group-hover:scale-[1.015]"
+                      className="h-[21rem] w-full rounded-xl object-contain object-center transition-transform duration-700 group-hover:scale-[1.015] sm:h-[25rem] lg:h-[30rem]"
                       style={{
-                        height: '22rem',
                         boxShadow: '0 20px 60px rgba(15,23,42,0.13), 0 4px 16px rgba(15,23,42,0.07)',
                       }}
                     />
