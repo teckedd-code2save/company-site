@@ -59,7 +59,7 @@ const products = [
     name: 'Datafy MCP',
     category: 'AI Grounding',
     status: 'Beta' as const,
-    tagline: 'Kill the hallucination at the source.',
+    tagline: 'Grounded in your live business data.',
     summary: 'AI agents drift when their inputs are stale or invented. Datafy connects them to your live operational data via MCP — so what they know is what\'s actually true.',
     highlights: [
       'MCP-native grounding layer for AI agents',
@@ -68,7 +68,7 @@ const products = [
     ],
     link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
     cta: 'Watch Datafy in action',
-    image: 'https://i.ytimg.com/vi/eUEZqX97i6I/maxresdefault.jpg',
+    image: '/images/products/datafy-surface.png',
     kind: 'video' as const,
   },
 ] as const;

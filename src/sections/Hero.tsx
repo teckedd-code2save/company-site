@@ -45,7 +45,7 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.14 }}
               className="mt-6 max-w-lg text-base leading-7 text-slate-500 dark:text-slate-400"
             >
-              Agents that handle payments. AI grounded in your own data.
+              Agents that transact. AI grounded in your own data.
               Deployment decisions made without guesswork. We're building towards that future — right now.
             </motion.p>
 

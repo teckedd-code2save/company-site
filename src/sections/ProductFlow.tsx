@@ -51,11 +51,11 @@ const products = [
     id: 'datafy',
     eyebrow: 'AI Data Grounding · Beta',
     name: 'Datafy MCP',
-    headline: 'AI that knows what\'s real.',
+    headline: 'AI grounded in your business.',
     sub: 'Connect agents to live operational data through MCP. What they reason with reflects reality — not stale mocks or hallucinated context.',
     cta: 'Watch Datafy',
     link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
-    image: 'https://i.ytimg.com/vi/eUEZqX97i6I/maxresdefault.jpg',
+    image: '/images/products/datafy-surface.png',
     flip: true,
     proof: {
       verb: 'Grounded by',

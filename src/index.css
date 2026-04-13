@@ -145,7 +145,7 @@
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(calc(-50% - 1.5rem)); }
 }
 
 @keyframes marquee-reverse {
@@ -169,7 +169,7 @@
 }
 
 .animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 
 .animate-marquee-reverse {
@@ -191,6 +191,14 @@
 .pause-on-hover:hover .animate-marquee,
 .pause-on-hover:hover .animate-ticker {
   animation-play-state: paused;
+}
+
+.marquee-track {
+  will-change: transform;
+}
+
+.marquee-group {
+  min-width: max-content;
 }
 
 @media (prefers-reduced-motion: reduce) {
