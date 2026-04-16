@@ -13,7 +13,7 @@ import Footer from './sections/Footer';
 function App() {
   return (
     <ModalProvider>
-      <div className="min-h-screen bg-white text-foreground dark:bg-slate-950">
+      <div className="min-h-screen bg-black text-white">
         <CheckoutNotice />
         <Navbar />
         <main>

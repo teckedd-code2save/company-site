@@ -2,17 +2,50 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
 
+/* ── Stagger variants ──────────────────────────────────────────────── */
+const colVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const colItem = {
+  hidden:  { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
+};
+
 export default function CTASection() {
   const { openContact } = useModal();
 
   return (
-    <section className="border-t border-slate-100 bg-slate-950 py-24 dark:border-slate-800 lg:py-32">
+    <section
+      className="relative overflow-hidden bg-black py-24 lg:py-36"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+    >
+      {/* Animated ambient mint glow */}
+      <motion.div
+        animate={{ scale: [1, 1.12, 1], opacity: [0.22, 0.4, 0.22] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        className="pointer-events-none absolute bottom-0 right-0 h-[500px] w-[500px]"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,230,153,0.2) 0%, transparent 65%)',
+        }}
+      />
+      {/* Secondary orb */}
+      <motion.div
+        animate={{ scale: [1, 1.08, 1], opacity: [0.1, 0.22, 0.1] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        className="pointer-events-none absolute -left-24 top-12 h-[380px] w-[380px] rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,230,153,0.1) 0%, transparent 70%)',
+        }}
+      />
       {/* Dot grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,1) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
+          backgroundImage: 'radial-gradient(circle, rgba(0,230,153,1) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
         }}
       />
 
@@ -21,18 +54,24 @@ export default function CTASection() {
 
           {/* Left — statement */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={colVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7 }}
           >
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Ready to ship
-            </p>
-            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Call on us.{' '}
-              <span className="font-light italic text-slate-500">Let us know where we can help.</span>
-            </h2>
+            <motion.p variants={colItem} className="mb-4 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#00E699' }}>
+              Open for work
+            </motion.p>
+            <motion.h2
+              variants={colItem}
+              className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+              style={{ letterSpacing: '-0.03em' }}
+            >
+              Tell us what you're building.{' '}
+              <span className="font-light italic" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                We'll figure out the rest.
+              </span>
+            </motion.h2>
           </motion.div>
 
           {/* Right — actions */}
@@ -40,26 +79,34 @@ export default function CTASection() {
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.65, delay: 0.1 }}
+            transition={{ duration: 0.65, delay: 0.18 }}
             className="flex flex-col gap-3 lg:items-end"
           >
-            <a
+            <motion.a
               href="#products"
-              className="group inline-flex items-center gap-2 bg-white px-7 py-3.5 text-sm font-medium text-slate-950 transition-opacity hover:opacity-80"
+              whileHover={{ scale: 1.03, boxShadow: '0 0 22px rgba(255,255,255,0.14)' }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black"
             >
-              See what we build
+              See our products
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <button
+            </motion.a>
+            <motion.button
               onClick={openContact}
-              className="inline-flex items-center gap-2 border border-slate-700 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-slate-500"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className="inline-flex items-center gap-2 rounded-full border px-8 py-3.5 text-sm font-medium text-white"
+              style={{ borderColor: 'rgba(255,255,255,0.18)' }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)')}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)')}
             >
-              Contact sales
-            </button>
+              Open a conversation
+            </motion.button>
           </motion.div>
         </div>
       </div>
-
     </section>
   );
 }

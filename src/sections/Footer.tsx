@@ -26,24 +26,24 @@ export default function Footer() {
   const { openContact, openPricing } = useModal();
 
   return (
-    <footer className="border-t border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-950">
+    <footer className="bg-black" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
 
       {/* Contact sales strip */}
-      <div className="border-b border-slate-100 dark:border-slate-800">
+      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div>
-            <p className="text-lg font-semibold text-slate-950 dark:text-white">
-              Let's figure out if we're the right fit.
+            <p className="text-lg font-semibold text-white">
+              Building for the AI economy? Let's talk.
             </p>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Open to new work, partnerships, and grant collaborations.
+            <p className="mt-1 text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              Open to product collaborations, AI deployments, and founding-stage partnerships.
             </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={openContact}
-            className="shrink-0 bg-slate-950 px-7 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 dark:bg-white dark:text-slate-950"
+            className="shrink-0 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-opacity hover:opacity-85"
           >
             Contact sales
           </motion.button>
@@ -52,18 +52,24 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-2 gap-8 md:grid-cols-4"
+        >
 
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <a href="#" className="mb-4 flex items-center gap-2.5">
-              <div className="h-5 w-5 bg-slate-950 dark:bg-white" />
-              <span className="text-sm font-semibold tracking-tight text-slate-950 dark:text-white">
+              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#00E699' }} />
+              <span className="text-sm font-semibold tracking-tight text-white">
                 Serendepify AI
               </span>
             </a>
-            <p className="max-w-xs text-sm leading-6 text-slate-500 dark:text-slate-400">
-              Autonomous AI, engineered. APIs that charge. Systems that deploy. Architecture that writes itself.
+            <p className="max-w-xs text-sm leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              We build the infrastructure of autonomous AI — transacting, deploying, reasoning, and grounding in production.
             </p>
             <div className="mt-5 flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (
@@ -73,7 +79,16 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center border border-slate-200 text-slate-400 transition-colors hover:border-slate-400 hover:text-slate-950 dark:border-slate-800 dark:hover:border-slate-600 dark:hover:text-white"
+                  className="flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+                  style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = '#00E699';
+                    e.currentTarget.style.color = '#00E699';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.4)';
+                  }}
                 >
                   <Icon className="h-3.5 w-3.5" />
                 </a>
@@ -83,7 +98,7 @@ export default function Footer() {
 
           {/* Products */}
           <div>
-            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 dark:text-white">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Products
             </h4>
             <ul className="space-y-3">
@@ -93,7 +108,8 @@ export default function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                    className="text-sm transition-colors hover:text-white"
+                    style={{ color: 'rgba(255,255,255,0.45)' }}
                   >
                     {link.label}
                   </a>
@@ -104,7 +120,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 dark:text-white">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Company
             </h4>
             <ul className="space-y-3">
@@ -114,7 +130,8 @@ export default function Footer() {
                     href={link.href}
                     target={link.href.startsWith('http') ? '_blank' : undefined}
                     rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                    className="text-sm transition-colors hover:text-white"
+                    style={{ color: 'rgba(255,255,255,0.45)' }}
                   >
                     {link.label}
                   </a>
@@ -123,30 +140,36 @@ export default function Footer() {
               <li>
                 <button
                   onClick={openPricing}
-                  className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                  className="text-sm transition-colors hover:text-white"
+                  style={{ color: 'rgba(255,255,255,0.45)' }}
                 >
                   Pricing
                 </button>
               </li>
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom */}
-        <div className="mt-10 flex flex-col gap-2 border-t border-slate-100 pt-8 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-slate-400">
-            © 2026 Serendepify AI. Autonomous AI, engineered.
+        <div
+          className="mt-10 flex flex-col gap-2 pt-8 sm:flex-row sm:items-center sm:justify-between"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+        >
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            © 2026 Serendepify AI. Infrastructure for the AI economy.
           </p>
           <div className="flex gap-5">
             <button
               onClick={openPricing}
-              className="text-xs text-slate-400 transition-colors hover:text-slate-950 dark:hover:text-white"
+              className="text-xs transition-colors hover:text-white"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
             >
               Pricing
             </button>
             <button
               onClick={openContact}
-              className="text-xs text-slate-400 transition-colors hover:text-slate-950 dark:hover:text-white"
+              className="text-xs transition-colors hover:text-white"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
             >
               Contact
             </button>

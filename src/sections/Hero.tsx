@@ -1,87 +1,147 @@
+import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
+
+const HeroParticles = lazy(() => import('@/components/HeroParticles'));
+
+/* ── Animation variants ─────────────────────────────────────────────── */
+const heroContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const heroItem = {
+  hidden:   { opacity: 0, y: 22 },
+  visible:  { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
+};
 
 export default function Hero() {
   const { openContact } = useModal();
 
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-slate-950">
-      {/* Subtle dot grid */}
+    <section className="relative overflow-hidden bg-black">
+
+      {/* ── WebGL particle field ─────────────────────────────────────── */}
+      <Suspense fallback={null}>
+        <HeroParticles />
+      </Suspense>
+
+      {/* ── Breathing ambient orbs ──────────────────────────────────── */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.06]"
+        className="pointer-events-none absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full animate-glow-breathe"
+        style={{ background: 'radial-gradient(circle, rgba(0,230,153,0.10) 0%, transparent 70%)' }}
+      />
+      <div
+        className="pointer-events-none absolute right-[-15%] top-[15%] h-[550px] w-[550px] rounded-full animate-glow-breathe-slow"
         style={{
-          backgroundImage: 'radial-gradient(circle, #0f172a 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
+          background: 'radial-gradient(circle, rgba(0,230,153,0.05) 0%, transparent 70%)',
+          animationDelay: '-3.5s',
         }}
       />
-      {/* Fade at bottom */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white dark:from-slate-950" />
+
+      {/* ── Dot grid ────────────────────────────────────────────────── */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(0,230,153,1) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      {/* ── Bottom fade ─────────────────────────────────────────────── */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        {/* ── Text block ── */}
-        <div className="flex min-h-[65vh] items-end pb-16 pt-32 sm:pb-20 sm:pt-36">
-          <div className="max-w-4xl">
+        <div className="flex min-h-[72vh] items-end pb-20 pt-36 sm:pb-24 sm:pt-44">
+          <motion.div
+            className="max-w-4xl"
+            variants={heroContainer}
+            initial="hidden"
+            animate="visible"
+          >
+
+            {/* Eyebrow */}
+            <motion.p
+              variants={heroItem}
+              className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em]"
+              style={{ color: '#00E699' }}
+            >
+              Building for the AI economy
+            </motion.p>
 
             {/* H1 */}
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="text-6xl font-medium leading-[0.98] tracking-tight text-slate-950 dark:text-white sm:text-7xl lg:text-[5.6rem]"
+              variants={heroItem}
+              className="text-6xl font-bold leading-[0.96] tracking-tight text-white sm:text-7xl lg:text-[5.6rem]"
+              style={{ letterSpacing: '-0.03em' }}
             >
-              Engineering applied AI
-              <br />
-              <span className="font-light italic text-4xl text-slate-400 dark:text-slate-500 sm:text-5xl lg:text-[3.65rem]">
-                for productivity and autonomy.
+              We build the stack that<br />
+              <span className="font-light italic" style={{ color: 'rgba(255,255,255,0.38)' }}>
+                makes AI autonomous.
               </span>
             </motion.h1>
 
             {/* Sub */}
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.14 }}
-              className="mt-6 max-w-lg text-base leading-7 text-slate-500 dark:text-slate-400"
+              variants={heroItem}
+              className="mt-7 max-w-xl text-base leading-7"
+              style={{ color: 'rgba(255,255,255,0.52)' }}
             >
-              Agents that transact. AI grounded in your own data.
-              Deployment decisions made without guesswork. We're building towards that future — right now.
+              The transition from AI-assisted to AI-autonomous is already underway.
+              We build the tools that close that gap — agents that transact,
+              systems that self-deploy, architecture that writes itself.
             </motion.p>
 
             {/* CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.22 }}
-              className="mt-8 flex flex-wrap items-center gap-4"
+              variants={heroItem}
+              className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <a
+              <motion.a
                 href="#products"
-                className="bg-slate-950 px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 dark:bg-white dark:text-slate-950"
+                whileHover={{ scale: 1.03, boxShadow: '0 0 22px rgba(255,255,255,0.14)' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                className="rounded-full bg-white px-7 py-3 text-sm font-medium text-black"
               >
-                See what we build
-              </a>
-              <button
+                Explore our products
+              </motion.a>
+              <motion.button
                 onClick={openContact}
-                className="text-sm font-medium text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                className="rounded-full border px-7 py-3 text-sm font-medium text-white"
+                style={{ borderColor: 'rgba(255,255,255,0.18)' }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)')}
               >
-                Book intro
-              </button>
+                Start a conversation
+              </motion.button>
             </motion.div>
-          </div>
+
+          </motion.div>
         </div>
 
       </div>
 
-      {/* Scroll hint */}
+      {/* ── Scroll hint ──────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
+        transition={{ delay: 1.8, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
       >
-        <ArrowDown className="h-3.5 w-3.5 animate-bounce text-slate-300 dark:text-slate-600" />
+        <ArrowDown
+          className="h-3.5 w-3.5 animate-bounce"
+          style={{ color: 'rgba(255,255,255,0.18)' }}
+        />
       </motion.div>
     </section>
   );

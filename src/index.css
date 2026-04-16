@@ -6,66 +6,41 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 47% 11%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 20% 95%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 20% 95%;
-    --muted-foreground: 215 16% 39%;
-    --accent: 210 24% 94%;
-    --accent-foreground: 222 47% 11%;
+    /* Pure black dark-first palette */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 153 100% 45%;          /* #00E699 neon mint */
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 16% 88%;
-    --input: 214 16% 88%;
-    --ring: 215 20% 65%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 153 100% 45%;
     --radius: 0.625rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 153 100% 45%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 153 100% 45%;
     --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Semantic mint tokens */
+    --mint: #00E699;
+    --mint-dim: #00D9A3;
+    --mint-glow: rgba(0, 230, 153, 0.25);
   }
 }
 
@@ -79,8 +54,8 @@
   }
 
   body {
-    @apply bg-background font-sans text-foreground antialiased;
-    background-image: radial-gradient(circle at top left, rgba(15, 23, 42, 0.03), transparent 22%);
+    @apply bg-black font-sans text-white antialiased;
+    background-image: radial-gradient(circle at 20% 50%, rgba(0, 230, 153, 0.04) 0%, transparent 50%);
   }
 }
 
@@ -90,15 +65,27 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent;
   }
 
-  .glow-purple {
-    box-shadow: 0 0 40px rgba(15, 23, 42, 0.08);
+  .glow-mint {
+    box-shadow: 0 0 40px rgba(0, 230, 153, 0.15);
   }
 
-  .glow-purple-lg {
-    box-shadow: 0 0 60px rgba(15, 23, 42, 0.12);
+  .glow-mint-lg {
+    box-shadow: 0 0 80px rgba(0, 230, 153, 0.2);
+  }
+
+  .text-mint {
+    color: #00E699;
+  }
+
+  .border-mint {
+    border-color: #00E699;
+  }
+
+  .bg-mint {
+    background-color: #00E699;
   }
 }
 
@@ -107,40 +94,42 @@
 }
 
 .code-block .keyword {
-  @apply text-slate-300;
+  color: #00E699;
 }
 
 .code-block .string {
-  @apply text-slate-400;
+  @apply text-white/60;
 }
 
 .code-block .function {
-  @apply text-slate-200;
+  @apply text-white;
 }
 
 .code-block .comment {
-  @apply text-gray-500;
+  @apply text-white/30;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+  background: #000;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-gray-300;
+  @apply rounded-full;
+  background: rgba(255,255,255,0.12);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  background: rgba(0, 230, 153, 0.4);
 }
 
 ::selection {
-  @apply bg-slate-200 text-slate-900;
+  background: rgba(0, 230, 153, 0.25);
+  color: #fff;
 }
 
 @keyframes marquee {
@@ -199,6 +188,75 @@
 
 .marquee-group {
   min-width: max-content;
+}
+
+/* ── Glow breathe (ambient orbs) ──────────────────────────────────────── */
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50%       { opacity: 0.42; transform: scale(1.1); }
+}
+
+@keyframes glow-breathe-slow {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50%       { opacity: 0.30; transform: scale(1.06); }
+}
+
+/* ── SVG path drawing (branch / tree animation) ───────────────────────── */
+@keyframes draw-path {
+  0%   { stroke-dashoffset: 1000; opacity: 0; }
+  5%   { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes pop-node {
+  0%   { transform: scale(0); opacity: 0; }
+  65%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* ── Shimmer sweep ────────────────────────────────────────────────────── */
+@keyframes shimmer-sweep {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── Glow pulse (neon rings) ──────────────────────────────────────────── */
+@keyframes glow-ring-pulse {
+  0%, 100% { box-shadow: 0 0 0   0 rgba(0,230,153,0); }
+  50%       { box-shadow: 0 0 24px 4px rgba(0,230,153,0.18); }
+}
+
+/* ── Utility classes ──────────────────────────────────────────────────── */
+.animate-glow-breathe {
+  animation: glow-breathe 5s ease-in-out infinite;
+}
+
+.animate-glow-breathe-slow {
+  animation: glow-breathe-slow 7s ease-in-out infinite;
+}
+
+.animate-draw-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-path 1.4s ease-out forwards;
+}
+
+.animate-pop-node {
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0);
+  animation: pop-node 0.4s ease-out forwards;
+}
+
+.animate-glow-ring {
+  animation: glow-ring-pulse 3s ease-in-out infinite;
+}
+
+.btn-glow-hover {
+  transition: box-shadow 0.25s ease, opacity 0.2s ease;
+}
+.btn-glow-hover:hover {
+  box-shadow: 0 0 24px rgba(0, 230, 153, 0.25);
 }
 
 @media (prefers-reduced-motion: reduce) {

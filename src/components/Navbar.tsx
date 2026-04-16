@@ -4,8 +4,8 @@ import { Menu, X } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
 
 const navLinks = [
-  { label: 'Products',     href: '#products' },
-  { label: 'How we work',  href: '#features' },
+  { label: 'Products',    href: '#products' },
+  { label: 'How we work', href: '#features' },
 ];
 
 export default function Navbar() {
@@ -26,28 +26,31 @@ export default function Navbar() {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed left-0 right-0 top-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-slate-100 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95'
+          ? 'border-b border-white/[0.06] bg-black/90 backdrop-blur-md'
           : 'bg-transparent'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5">
-            <div className="h-5 w-5 rounded-sm bg-slate-950 dark:bg-white" />
-            <span className="text-sm font-semibold tracking-tight text-slate-950 dark:text-white">
+            <div
+              className="h-5 w-5 rounded-sm"
+              style={{ backgroundColor: '#00E699' }}
+            />
+            <span className="text-sm font-semibold tracking-tight text-white">
               Serendepify AI
             </span>
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                className="text-sm text-white/55 transition-colors hover:text-white"
               >
                 {link.label}
               </a>
@@ -55,24 +58,28 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop actions */}
-          <div className="hidden items-center gap-2 md:flex">
-            <button
+          <div className="hidden items-center gap-3 md:flex">
+            <motion.button
               onClick={openPricing}
-              className="px-4 py-2 text-sm text-slate-500 transition-colors hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+              whileHover={{ opacity: 1 }}
+              className="px-4 py-2 text-sm text-white/55 transition-colors hover:text-white"
             >
               Pricing
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={openContact}
-              className="bg-slate-950 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-80 dark:bg-white dark:text-slate-950"
+              whileHover={{ scale: 1.03, boxShadow: '0 0 18px rgba(255,255,255,0.12)' }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black"
             >
               Contact sales
-            </button>
+            </motion.button>
           </div>
 
           {/* Mobile toggle */}
           <button
-            className="p-2 text-slate-600 dark:text-slate-300 md:hidden"
+            className="p-2 text-white/60 md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -85,7 +92,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="border-t border-slate-100 bg-white pb-4 pt-2 dark:border-slate-800 dark:bg-slate-950 md:hidden"
+            className="border-t border-white/[0.06] bg-black pb-5 pt-3 md:hidden"
           >
             <nav className="flex flex-col">
               {navLinks.map((link) => (
@@ -93,20 +100,20 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="px-2 py-3 text-sm text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                  className="px-2 py-3 text-sm text-white/55 hover:text-white"
                 >
                   {link.label}
                 </a>
               ))}
               <button
                 onClick={() => { setMobileOpen(false); openPricing(); }}
-                className="px-2 py-3 text-left text-sm text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+                className="px-2 py-3 text-left text-sm text-white/55 hover:text-white"
               >
                 Pricing
               </button>
               <button
                 onClick={() => { setMobileOpen(false); openContact(); }}
-                className="mt-2 bg-slate-950 py-3 text-center text-sm font-medium text-white dark:bg-white dark:text-slate-950"
+                className="mt-3 rounded-full bg-white py-3 text-center text-sm font-medium text-black"
               >
                 Contact sales
               </button>
