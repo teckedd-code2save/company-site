@@ -144,7 +144,7 @@ const products = [
     headline: 'Read the codebase. Return a plan.',
     sub:      'Point Shipd at your repo. It scores every deployment path and returns a recommendation — so you ship with conviction, not guesswork.',
     cta:      'See Shipd',
-    link:     'https://shipd-eight.vercel.app/',
+    link:     'https://shipd-seven.vercel.app/',
     videoSrc: '/images/products/shipd-surface.webm',
     mp4Src:   '/images/products/shipd-surface.mp4',
     isVideo:  true,
