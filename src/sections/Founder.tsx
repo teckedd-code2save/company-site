@@ -56,12 +56,8 @@ export default function Founder() {
             transition={{ duration: 0.65 }}
             className="mx-auto w-full max-w-md"
           >
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:bg-slate-950">
-              <img
-                src="/images/ceo-photo.jpg"
-                alt="Serendepify founder portrait"
-                className="h-[28rem] w-full object-cover"
-              />
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200 shadow-[0_28px_80px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 flex h-[28rem] w-full items-center justify-center">
+              <span className="text-6xl font-bold text-slate-400 dark:text-slate-600">ET</span>
             </div>
           </motion.div>
 

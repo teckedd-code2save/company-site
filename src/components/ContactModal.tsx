@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
+import DrawnUnderline from '@/components/DrawnUnderline';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/lib/modal-context';
 import { siteConfig } from '@/lib/site-config';
@@ -57,6 +58,7 @@ export default function ContactModal() {
                   >
                     Let's figure out if we're the right fit.
                   </motion.h1>
+                  <DrawnUnderline className="mt-3" width={56} delay={0.4} />
 
                   <motion.p
                     initial={{ opacity: 0, y: 12 }}

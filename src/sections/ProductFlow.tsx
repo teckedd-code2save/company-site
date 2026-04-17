@@ -1,6 +1,12 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import SplitText from '@/components/SplitText';
+import MagneticButton from '@/components/MagneticButton';
+import BrowserFrame from '@/components/BrowserFrame';
+import ProductLightbox from '@/components/ProductLightbox';
+import DrawnUnderline from '@/components/DrawnUnderline';
+import LightningFlash from '@/components/LightningFlash';
 
 /* ══════════════════════════════════════════════════════════════════════
    LoopVideo — imperative play() so autoplay always fires, even inside
@@ -32,15 +38,14 @@ function LoopVideo({ webm, mp4, className }: { webm: string; mp4: string; classN
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   InterstitialQuote — 3-D scroll parallax breathing moment.
-   Each variant has distinct alignment, weight, and scale.
+   InterstitialQuote — 3-D scroll parallax + sticky pin breathing moment.
 ═══════════════════════════════════════════════════════════════════════ */
 type QuoteVariant = 'left-heavy' | 'center-light' | 'right-mixed';
 
 interface Quote {
-  main:    string;   // primary line — rendered larger
-  sub:     string;   // secondary line — lighter / dimmer
-  source:  string;   // small attribution label
+  main:    string;
+  sub:     string;
+  source:  string;
   variant: QuoteVariant;
 }
 
@@ -94,23 +99,23 @@ function InterstitialQuote({ q }: { q: Quote }) {
       className="relative overflow-hidden py-28 lg:py-40"
       style={{ perspective: '1400px' }}
     >
-      {/* Ambient glow — offset per variant for variety */}
+      {/* Ambient glow */}
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background: q.variant === 'left-heavy'
-            ? 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(0,230,153,0.05) 0%, transparent 100%)'
+            ? 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(192,132,252,0.05) 0%, transparent 100%)'
             : q.variant === 'right-mixed'
-              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,230,153,0.05) 0%, transparent 100%)'
-              : 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,230,153,0.04) 0%, transparent 100%)',
+              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(192,132,252,0.05) 0%, transparent 100%)'
+              : 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(192,132,252,0.04) 0%, transparent 100%)',
         }}
       />
 
       <motion.div style={{ rotateX, y, opacity }} className={`relative ${s.wrap}`}>
         <p className={s.mainClass} style={s.mainStyle}>{q.main}</p>
         <p className={s.subClass}  style={s.subStyle}>{q.sub}</p>
-        <p className={s.srcClass}  style={{ color: '#00E699' }}>{q.source}</p>
+        <p className={s.srcClass}  style={{ color: '#C084FC' }}>{q.source}</p>
       </motion.div>
     </div>
   );
@@ -191,8 +196,7 @@ const products = [
   },
 ] as const;
 
-/* Interstitial content — impact statements, customer signals, founder observations.
-   Not tied to the adjacent product. Vary by variant for visual rhythm. */
+/* Interstitial content */
 const interstitials: Quote[] = [
   {
     main:    'We went from idea to\ncharging customers in\nunder a week.',
@@ -251,7 +255,7 @@ function ProofStrip({ id, verb, name, statement }: {
                 key={tag}
                 className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium tracking-wide"
                 style={i % 3 === 0
-                  ? { background: '#00E699', color: '#000', border: '1px solid #00E699' }
+                  ? { background: '#C084FC', color: '#000', border: '1px solid #C084FC' }
                   : { background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {tag}
@@ -283,7 +287,7 @@ function ProofStrip({ id, verb, name, statement }: {
                 <p className="text-sm font-semibold text-white">{svc.name}</p>
                 <div className="mt-1.5 flex flex-wrap gap-1">
                   {svc.tags.map((t) => (
-                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider" style={{ color: '#00E699' }}>{t}</span>
+                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider" style={{ color: '#C084FC' }}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -328,117 +332,145 @@ const TEXT_PAD = 'p-10 sm:p-14 lg:p-16 xl:p-20';
    ProductFlow
 ═══════════════════════════════════════════════════════════════════════ */
 export default function ProductFlow() {
+  const [lightbox, setLightbox] = useState<{ open: boolean; type: 'video' | 'image'; src: string; srcFallback?: string; alt?: string }>({
+    open: false,
+    type: 'video',
+    src: '',
+  });
+
+  const openLightbox = (product: typeof products[number]) => {
+    if (product.isVideo && product.videoSrc) {
+      setLightbox({ open: true, type: 'video', src: product.videoSrc, srcFallback: product.mp4Src || undefined, alt: product.name });
+    } else if (!product.isVideo && product.imgSrc) {
+      setLightbox({ open: true, type: 'image', src: product.imgSrc, alt: product.name });
+    }
+  };
+
   return (
-    <div id="products">
-      {products.map((product, idx) => (
-        <div key={product.id}>
+    <>
+      <div id="products">
+        {products.map((product, idx) => (
+          <div key={product.id}>
 
-          {/* ── Product section ──────────────────────────────────────── */}
-          <section
-            id={product.id}
-            className="overflow-hidden bg-black"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-          >
-            <div className={`flex flex-col lg:flex-row lg:items-stretch lg:min-h-[680px] ${product.flip ? 'lg:flex-row-reverse' : ''}`}>
+            {/* ── Product section ──────────────────────────────────────── */}
+            <section
+              id={product.id}
+              className="overflow-hidden"
+              style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}
+            >
+              {idx === 0 && <LightningFlash intensity={0.03} />}
+              <div className={`flex flex-col lg:flex-row lg:items-stretch lg:min-h-[720px] ${product.flip ? 'lg:flex-row-reverse' : ''}`}>
 
-              {/* Text panel */}
-              <motion.div
-                initial={{ opacity: 0, x: product.flip ? 32 : -32 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.7, ease: EASE }}
-                className={`flex shrink-0 items-center lg:w-[480px] xl:w-[560px] ${TEXT_PAD}`}
-              >
-                <div className="w-full">
-                  <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#00E699' }}>
-                    {product.eyebrow}
-                  </p>
-                  <h2
-                    className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
-                    style={{ letterSpacing: '-0.02em' }}
+                {/* Text panel */}
+                <motion.div
+                  initial={{ opacity: 0, x: product.flip ? 32 : -32 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.7, ease: EASE }}
+                  className={`flex shrink-0 items-center lg:w-[480px] xl:w-[560px] ${TEXT_PAD}`}
+                >
+                  <div className="w-full">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#C084FC' }}>
+                      {product.eyebrow}
+                    </p>
+                    <DrawnUnderline className="mb-4" width={28} delay={0.2} />
+                    <h2
+                      className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+                      style={{ letterSpacing: '-0.02em' }}
+                    >
+                      <SplitText stagger={0.03} delay={0.1}>
+                        {product.headline}
+                      </SplitText>
+                    </h2>
+                    <p className="mt-5 text-base leading-7" style={{ color: 'rgba(255,255,255,0.52)' }}>
+                      {product.sub}
+                    </p>
+                    <MagneticButton
+                      as="a"
+                      href={product.link}
+                      className="group mt-8 inline-flex items-center gap-1.5 rounded-full border px-6 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50"
+                      style={{ borderColor: 'rgba(255,255,255,0.18)' }}
+                    >
+                      {product.cta}
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </MagneticButton>
+                  </div>
+                </motion.div>
+
+                {/* Media panel — framed in browser chrome, clickable */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.9, delay: 0.12 }}
+                  className="relative flex-1 min-h-[520px] p-4 sm:p-6 lg:min-h-0 lg:p-10"
+                  style={{ backgroundColor: '#050505' }}
+                >
+                  <BrowserFrame
+                    className="h-full w-full cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
+                    delay={0.3}
+                    onClick={() => openLightbox(product)}
                   >
-                    {product.headline}
-                  </h2>
-                  <p className="mt-5 text-base leading-7" style={{ color: 'rgba(255,255,255,0.52)' }}>
-                    {product.sub}
-                  </p>
-                  <motion.a
-                    href={product.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group mt-8 inline-flex items-center gap-1.5 rounded-full border px-6 py-2.5 text-sm font-medium text-white"
-                    style={{ borderColor: 'rgba(255,255,255,0.18)' }}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)')}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)')}
-                  >
-                    {product.cta}
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </motion.a>
-                </div>
-              </motion.div>
+                    {product.isVideo && product.videoSrc ? (
+                      <LoopVideo
+                        webm={product.videoSrc}
+                        mp4={product.mp4Src!}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full overflow-hidden">
+                        <img
+                          src={(product as { imgSrc?: string }).imgSrc ?? ''}
+                          alt={product.name}
+                          className="h-full w-full object-cover"
+                          style={{
+                            display: 'block',
+                            animation: 'ken-burns 24s ease-in-out infinite alternate',
+                          }}
+                        />
+                      </div>
+                    )}
+                  </BrowserFrame>
 
-              {/* Media panel — zero padding, bleeds to screen edge */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.9, delay: 0.12 }}
-                className="relative flex-1 min-h-[480px] lg:min-h-0"
-                style={{ background: '#0a0a0a' }}
-              >
-                {product.isVideo && product.videoSrc ? (
-                  <LoopVideo
-                    webm={product.videoSrc}
-                    mp4={product.mp4Src!}
-                    className="absolute inset-0 h-full w-full object-cover"
+                  {/* Soft directional shadow for text-edge blending */}
+                  <div
+                    className={`pointer-events-none absolute inset-y-0 ${product.flip ? 'right-0' : 'left-0'}`}
+                    style={{
+                      width: '18%',
+                      background: product.flip
+                        ? 'linear-gradient(to left,  #000 0%, transparent 100%)'
+                        : 'linear-gradient(to right, #000 0%, transparent 100%)',
+                    }}
                   />
-                ) : (
-                  <img
-                    src={(product as { imgSrc?: string }).imgSrc ?? ''}
-                    alt={product.name}
-                    className="absolute inset-0 h-full w-full object-cover"
-                    style={{ display: 'block' }}
-                  />
-                )}
+                </motion.div>
 
-                {/* Strong directional shadow — text-facing edge blends into the black bg */}
-                <div
-                  className={`pointer-events-none absolute inset-y-0 ${product.flip ? 'right-0' : 'left-0'}`}
-                  style={{
-                    width: '45%',
-                    background: product.flip
-                      ? 'linear-gradient(to left,  #000 0%, rgba(0,0,0,0.72) 25%, rgba(0,0,0,0.3) 60%, transparent 100%)'
-                      : 'linear-gradient(to right, #000 0%, rgba(0,0,0,0.72) 25%, rgba(0,0,0,0.3) 60%, transparent 100%)',
-                  }}
-                />
-                {/* Top edge fade into section border */}
-                <div
-                  className="pointer-events-none absolute inset-x-0 top-0 h-16"
-                  style={{ background: 'linear-gradient(to bottom, #000, transparent)' }}
-                />
-                {/* Bottom edge fade into next section */}
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-16"
-                  style={{ background: 'linear-gradient(to top, #000, transparent)' }}
-                />
-              </motion.div>
+              </div>
+            </section>
 
-            </div>
-          </section>
+            {/* Proof strip */}
+            <ProofStrip id={product.id} verb={product.proof.verb} name={product.name} statement={product.proof.statement} />
 
-          {/* Proof strip */}
-          <ProofStrip id={product.id} verb={product.proof.verb} name={product.name} statement={product.proof.statement} />
+            {/* 3-D scroll quote */}
+            {idx < products.length - 1 && (
+              <InterstitialQuote q={interstitials[idx]} />
+            )}
 
-          {/* 3-D scroll quote — between every pair of products, not after the last */}
-          {idx < products.length - 1 && (
-            <InterstitialQuote q={interstitials[idx]} />
-          )}
+          </div>
+        ))}
+      </div>
 
-        </div>
-      ))}
-    </div>
+      <style>{`
+        @keyframes ken-burns {
+          0% { transform: scale(1) translate(0, 0); }
+          100% { transform: scale(1.08) translate(-1%, -1%); }
+        }
+      `}</style>
+
+      <ProductLightbox
+        open={lightbox.open}
+        onClose={() => setLightbox((s) => ({ ...s, open: false }))}
+        media={{ type: lightbox.type, src: lightbox.src, srcFallback: lightbox.srcFallback, alt: lightbox.alt }}
+      />
+    </>
   );
 }

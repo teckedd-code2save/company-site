@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Check, LoaderCircle, RefreshCw, Receipt } from 'lucide-react';
+import DrawnUnderline from '@/components/DrawnUnderline';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/lib/modal-context';
 import { startCheckout } from '@/lib/checkout';
@@ -186,6 +187,7 @@ export default function PricingModal() {
                     Scale when it works.
                   </span>
                 </h1>
+                <DrawnUnderline className="mt-4" width={64} delay={0.3} />
                 <p className="mt-5 max-w-lg text-base text-slate-500 dark:text-slate-400">
                   No procurement loops. No black-box quotes. Pick a tier and get going.
                 </p>

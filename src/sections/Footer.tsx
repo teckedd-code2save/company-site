@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
+import MagneticButton from '@/components/MagneticButton';
+import DrawnUnderline from '@/components/DrawnUnderline';
 
 const footerLinks = {
   products: [
@@ -26,7 +28,7 @@ export default function Footer() {
   const { openContact, openPricing } = useModal();
 
   return (
-    <footer className="bg-black" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}>
 
       {/* Contact sales strip */}
       <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -35,23 +37,31 @@ export default function Footer() {
             <p className="text-lg font-semibold text-white">
               Building for the AI economy? Let's talk.
             </p>
-            <p className="mt-1 text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            <DrawnUnderline className="my-2" width={40} delay={0.1} />
+            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Open to product collaborations, AI deployments, and founding-stage partnerships.
             </p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <MagneticButton
             onClick={openContact}
             className="shrink-0 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-opacity hover:opacity-85"
           >
             Contact sales
-          </motion.button>
+          </MagneticButton>
         </div>
       </div>
 
       {/* Main footer */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* Connection line — draws upward from bottom-left */}
+        <motion.div
+          className="pointer-events-none absolute -top-24 left-0 w-px origin-bottom bg-[#C084FC]/30"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          style={{ height: 96 }}
+        />
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +73,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <a href="#" className="mb-4 flex items-center gap-2.5">
-              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#00E699' }} />
+              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#C084FC' }} />
               <span className="text-sm font-semibold tracking-tight text-white">
                 Serendepify AI
               </span>
@@ -82,8 +92,8 @@ export default function Footer() {
                   className="flex h-8 w-8 items-center justify-center rounded-full transition-colors"
                   style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = '#00E699';
-                    e.currentTarget.style.color = '#00E699';
+                    e.currentTarget.style.borderColor = '#C084FC';
+                    e.currentTarget.style.color = '#C084FC';
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';

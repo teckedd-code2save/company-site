@@ -2,6 +2,12 @@ import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
+import ScrambleText from '@/components/ScrambleText';
+import SplitText from '@/components/SplitText';
+import MagneticButton from '@/components/MagneticButton';
+import HeroBlueprint from '@/components/HeroBlueprint';
+import DrawnUnderline from '@/components/DrawnUnderline';
+import LightningFlash from '@/components/LightningFlash';
 
 const HeroParticles = lazy(() => import('@/components/HeroParticles'));
 
@@ -9,7 +15,7 @@ const HeroParticles = lazy(() => import('@/components/HeroParticles'));
 const heroContainer = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
   },
 };
 
@@ -24,41 +30,26 @@ export default function Hero() {
   const { openContact } = useModal();
 
   return (
-    <section className="relative overflow-hidden bg-black">
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#050505' }}>
+      <LightningFlash intensity={0.03} />
+
+      {/* ── Blueprint drawing layer ────────────────────────────────── */}
+      <HeroBlueprint />
 
       {/* ── WebGL particle field ─────────────────────────────────────── */}
       <Suspense fallback={null}>
         <HeroParticles />
       </Suspense>
 
-      {/* ── Breathing ambient orbs ──────────────────────────────────── */}
-      <div
-        className="pointer-events-none absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full animate-glow-breathe"
-        style={{ background: 'radial-gradient(circle, rgba(0,230,153,0.10) 0%, transparent 70%)' }}
-      />
-      <div
-        className="pointer-events-none absolute right-[-15%] top-[15%] h-[550px] w-[550px] rounded-full animate-glow-breathe-slow"
-        style={{
-          background: 'radial-gradient(circle, rgba(0,230,153,0.05) 0%, transparent 70%)',
-          animationDelay: '-3.5s',
-        }}
-      />
-
-      {/* ── Dot grid ────────────────────────────────────────────────── */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(0,230,153,1) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-
       {/* ── Bottom fade ─────────────────────────────────────────────── */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/80 to-transparent" />
+
+      {/* ── Left text-guard gradient ────────────────────────────────── */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[48%] bg-gradient-to-r from-black via-black/50 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        <div className="flex min-h-[72vh] items-end pb-20 pt-36 sm:pb-24 sm:pt-44">
+        <div className="flex min-h-[72vh] items-end pb-24 pt-36 sm:pb-28 sm:pt-44">
           <motion.div
             className="max-w-4xl"
             variants={heroContainer}
@@ -67,30 +58,34 @@ export default function Hero() {
           >
 
             {/* Eyebrow */}
-            <motion.p
-              variants={heroItem}
-              className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em]"
-              style={{ color: '#00E699' }}
-            >
-              Building for the AI economy
-            </motion.p>
+            <motion.div variants={heroItem} className="mb-6">
+              <p
+                className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em]"
+                style={{ color: '#C084FC' }}
+              >
+                <ScrambleText delay={400} duration={900}>
+                  Building for the AI economy
+                </ScrambleText>
+              </p>
+              <DrawnUnderline width={32} delay={1.2} />
+            </motion.div>
 
             {/* H1 */}
-            <motion.h1
-              variants={heroItem}
-              className="text-6xl font-bold leading-[0.96] tracking-tight text-white sm:text-7xl lg:text-[5.6rem]"
-              style={{ letterSpacing: '-0.03em' }}
-            >
-              We build the stack that<br />
-              <span className="font-light italic" style={{ color: 'rgba(255,255,255,0.38)' }}>
-                makes AI autonomous.
-              </span>
-            </motion.h1>
+            <motion.div variants={heroItem} className="mb-2">
+              <h1
+                className="text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl sm:font-bold lg:text-[5.2rem] lg:leading-[0.98] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+                style={{ letterSpacing: '-0.03em' }}
+              >
+                <SplitText trigger="animate" stagger={0.035} delay={0.6}>
+                  We build the stack that makes AI autonomous.
+                </SplitText>
+              </h1>
+            </motion.div>
 
             {/* Sub */}
             <motion.p
               variants={heroItem}
-              className="mt-7 max-w-xl text-base leading-7"
+              className="mt-7 max-w-xl text-base leading-7 drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]"
               style={{ color: 'rgba(255,255,255,0.52)' }}
             >
               The transition from AI-assisted to AI-autonomous is already underway.
@@ -103,27 +98,21 @@ export default function Hero() {
               variants={heroItem}
               className="mt-10 flex flex-wrap items-center gap-4"
             >
-              <motion.a
+              <MagneticButton
+                as="a"
                 href="#products"
-                whileHover={{ scale: 1.03, boxShadow: '0 0 22px rgba(255,255,255,0.14)' }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 className="rounded-full bg-white px-7 py-3 text-sm font-medium text-black"
               >
                 Explore our products
-              </motion.a>
-              <motion.button
+              </MagneticButton>
+
+              <MagneticButton
                 onClick={openContact}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                className="rounded-full border px-7 py-3 text-sm font-medium text-white"
+                className="rounded-full border px-7 py-3 text-sm font-medium text-white transition-colors hover:border-white/45"
                 style={{ borderColor: 'rgba(255,255,255,0.18)' }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)')}
               >
                 Start a conversation
-              </motion.button>
+              </MagneticButton>
             </motion.div>
 
           </motion.div>
@@ -135,7 +124,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
+        transition={{ delay: 2.2, duration: 0.6 }}
         className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
       >
         <ArrowDown

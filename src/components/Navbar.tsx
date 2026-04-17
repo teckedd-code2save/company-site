@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
+import MagneticButton from '@/components/MagneticButton';
 
 const navLinks = [
   { label: 'Products',    href: '#products' },
@@ -26,19 +27,34 @@ export default function Navbar() {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed left-0 right-0 top-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-white/[0.06] bg-black/90 backdrop-blur-md'
+          ? 'border-b border-white/[0.06] backdrop-blur-md'
           : 'bg-transparent'
       }`}
+      style={{ backgroundColor: scrolled ? 'rgba(5,5,5,0.9)' : 'transparent' }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5">
-            <div
-              className="h-5 w-5 rounded-sm"
-              style={{ backgroundColor: '#00E699' }}
-            />
+            <svg width="20" height="20" viewBox="0 0 20 20" className="overflow-visible">
+              <motion.rect
+                x="1" y="1" width="18" height="18" rx="3"
+                fill="none"
+                stroke="#C084FC"
+                strokeWidth="1.5"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              />
+              <motion.rect
+                x="1" y="1" width="18" height="18" rx="3"
+                fill="#C084FC"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+              />
+            </svg>
             <span className="text-sm font-semibold tracking-tight text-white">
               Serendepify AI
             </span>
@@ -66,15 +82,12 @@ export default function Navbar() {
             >
               Pricing
             </motion.button>
-            <motion.button
+            <MagneticButton
               onClick={openContact}
-              whileHover={{ scale: 1.03, boxShadow: '0 0 18px rgba(255,255,255,0.12)' }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black"
             >
               Contact sales
-            </motion.button>
+            </MagneticButton>
           </div>
 
           {/* Mobile toggle */}
@@ -92,7 +105,8 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="border-t border-white/[0.06] bg-black pb-5 pt-3 md:hidden"
+            className="border-t border-white/[0.06] pb-5 pt-3 md:hidden"
+            style={{ backgroundColor: '#050505' }}
           >
             <nav className="flex flex-col">
               {navLinks.map((link) => (
