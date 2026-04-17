@@ -17,7 +17,7 @@ export default function BrowserFrame({ children, className = '', delay = 0, onCl
   return (
     <div ref={ref} className={`relative ${className}`} onClick={onClick} role="button" tabIndex={onClick ? 0 : undefined} onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); } : undefined}>
       {/* Top bar */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex h-10 items-center gap-2 rounded-t-2xl border-b border-white/10 bg-white/[0.02] px-4">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex h-10 items-center gap-2 rounded-t-2xl border-b border-white/10 px-4 glass-strong">
         <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
         <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
         <span className="h-2.5 w-2.5 rounded-full bg-green-400/80" />
@@ -62,7 +62,7 @@ export default function BrowserFrame({ children, className = '', delay = 0, onCl
           <motion.div
             className="absolute -left-px -top-px z-10 h-4 w-4"
             style={{
-              background: 'linear-gradient(135deg, rgba(192,132,252,0.4) 0%, transparent 60%)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 60%)',
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -71,7 +71,7 @@ export default function BrowserFrame({ children, className = '', delay = 0, onCl
           <motion.div
             className="absolute -bottom-px -right-px z-10 h-4 w-4"
             style={{
-              background: 'linear-gradient(315deg, rgba(192,132,252,0.4) 0%, transparent 60%)',
+              background: 'linear-gradient(315deg, rgba(255,255,255,0.4) 0%, transparent 60%)',
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

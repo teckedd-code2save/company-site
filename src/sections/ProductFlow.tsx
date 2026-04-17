@@ -7,6 +7,7 @@ import BrowserFrame from '@/components/BrowserFrame';
 import ProductLightbox from '@/components/ProductLightbox';
 import DrawnUnderline from '@/components/DrawnUnderline';
 import LightningFlash from '@/components/LightningFlash';
+import MouseReactiveGrid from '@/components/MouseReactiveGrid';
 
 /* ══════════════════════════════════════════════════════════════════════
    LoopVideo — imperative play() so autoplay always fires, even inside
@@ -99,23 +100,26 @@ function InterstitialQuote({ q }: { q: Quote }) {
       className="relative overflow-hidden py-28 lg:py-40"
       style={{ perspective: '1400px' }}
     >
+      {/* Mouse-reactive dot grid */}
+      <MouseReactiveGrid />
+
       {/* Ambient glow */}
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background: q.variant === 'left-heavy'
-            ? 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(192,132,252,0.05) 0%, transparent 100%)'
+            ? 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 100%)'
             : q.variant === 'right-mixed'
-              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(192,132,252,0.05) 0%, transparent 100%)'
-              : 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(192,132,252,0.04) 0%, transparent 100%)',
+              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(255,255,255,0.04) 0%, transparent 100%)'
+              : 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 100%)',
         }}
       />
 
       <motion.div style={{ rotateX, y, opacity }} className={`relative ${s.wrap}`}>
         <p className={s.mainClass} style={s.mainStyle}>{q.main}</p>
         <p className={s.subClass}  style={s.subStyle}>{q.sub}</p>
-        <p className={s.srcClass}  style={{ color: '#C084FC' }}>{q.source}</p>
+        <p className={s.srcClass}  style={{ color: '#FFFFFF' }}>{q.source}</p>
       </motion.div>
     </div>
   );
@@ -242,20 +246,21 @@ function ProofStrip({ id, verb, name, statement }: {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5 }}
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}
+        className="glass-card rounded-none"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-5 flex items-baseline gap-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="text-lg font-bold tracking-tight text-white">{name}</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
+            <p className="text-lg font-semibold tracking-tight text-white">{name}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             {b2dpTags.map((tag, i) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium tracking-wide"
+                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-light tracking-wide"
                 style={i % 3 === 0
-                  ? { background: '#C084FC', color: '#000', border: '1px solid #C084FC' }
+                  ? { background: '#FFFFFF', color: '#000', border: '1px solid #FFFFFF' }
                   : { background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
                 {tag}
@@ -274,20 +279,21 @@ function ProofStrip({ id, verb, name, statement }: {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.5 }}
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}
+        className="glass-card rounded-none"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-5 flex items-baseline gap-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="text-lg font-bold tracking-tight text-white">{name}</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
+            <p className="text-lg font-semibold tracking-tight text-white">{name}</p>
           </div>
-          <div className="grid grid-cols-2 gap-px sm:grid-cols-4" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {shipdServices.map((svc) => (
-              <div key={svc.name} className="px-4 py-4" style={{ background: '#000' }}>
-                <p className="text-sm font-semibold text-white">{svc.name}</p>
+              <div key={svc.name} className="glass-card rounded-xl px-4 py-4">
+                <p className="text-sm font-light text-white">{svc.name}</p>
                 <div className="mt-1.5 flex flex-wrap gap-1">
                   {svc.tags.map((t) => (
-                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider" style={{ color: '#C084FC' }}>{t}</span>
+                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider" style={{ color: '#FFFFFF' }}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -304,13 +310,14 @@ function ProofStrip({ id, verb, name, statement }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5 }}
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}
+      className="glass-card rounded-none"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8">
           <div className="shrink-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="mt-0.5 text-xl font-bold tracking-tight text-white">{name}</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
+            <p className="mt-0.5 text-xl font-semibold tracking-tight text-white">{name}</p>
           </div>
           <div className="hidden h-10 w-px sm:block" style={{ background: 'rgba(255,255,255,0.08)' }} />
           <p className="text-sm leading-6" style={{ color: 'rgba(255,255,255,0.5)' }}>{statement}</p>
@@ -356,7 +363,7 @@ export default function ProductFlow() {
             <section
               id={product.id}
               className="overflow-hidden"
-              style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}
+              style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
             >
               {idx === 0 && <LightningFlash intensity={0.03} />}
               <div className={`flex flex-col lg:flex-row lg:items-stretch lg:min-h-[720px] ${product.flip ? 'lg:flex-row-reverse' : ''}`}>
@@ -370,19 +377,19 @@ export default function ProductFlow() {
                   className={`flex shrink-0 items-center lg:w-[480px] xl:w-[560px] ${TEXT_PAD}`}
                 >
                   <div className="w-full">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#C084FC' }}>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
                       {product.eyebrow}
                     </p>
                     <DrawnUnderline className="mb-4" width={28} delay={0.2} />
                     <h2
-                      className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+                      className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
                       style={{ letterSpacing: '-0.02em' }}
                     >
                       <SplitText stagger={0.03} delay={0.1}>
                         {product.headline}
                       </SplitText>
                     </h2>
-                    <p className="mt-5 text-base leading-7" style={{ color: 'rgba(255,255,255,0.52)' }}>
+                    <p className="mt-5 text-base font-light leading-7" style={{ color: 'rgba(255,255,255,0.52)' }}>
                       {product.sub}
                     </p>
                     <MagneticButton
@@ -404,7 +411,7 @@ export default function ProductFlow() {
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.9, delay: 0.12 }}
                   className="relative flex-1 min-h-[520px] p-4 sm:p-6 lg:min-h-0 lg:p-10"
-                  style={{ backgroundColor: '#050505' }}
+                  style={{ backgroundColor: '#000000' }}
                 >
                   <BrowserFrame
                     className="h-full w-full cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"

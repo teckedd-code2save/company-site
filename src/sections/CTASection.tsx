@@ -24,7 +24,7 @@ export default function CTASection() {
   return (
     <section
       className="relative overflow-hidden py-24 lg:py-36"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
     >
       <LightningFlash intensity={0.04} />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -37,13 +37,13 @@ export default function CTASection() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            <motion.p variants={colItem} className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#C084FC' }}>
+            <motion.p variants={colItem} className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#E898A8' }}>
               Open for work
             </motion.p>
             <DrawnUnderline className="mb-4" width={36} delay={0.3} />
             <motion.div variants={colItem}>
               <h2
-                className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+                className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
                 style={{ letterSpacing: '-0.03em' }}
               >
                 <SplitText stagger={0.03}>
@@ -61,21 +61,23 @@ export default function CTASection() {
             transition={{ duration: 0.65, delay: 0.18 }}
             className="flex flex-col gap-3 lg:items-end"
           >
-            <MagneticButton
-              as="a"
-              href="#products"
-              className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black"
-            >
-              See our products
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </MagneticButton>
-            <MagneticButton
-              onClick={openContact}
-              className="inline-flex items-center gap-2 rounded-full border px-8 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/45"
-              style={{ borderColor: 'rgba(255,255,255,0.18)' }}
-            >
-              Open a conversation
-            </MagneticButton>
+            <div className="glass-card flex flex-col gap-3 rounded-2xl p-5 sm:p-6">
+              <MagneticButton
+                as="a"
+                href="#products"
+                className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-medium text-black"
+              >
+                See our products
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </MagneticButton>
+              <MagneticButton
+                onClick={openContact}
+                className="inline-flex items-center gap-2 rounded-full border px-8 py-3 text-sm font-medium text-white transition-colors hover:border-white/45"
+                style={{ borderColor: 'rgba(255,255,255,0.18)' }}
+              >
+                Open a conversation
+              </MagneticButton>
+            </div>
           </motion.div>
         </div>
       </div>

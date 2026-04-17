@@ -12,7 +12,7 @@ export default function DrawnUnderline({
   className = '',
   width = 48,
   delay = 0,
-  color = '#C084FC',
+  color = '#FFFFFF',
 }: DrawnUnderlineProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });

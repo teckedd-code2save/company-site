@@ -82,10 +82,10 @@ export default function CustomCursor() {
           style={{
             width: 10,
             height: 10,
-            backgroundColor: '#C084FC',
+            backgroundColor: '#FFFFFF',
             boxShadow: hovered
-              ? '0 0 20px rgba(192,132,252,0.5)'
-              : '0 0 8px rgba(192,132,252,0.35)',
+              ? '0 0 20px rgba(255,255,255,0.5)'
+              : '0 0 8px rgba(255,255,255,0.35)',
           }}
         />
       </motion.div>

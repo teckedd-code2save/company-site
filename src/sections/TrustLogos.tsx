@@ -54,7 +54,7 @@ export default function TrustLogos() {
       style={{
         borderTop: '1px solid rgba(255,255,255,0.06)',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
-        background: '#050505',
+        background: '#000000',
       }}
     >
       {/* Header */}
@@ -65,11 +65,11 @@ export default function TrustLogos() {
         transition={{ duration: 0.5 }}
         className="mb-14 text-center"
       >
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#C084FC' }}>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#FFFFFF' }}>
           Tools & platforms we build with
         </p>
         <DrawnUnderline className="mx-auto mb-4" width={48} delay={0.2} />
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl" style={{ letterSpacing: '-0.02em' }}>
+        <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl" style={{ letterSpacing: '-0.02em' }}>
           Built on the best infrastructure.
         </h2>
       </motion.div>
@@ -85,7 +85,7 @@ export default function TrustLogos() {
         {featured.map((logo) => (
           <div
             key={logo.name}
-            className="flex items-center gap-3 text-white/80 transition-colors hover:text-[#C084FC]"
+            className="flex items-center gap-3 text-white/80 transition-colors hover:text-[#FFFFFF]"
           >
             <span className="text-white/90">{logo.mark}</span>
             <span className="text-base font-semibold tracking-wide">{logo.name}</span>
@@ -96,9 +96,9 @@ export default function TrustLogos() {
       {/* Vertical infinite scroll of remaining tools */}
       <div className="relative mx-auto h-40 max-w-xl overflow-hidden">
         {/* Top fade */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-12 bg-gradient-to-b from-[#050505] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-12 bg-gradient-to-b from-[#000000] to-transparent" />
         {/* Bottom fade */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-t from-[#050505] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-t from-[#000000] to-transparent" />
 
         <div className="animate-scroll-up flex flex-col items-center gap-5">
           {[...scrolling, ...scrolling, ...scrolling].map((logo, i) => (

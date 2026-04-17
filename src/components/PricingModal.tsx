@@ -7,6 +7,8 @@ import { useModal } from '@/lib/modal-context';
 import { startCheckout } from '@/lib/checkout';
 import { getPlanAction, resolveContactLink, resolvePaymentLink } from '@/lib/site-config';
 
+const MAUVE = '#D4A5B0';
+
 type BillingMode = 'project' | 'retainer';
 
 const plans = {
@@ -156,7 +158,8 @@ export default function PricingModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-slate-950"
+          className="fixed inset-0 z-50 overflow-y-auto"
+          style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)' }}
         >
           <motion.div
             initial={{ y: 32, opacity: 0 }}
@@ -166,13 +169,13 @@ export default function PricingModal() {
             className="min-h-full"
           >
             {/* Top bar */}
-            <div className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-slate-100 bg-white/95 px-6 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 sm:px-10">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+            <div className="glass-strong sticky top-0 z-10 flex h-14 items-center justify-between border-b border-white/[0.06] px-6 sm:px-10">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
                 Pricing
               </span>
               <button
                 onClick={closePricing}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -181,26 +184,26 @@ export default function PricingModal() {
             <div className="mx-auto max-w-6xl px-6 pb-24 pt-16 sm:px-10">
               {/* Header */}
               <div className="mb-14">
-                <h1 className="text-5xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-6xl lg:text-7xl">
+                <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
                   Start small.{' '}
-                  <span className="font-light text-slate-400 dark:text-slate-500">
+                  <span className="font-light text-white/35">
                     Scale when it works.
                   </span>
                 </h1>
-                <DrawnUnderline className="mt-4" width={64} delay={0.3} />
-                <p className="mt-5 max-w-lg text-base text-slate-500 dark:text-slate-400">
+                <DrawnUnderline className="mt-4" width={64} delay={0.3} color={MAUVE} />
+                <p className="mt-5 max-w-lg text-base text-white/50">
                   No procurement loops. No black-box quotes. Pick a tier and get going.
                 </p>
 
                 {/* Billing toggle */}
-                <div className="mt-8 inline-flex items-center gap-1 border border-slate-200 bg-slate-50 p-1 dark:border-slate-800 dark:bg-slate-900">
+                <div className="glass-card mt-8 inline-flex items-center gap-1 rounded-xl p-1">
                   <button
                     type="button"
                     onClick={() => setBillingMode('project')}
-                    className={`px-5 py-2 text-sm font-medium transition-all ${
+                    className={`px-5 py-2 text-sm font-medium transition-all rounded-lg ${
                       billingMode === 'project'
-                        ? 'bg-slate-950 text-white dark:bg-white dark:text-black'
-                        : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                        ? 'bg-white text-black'
+                        : 'text-white/50 hover:text-white'
                     }`}
                   >
                     One-time
@@ -208,10 +211,10 @@ export default function PricingModal() {
                   <button
                     type="button"
                     onClick={() => setBillingMode('retainer')}
-                    className={`flex items-center gap-1.5 px-5 py-2 text-sm font-medium transition-all ${
+                    className={`flex items-center gap-1.5 px-5 py-2 text-sm font-medium transition-all rounded-lg ${
                       billingMode === 'retainer'
-                        ? 'bg-slate-950 text-white dark:bg-white dark:text-black'
-                        : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                        ? 'bg-white text-black'
+                        : 'text-white/50 hover:text-white'
                     }`}
                   >
                     <RefreshCw className="h-3 w-3" />
@@ -220,59 +223,61 @@ export default function PricingModal() {
                 </div>
               </div>
 
-              {/* Plans — thin border grid */}
+              {/* Plans */}
               <motion.div
                 key={billingMode}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 gap-px bg-slate-200/70 dark:bg-slate-800/70 md:grid-cols-3"
+                className="grid grid-cols-1 gap-4 md:grid-cols-3"
               >
                 {activePlans.map((plan) => (
                   <div
                     key={plan.name}
-                    className={`relative flex flex-col p-8 ${
-                      plan.popular
-                        ? 'bg-slate-950 dark:bg-slate-900'
-                        : 'bg-white dark:bg-slate-950'
+                    className={`glass-card relative flex flex-col rounded-2xl p-8 ${
+                      plan.popular ? 'border-white/15' : ''
                     }`}
+                    style={plan.popular ? { boxShadow: '0 4px 32px rgba(0,0,0,0.4), 0 0 24px rgba(212,165,176,0.08), inset 0 1px 0 rgba(255,255,255,0.06)' } : undefined}
                   >
                     {plan.badge && (
-                      <span className="mb-4 inline-flex w-fit items-center gap-1 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-slate-950">
+                      <span
+                        className="mb-4 inline-flex w-fit items-center gap-1 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest"
+                        style={{ background: 'linear-gradient(135deg, #E898A8, #D4A5B0)', color: '#000' }}
+                      >
                         {plan.badge}
                       </span>
                     )}
 
-                    <p className={`text-xs font-semibold uppercase tracking-[0.2em] ${plan.popular ? 'text-slate-400' : 'text-slate-400'}`}>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
                       {plan.name}
                     </p>
 
                     <div className="mt-4">
                       {plan.price !== null ? (
                         <div className="flex items-baseline gap-1.5">
-                          <span className={`text-5xl font-bold tracking-tight ${plan.popular ? 'text-white' : 'text-slate-950 dark:text-white'}`}>
+                          <span className="text-5xl font-semibold tracking-tight text-white">
                             ${plan.price}
                           </span>
-                          <span className={`text-sm ${plan.popular ? 'text-slate-400' : 'text-slate-400'}`}>
+                          <span className="text-sm text-white/40">
                             {plan.priceNote}
                           </span>
                         </div>
                       ) : (
-                        <span className={`text-4xl font-bold tracking-tight ${plan.popular ? 'text-white' : 'text-slate-950 dark:text-white'}`}>
+                        <span className="text-4xl font-semibold tracking-tight text-white">
                           Custom
                         </span>
                       )}
                     </div>
 
-                    <p className={`mt-3 text-sm leading-6 ${plan.popular ? 'text-slate-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                    <p className="mt-3 text-sm leading-6 text-white/45">
                       {plan.description}
                     </p>
 
                     <Button
-                      className={`mt-6 w-full rounded-none py-5 text-sm font-medium transition-opacity hover:opacity-80 ${
+                      className={`mt-6 w-full rounded-full py-5 text-sm font-medium transition-opacity hover:opacity-90 ${
                         plan.popular
-                          ? 'bg-white text-slate-950 hover:opacity-90'
-                          : 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                          ? 'bg-white text-black'
+                          : 'bg-white/10 text-white hover:bg-white/20'
                       }`}
                       disabled={pendingPlan === plan.key}
                       onClick={() => void handleCheckout(plan.key)}
@@ -285,10 +290,8 @@ export default function PricingModal() {
                     <ul className="mt-8 space-y-3">
                       {plan.features.map((f) => (
                         <li key={f} className="flex items-start gap-3">
-                          <Check className={`mt-0.5 h-4 w-4 shrink-0 ${plan.popular ? 'text-slate-400' : 'text-slate-400'}`} />
-                          <span className={`text-sm ${plan.popular ? 'text-slate-300' : 'text-slate-600 dark:text-slate-400'}`}>
-                            {f}
-                          </span>
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-white/35" />
+                          <span className="text-sm text-white/55">{f}</span>
                         </li>
                       ))}
                     </ul>
@@ -298,17 +301,17 @@ export default function PricingModal() {
 
               {/* Reassurance */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8">
-                <div className="flex items-center gap-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 text-sm text-white/40">
                   <Receipt className="h-3.5 w-3.5 shrink-0" />
                   Receipt and invoice on every payment
                 </div>
-                <div className="flex items-center gap-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 text-sm text-white/40">
                   <Check className="h-3.5 w-3.5 shrink-0" />
                   Stripe-secured · no account required
                 </div>
                 <button
                   onClick={() => { closePricing(); openContact(); }}
-                  className="text-sm text-slate-400 underline underline-offset-2 transition-colors hover:text-slate-700 dark:hover:text-white"
+                  className="text-sm text-white/40 underline underline-offset-2 transition-colors hover:text-white"
                 >
                   Not sure which plan fits? Send a message →
                 </button>

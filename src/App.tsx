@@ -7,21 +7,24 @@ import Hero from './sections/Hero';
 import TrustLogos from './sections/TrustLogos';
 import ProductFlow from './sections/ProductFlow';
 import Features from './sections/Features';
+import TimelineSection from './sections/TimelineSection';
 import SocialProof from './sections/SocialProof';
 import CTASection from './sections/CTASection';
 import Footer from './sections/Footer';
 import GrainOverlay from './components/GrainOverlay';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
+import CursorSpotlight from './components/CursorSpotlight';
 import AnimatedRule from './components/AnimatedRule';
 
 function App() {
   return (
     <ModalProvider>
-      <div className="min-h-screen text-white" style={{ backgroundColor: '#050505' }}>
+      <div className="dark min-h-screen text-white" style={{ backgroundColor: '#000000' }}>
         <GrainOverlay />
         <CustomCursor />
         <ScrollProgress />
+        <CursorSpotlight />
         <CheckoutNotice />
         <Navbar />
         <main>
@@ -29,6 +32,7 @@ function App() {
           <TrustLogos />
           <AnimatedRule />
           <ProductFlow />
+          <TimelineSection />
           <Features />
           <SocialProof />
           <AnimatedRule delay={0.1} />

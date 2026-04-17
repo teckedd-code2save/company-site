@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useModal } from '@/lib/modal-context';
-import BranchDiagram from '@/components/BranchDiagram';
+
 import SplitText from '@/components/SplitText';
 import MagneticButton from '@/components/MagneticButton';
 import DrawnUnderline from '@/components/DrawnUnderline';
@@ -49,7 +49,7 @@ export default function Features() {
     <section
       id="features"
       className="py-20 lg:py-28"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
     >
       <LightningFlash intensity={0.035} />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,13 +63,13 @@ export default function Features() {
           className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#C084FC' }}>
+            <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
               Our operating thesis
             </p>
             <DrawnUnderline className="mb-3" width={40} delay={0.2} />
             <h2
-              className="text-4xl font-bold tracking-tight text-white sm:text-5xl"
-              style={{ letterSpacing: '-0.02em' }}
+              className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+              style={{ letterSpacing: '-0.03em' }}
             >
               <SplitText stagger={0.035}>
                 Strong conviction. Zero compromise.
@@ -78,7 +78,7 @@ export default function Features() {
           </div>
           <MagneticButton
             onClick={openContact}
-            className="shrink-0 text-sm font-medium text-white lg:pb-1"
+            className="shrink-0 text-sm font-light text-white lg:pb-1"
           >
             Work with us →
           </MagneticButton>
@@ -90,32 +90,15 @@ export default function Features() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 gap-px lg:grid-cols-3"
-          style={{ background: 'rgba(255,255,255,0.06)' }}
+          className="grid grid-cols-1 gap-4 lg:grid-cols-3"
         >
           {/* Large identity card */}
           <motion.div
             variants={gridCard}
-            className="col-span-1 p-8 text-white sm:p-10 lg:col-span-2 lg:row-span-2"
-            style={{ background: '#080808' }}
+            className="glass-card col-span-1 rounded-2xl p-8 text-white sm:p-10 lg:col-span-2 lg:row-span-2"
           >
-            {/* Animated mint accent bar */}
-            <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              whileInView={{ width: 48, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: EASE, delay: 0.3 }}
-              className="mb-8 h-px"
-              style={{ background: '#C084FC' }}
-            />
-
-            {/* Branch diagram */}
-            <div className="mb-8 h-40 w-full opacity-70">
-              <BranchDiagram />
-            </div>
-
             <p
-              className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+              className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
               style={{ letterSpacing: '-0.03em' }}
             >
               <SplitText stagger={0.03} delay={0.2}>
@@ -140,8 +123,7 @@ export default function Features() {
               variants={gridCard}
               whileHover="hover"
               initial="rest"
-              className="group relative cursor-default p-7 sm:p-8"
-              style={{ background: '#000' }}
+              className="group relative cursor-default glass-card rounded-2xl p-7 sm:p-8"
             >
               {/* Hover border trace */}
               <svg
@@ -154,7 +136,7 @@ export default function Features() {
                   width="100%"
                   height="100%"
                   fill="none"
-                  stroke="#C084FC"
+                  stroke="rgba(255,255,255,0.4)"
                   strokeWidth={1}
                   initial={{ pathLength: 0, opacity: 0 }}
                   variants={{
@@ -170,21 +152,21 @@ export default function Features() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-4 block text-4xl font-bold tracking-tighter"
-                style={{ color: 'rgba(192,132,252,0.10)' }}
+                className="mb-4 block text-4xl font-semibold tracking-tighter"
+                style={{ color: 'rgba(255,255,255,0.08)' }}
               >
                 {p.num}
               </motion.span>
               <span
-                className="mb-3 inline-block text-[10px] font-semibold uppercase tracking-widest"
-                style={{ color: '#C084FC' }}
+                className="mb-3 inline-block text-sm font-light uppercase tracking-widest"
+                style={{ color: 'rgba(255,255,255,0.5)' }}
               >
                 {p.tag}
               </span>
-              <h3 className="text-base font-semibold leading-snug text-white">
+              <h3 className="text-base font-light leading-snug text-white">
                 {p.title}
               </h3>
-              <p className="mt-2 text-sm leading-6" style={{ color: 'rgba(255,255,255,0.42)' }}>
+              <p className="mt-3 text-base font-light leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
                 {p.body}
               </p>
             </motion.div>

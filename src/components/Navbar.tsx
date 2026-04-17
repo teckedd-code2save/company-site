@@ -27,10 +27,10 @@ export default function Navbar() {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed left-0 right-0 top-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-white/[0.06] backdrop-blur-md'
+          ? 'glass-strong border-b border-white/[0.06]'
           : 'bg-transparent'
       }`}
-      style={{ backgroundColor: scrolled ? 'rgba(5,5,5,0.9)' : 'transparent' }}
+      style={{ backgroundColor: scrolled ? 'rgba(0,0,0,0.85)' : 'transparent' }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -41,7 +41,7 @@ export default function Navbar() {
               <motion.rect
                 x="1" y="1" width="18" height="18" rx="3"
                 fill="none"
-                stroke="#C084FC"
+                stroke="#FFFFFF"
                 strokeWidth="1.5"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
@@ -49,7 +49,7 @@ export default function Navbar() {
               />
               <motion.rect
                 x="1" y="1" width="18" height="18" rx="3"
-                fill="#C084FC"
+                fill="#FFFFFF"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.6 }}
@@ -105,8 +105,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="border-t border-white/[0.06] pb-5 pt-3 md:hidden"
-            style={{ backgroundColor: '#050505' }}
+            className="glass-strong border-t border-white/[0.06] pb-5 pt-3 md:hidden"
           >
             <nav className="flex flex-col">
               {navLinks.map((link) => (

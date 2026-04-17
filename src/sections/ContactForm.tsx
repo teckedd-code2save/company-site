@@ -27,11 +27,11 @@ export default function ContactForm() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
             Get in touch
           </p>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-black dark:text-white lg:text-5xl">
-            We'd love to hear from you.
+          <h2 className="mb-4 text-4xl font-semibold tracking-tight text-black dark:text-white lg:text-5xl">
+            Start a project.
           </h2>
           <p className="mx-auto max-w-md text-base text-slate-500 dark:text-slate-400">
-            Always open to new ideas, partnerships, and opportunities.
+            Tell us what you're building. We'll respond within 24 hours.
           </p>
         </motion.div>
 

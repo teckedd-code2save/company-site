@@ -54,7 +54,7 @@ export default function ProductLightbox({ open, onClose, media }: ProductLightbo
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.96, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-4 w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-2xl"
+            className="glass-strong relative mx-4 w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {media.type === 'video' ? (

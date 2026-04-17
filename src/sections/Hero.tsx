@@ -30,7 +30,7 @@ export default function Hero() {
   const { openContact } = useModal();
 
   return (
-    <section className="relative overflow-hidden" style={{ backgroundColor: '#050505' }}>
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
       <LightningFlash intensity={0.03} />
 
       {/* ── Blueprint drawing layer ────────────────────────────────── */}
@@ -60,8 +60,8 @@ export default function Hero() {
             {/* Eyebrow */}
             <motion.div variants={heroItem} className="mb-6">
               <p
-                className="mb-2 text-[11px] font-semibold uppercase tracking-[0.28em]"
-                style={{ color: '#C084FC' }}
+                className="mb-2 text-xs font-medium uppercase tracking-[0.28em]"
+                style={{ color: '#D4A5B0' }}
               >
                 <ScrambleText delay={400} duration={900}>
                   Building for the AI economy
@@ -73,7 +73,7 @@ export default function Hero() {
             {/* H1 */}
             <motion.div variants={heroItem} className="mb-2">
               <h1
-                className="text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl sm:font-bold lg:text-[5.2rem] lg:leading-[0.98] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+                className="text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[5.5rem] lg:leading-[0.98] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
                 style={{ letterSpacing: '-0.03em' }}
               >
                 <SplitText trigger="animate" stagger={0.035} delay={0.6}>
@@ -85,8 +85,8 @@ export default function Hero() {
             {/* Sub */}
             <motion.p
               variants={heroItem}
-              className="mt-7 max-w-xl text-base leading-7 drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]"
-              style={{ color: 'rgba(255,255,255,0.52)' }}
+              className="mt-7 max-w-xl text-lg font-light leading-[1.65] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]"
+              style={{ color: 'rgba(255,255,255,0.55)' }}
             >
               The transition from AI-assisted to AI-autonomous is already underway.
               We build the tools that close that gap — agents that transact,

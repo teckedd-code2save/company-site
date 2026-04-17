@@ -29,11 +29,11 @@ export default function CTABanner() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
         >
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
-            Want to see which product is most relevant to your team?
+          <h2 className="mb-4 text-4xl font-semibold tracking-tight text-slate-950 dark:text-white lg:text-5xl">
+            Find the right product for your stack.
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-slate-600 dark:text-gray-300">
-            We can walk through the products, answer technical questions, and show the option that best matches your workflow or business need.
+            Walk through the stack, ask technical questions, and find what ships fastest for your workflow.
           </p>
 
           <motion.div

@@ -196,7 +196,7 @@ export default function Pricing() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
             Pricing
           </p>
-          <h2 className="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
+          <h2 className="mb-3 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
             Simple, transparent pricing.
           </h2>
 
@@ -250,17 +250,17 @@ export default function Pricing() {
                   ? 'border-indigo-300/70 ring-2 ring-indigo-400/30 dark:border-indigo-600/50 dark:ring-indigo-500/20'
                   : 'border-white/55 dark:border-slate-700/50'
               }`}>
-                <h3 className="mb-1.5 text-lg font-bold text-slate-950 dark:text-white">{plan.name}</h3>
+                <h3 className="mb-1.5 text-lg font-semibold text-slate-950 dark:text-white">{plan.name}</h3>
                 <p className="mb-5 text-sm leading-6 text-slate-500 dark:text-slate-400">{plan.description}</p>
 
                 <div className="mb-5">
                   {plan.price !== null ? (
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-bold text-slate-950 dark:text-white">${plan.price}</span>
+                      <span className="text-2xl font-semibold text-slate-950 dark:text-white">${plan.price}</span>
                       <span className="text-sm text-slate-400 dark:text-slate-500">{plan.priceNote} · starting from</span>
                     </div>
                   ) : (
-                    <div className="text-2xl font-bold text-slate-950 dark:text-white">Custom</div>
+                    <div className="text-2xl font-semibold text-slate-950 dark:text-white">Custom</div>
                   )}
                 </div>
 

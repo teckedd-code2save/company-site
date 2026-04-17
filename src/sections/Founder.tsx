@@ -57,7 +57,7 @@ export default function Founder() {
             className="mx-auto w-full max-w-md"
           >
             <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200 shadow-[0_28px_80px_rgba(15,23,42,0.12)] dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 flex h-[28rem] w-full items-center justify-center">
-              <span className="text-6xl font-bold text-slate-400 dark:text-slate-600">ET</span>
+              <span className="text-6xl font-semibold text-slate-400 dark:text-slate-600">ET</span>
             </div>
           </motion.div>
 
@@ -76,9 +76,9 @@ export default function Founder() {
 
             <motion.h2
               variants={itemVariants}
-              className="mb-3 text-4xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-5xl"
+              className="mb-3 text-4xl font-semibold tracking-tight text-slate-950 dark:text-white lg:text-5xl"
             >
-              Built by a founder who works at the intersection of code and commercial reality.
+              Built at the intersection of code and commercial reality.
             </motion.h2>
 
             <motion.p
@@ -113,7 +113,7 @@ export default function Founder() {
                     <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900">
                       <Icon className="w-5 h-5 text-slate-700 dark:text-slate-200" />
                     </div>
-                    <div className="text-lg font-bold text-slate-950 dark:text-white">{stat.value}</div>
+                    <div className="text-lg font-semibold text-slate-950 dark:text-white">{stat.value}</div>
                     <div className="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">{stat.label}</div>
                   </div>
                 );

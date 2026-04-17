@@ -28,7 +28,7 @@ export default function Footer() {
   const { openContact, openPricing } = useModal();
 
   return (
-    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#050505' }}>
+    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}>
 
       {/* Contact sales strip */}
       <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -55,7 +55,7 @@ export default function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Connection line — draws upward from bottom-left */}
         <motion.div
-          className="pointer-events-none absolute -top-24 left-0 w-px origin-bottom bg-[#C084FC]/30"
+          className="pointer-events-none absolute -top-24 left-0 w-px origin-bottom bg-[#FFFFFF]/30"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true, margin: '-40px' }}
@@ -73,7 +73,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
             <a href="#" className="mb-4 flex items-center gap-2.5">
-              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#C084FC' }} />
+              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#FFFFFF' }} />
               <span className="text-sm font-semibold tracking-tight text-white">
                 Serendepify AI
               </span>
@@ -92,8 +92,8 @@ export default function Footer() {
                   className="flex h-8 w-8 items-center justify-center rounded-full transition-colors"
                   style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = '#C084FC';
-                    e.currentTarget.style.color = '#C084FC';
+                    e.currentTarget.style.borderColor = '#FFFFFF';
+                    e.currentTarget.style.color = '#FFFFFF';
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';

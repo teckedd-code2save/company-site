@@ -86,12 +86,12 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        glow: "0 0 40px rgba(139, 92, 246, 0.3)",
-        'glow-lg': "0 0 60px rgba(139, 92, 246, 0.4)",
+        glow: "0 0 40px rgba(255, 255, 255, 0.12)",
+        'glow-lg': "0 0 60px rgba(255, 255, 255, 0.18)",
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        mono: ['GeistMono', 'ui-monospace', 'SFMono-Regular', 'Roboto Mono', 'Menlo', 'monospace'],
       },
       keyframes: {
         "accordion-down": {
