@@ -47,6 +47,17 @@ export default function Hero() {
       {/* ── Left text-guard gradient ────────────────────────────────── */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-[48%] bg-gradient-to-r from-black via-black/50 to-transparent" />
 
+      {/* ── Background shine behind typography ──────────────────────── */}
+      <div
+        className="pointer-events-none absolute left-0 top-1/2 z-0 -translate-y-1/2"
+        style={{
+          width: '60%',
+          height: '70%',
+          background: 'radial-gradient(ellipse 50% 45% at 30% 50%, rgba(255,255,255,0.055) 0%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <div className="flex min-h-[72vh] items-end pb-24 pt-36 sm:pb-28 sm:pt-44">
