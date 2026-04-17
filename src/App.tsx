@@ -1,6 +1,7 @@
 import { ModalProvider } from './lib/modal-context';
 import PricingModal from './components/PricingModal';
 import ContactModal from './components/ContactModal';
+import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import CheckoutNotice from './components/CheckoutNotice';
 import Hero from './sections/Hero';
@@ -20,6 +21,7 @@ import AnimatedRule from './components/AnimatedRule';
 function App() {
   return (
     <ModalProvider>
+      <Preloader />
       <div className="dark min-h-screen text-white" style={{ backgroundColor: '#000000' }}>
         <GrainOverlay />
         <CustomCursor />
