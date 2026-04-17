@@ -1,18 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const DURATION = 1.6;
+const BOOT_LINES = [
+  { text: '> boot sequence initiated', delay: 100 },
+  { text: '> mounting kernel...        [ok]', delay: 280 },
+  { text: '> loading modules...        [ok]', delay: 460 },
+  { text: '> resolving dependencies... [ok]', delay: 640 },
+  { text: '> compiling assets...       [ok]', delay: 820 },
+  { text: '> establishing grid...      [ok]', delay: 1000 },
+  { text: '> ready.', delay: 1200 },
+];
 
-export default function Preloader({ onComplete }: { onComplete?: () => void }) {
+const TOTAL_DURATION = 1800;
+
+export default function Preloader() {
+  const [visibleLines, setVisibleLines] = useState<number>(0);
   const [done, setDone] = useState(false);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setDone(true);
-      onComplete?.();
-    }, DURATION * 1000);
-    return () => clearTimeout(t);
-  }, [onComplete]);
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const shown = BOOT_LINES.filter((l) => elapsed >= l.delay).length;
+      setVisibleLines(shown);
+
+      if (elapsed >= TOTAL_DURATION) {
+        setDone(true);
+        return;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -22,102 +45,56 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
           style={{ backgroundColor: '#000000' }}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="flex flex-col items-center gap-10">
-            {/* ── Rotating wireframe diamond ───────────────────────────── */}
-            <div className="relative" style={{ width: 56, height: 56 }}>
-              {/* Glow halo */}
+          <div className="flex flex-col items-start gap-1 px-6" style={{ minWidth: 320 }}>
+            {BOOT_LINES.map((line, i) => (
               <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: 'radial-gradient(circle, rgba(212,165,176,0.18) 0%, transparent 70%)',
-                  filter: 'blur(8px)',
+                key={i}
+                className="flex items-center gap-2"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{
+                  opacity: i < visibleLines ? 1 : 0,
+                  x: i < visibleLines ? 0 : -8,
                 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1.2 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-              />
-
-              <svg
-                width="56"
-                height="56"
-                viewBox="0 0 56 56"
-                className="relative overflow-visible"
+                transition={{ duration: 0.15 }}
               >
-                {/* Outer octahedron / diamond wireframe */}
-                <motion.g
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 90 }}
-                  transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ transformOrigin: '28px 28px' }}
+                <span
+                  className="text-xs tracking-wide"
+                  style={{
+                    fontFamily: 'GeistMono, ui-monospace, monospace',
+                    color: line.text.includes('[ok]')
+                      ? 'rgba(255,255,255,0.5)'
+                      : line.text.includes('ready')
+                        ? '#D4A5B0'
+                        : 'rgba(255,255,255,0.35)',
+                  }}
                 >
-                  {/* Top triangle */}
-                  <motion.path
-                    d="M28 4 L52 28 L28 28 L4 28 Z"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth={1}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                  {/* Bottom triangle */}
-                  <motion.path
-                    d="M28 52 L52 28 L28 28 L4 28 Z"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth={1}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                  {/* Vertical spine */}
-                  <motion.line
-                    x1={28} y1={4} x2={28} y2={52}
-                    stroke="rgba(212,165,176,0.6)"
-                    strokeWidth={1.5}
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                  {/* Center node */}
-                  <motion.circle
-                    cx={28} cy={28} r={3}
-                    fill="#D4A5B0"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 20, delay: 0.6 }}
-                  />
-                  {/* Node pulse ring */}
-                  <motion.circle
-                    cx={28} cy={28} r={3}
-                    fill="none"
-                    stroke="#D4A5B0"
-                    strokeWidth={1}
-                    initial={{ opacity: 0 }}
-                    animate={{ r: [3, 14, 3], opacity: [0.4, 0, 0.4] }}
-                    transition={{ duration: 1.2, repeat: Infinity, ease: 'easeOut', delay: 0.8 }}
-                  />
-                </motion.g>
-              </svg>
-            </div>
+                  {line.text}
+                </span>
+              </motion.div>
+            ))}
 
-            {/* ── Progress bar ─────────────────────────────────────────── */}
-            <div className="relative h-px w-28 overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-              <motion.div
-                className="absolute inset-y-0 left-0"
-                style={{ background: '#D4A5B0' }}
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            {/* Blinking cursor on the last visible line */}
+            {visibleLines > 0 && visibleLines < BOOT_LINES.length && (
+              <motion.span
+                className="mt-0.5 h-3 w-2"
+                style={{ backgroundColor: '#D4A5B0' }}
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.6, repeat: Infinity, ease: 'linear' }}
               />
-            </div>
+            )}
+
+            {/* Final cursor after ready */}
+            {visibleLines >= BOOT_LINES.length && !done && (
+              <motion.span
+                className="mt-0.5 h-3 w-2"
+                style={{ backgroundColor: '#D4A5B0' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.5, repeat: Infinity, ease: 'linear', delay: 0.1 }}
+              />
+            )}
           </div>
         </motion.div>
       )}
