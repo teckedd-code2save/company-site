@@ -1,14 +1,15 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-/* ── Cinematic blueprint — technical drawing that sketches itself ───── */
+const MAUVE = '#D4A5B0';
+const CORAL = '#E898A8';
+const STROKE = 'rgba(212,165,176,0.28)';
+const STROKE_DIM = 'rgba(212,165,176,0.12)';
 
 const drawTransition = { duration: 1.4, ease: [0.22, 1, 0.36, 1] as const };
 const popTransition = { type: 'spring', stiffness: 300, damping: 20 } as const;
 
-function AnimatedPath({
-  d, delay = 0, className = '', style,
-}: { d: string; delay?: number; className?: string; style?: React.CSSProperties }) {
+function AnimatedPath({ d, delay = 0, className = '', style }: { d: string; delay?: number; className?: string; style?: React.CSSProperties }) {
   return (
     <motion.path
       d={d} className={className}
@@ -20,9 +21,7 @@ function AnimatedPath({
   );
 }
 
-function AnimatedLine({
-  x1, y1, x2, y2, delay = 0, style,
-}: { x1: number; y1: number; x2: number; y2: number; delay?: number; style?: React.CSSProperties }) {
+function AnimatedLine({ x1, y1, x2, y2, delay = 0, style }: { x1: number; y1: number; x2: number; y2: number; delay?: number; style?: React.CSSProperties }) {
   return (
     <motion.line
       x1={x1} y1={y1} x2={x2} y2={y2} style={{ ...style }}
@@ -42,7 +41,7 @@ function Tick({ cx, cy, angle, delay = 0 }: { cx: number; cy: number; angle: num
   return (
     <motion.line
       x1={x1} y1={y1} x2={x2} y2={y2}
-      stroke="rgba(255,255,255,0.35)" strokeWidth={1}
+      stroke={STROKE} strokeWidth={1}
       initial={{ pathLength: 0, opacity: 0 }}
       animate={{ pathLength: 1, opacity: 1 }}
       transition={{ duration: 0.3, delay }}
@@ -60,13 +59,13 @@ export default function HeroBlueprint() {
       {inView && (
         <svg viewBox="0 0 1200 800" className="absolute right-0 top-0 h-full w-full" preserveAspectRatio="xMaxYMid slice">
           {/* Perspective grid lines radiating from vanishing point */}
-          <AnimatedLine x1={vp.x} y1={vp.y} x2={200} y2={750} delay={0.2} style={{ stroke: 'rgba(255,255,255,0.18)', strokeWidth: 1 }} />
-          <AnimatedLine x1={vp.x} y1={vp.y} x2={800} y2={780} delay={0.35} style={{ stroke: 'rgba(255,255,255,0.18)', strokeWidth: 1 }} />
-          <AnimatedLine x1={vp.x} y1={vp.y} x2={1150} y2={650} delay={0.5} style={{ stroke: 'rgba(255,255,255,0.18)', strokeWidth: 1 }} />
+          <AnimatedLine x1={vp.x} y1={vp.y} x2={200} y2={750} delay={0.2} style={{ stroke: STROKE, strokeWidth: 1 }} />
+          <AnimatedLine x1={vp.x} y1={vp.y} x2={800} y2={780} delay={0.35} style={{ stroke: STROKE, strokeWidth: 1 }} />
+          <AnimatedLine x1={vp.x} y1={vp.y} x2={1150} y2={650} delay={0.5} style={{ stroke: STROKE, strokeWidth: 1 }} />
 
           {/* Horizontal cross-lines on the perspective rays */}
-          <AnimatedPath d="M 320 420 L 900 450" delay={0.7} style={{ stroke: 'rgba(255,255,255,0.10)', strokeWidth: 1 }} />
-          <AnimatedPath d="M 260 580 L 980 600" delay={0.85} style={{ stroke: 'rgba(255,255,255,0.10)', strokeWidth: 1 }} />
+          <AnimatedPath d="M 320 420 L 900 450" delay={0.7} style={{ stroke: STROKE_DIM, strokeWidth: 1 }} />
+          <AnimatedPath d="M 260 580 L 980 600" delay={0.85} style={{ stroke: STROKE_DIM, strokeWidth: 1 }} />
 
           {/* Measurement ticks along perspective lines */}
           <Tick cx={380} cy={580} angle={0.95} delay={0.9} />
@@ -74,27 +73,27 @@ export default function HeroBlueprint() {
           <Tick cx={720} cy={380} angle={-0.25} delay={1.1} />
           <Tick cx={880} cy={520} angle={-0.85} delay={1.2} />
 
-          {/* Central glowing node */}
+          {/* Central glowing node — mauve */}
           <motion.circle
-            cx={vp.x} cy={vp.y} r={6} fill="#FFFFFF"
+            cx={vp.x} cy={vp.y} r={6} fill={MAUVE}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ ...popTransition, delay: 1.3 }}
-            style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.6))' }}
+            style={{ filter: `drop-shadow(0 0 10px ${CORAL}80)` }}
           />
 
-          {/* Pulsing ring around node */}
+          {/* Pulsing ring around node — coral */}
           <motion.circle
             cx={vp.x} cy={vp.y} r={6} fill="none"
-            stroke="rgba(255,255,255,0.4)" strokeWidth={1}
+            stroke={CORAL} strokeWidth={1}
             initial={{ opacity: 0 }}
             animate={{ r: [6, 28, 6], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: 1.6 }}
           />
 
           {/* Corner brackets — upper-right & lower-right */}
-          <AnimatedPath d="M 1050 80 L 1120 80 L 1120 150" delay={1.0} style={{ stroke: 'rgba(255,255,255,0.20)', strokeWidth: 1.5 }} />
-          <AnimatedPath d="M 1150 180 L 1150 250 L 1080 250" delay={1.15} style={{ stroke: 'rgba(255,255,255,0.20)', strokeWidth: 1.5 }} />
+          <AnimatedPath d="M 1050 80 L 1120 80 L 1120 150" delay={1.0} style={{ stroke: STROKE, strokeWidth: 1.5 }} />
+          <AnimatedPath d="M 1150 180 L 1150 250 L 1080 250" delay={1.15} style={{ stroke: STROKE, strokeWidth: 1.5 }} />
         </svg>
       )}
     </div>

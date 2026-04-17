@@ -4,7 +4,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { KernelSize } from 'postprocessing';
 import * as THREE from 'three';
 
-const ACCENT = '#FFFFFF';
+const ACCENT = '#D4A5B0';
 const BG = '#000000';
 
 /* ═══════════════════════════════════════════════════════════════════════
