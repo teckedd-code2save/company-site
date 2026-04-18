@@ -9,21 +9,21 @@ import LightningFlash from '@/components/LightningFlash';
 const principles = [
   {
     num: '01',
-    tag: 'Four layers of the stack',
-    title: 'Payment rails, deployment intelligence, architecture generation, data grounding.',
-    body: 'We mapped the four hardest problems in AI deployment and built a product for each one — live today, not roadmapped.',
+    tag: 'The core stack',
+    title: 'Payments, deployment, architecture, and data — handled.',
+    body: 'We mapped the hardest problems in AI deployment and built a product for each one — running in production, not on a roadmap.',
   },
   {
     num: '02',
     tag: 'Shipped, not promised',
     title: 'Live software you can use right now.',
-    body: 'No waitlists. No private betas. MPP Studio, Shipd, B2DP, and Datafy are running in production — put them in front of your team today.',
+    body: 'B2DP (Business to Data Platform), Shipd, MPP Studio, and Datafy MCP are in active development and available to explore.',
   },
   {
     num: '03',
-    tag: 'Founder delivery',
-    title: 'We stay in until it works.',
-    body: "One team, no handoff theater. We go from first principles to deployed product without disappearing after the wireframes.",
+    tag: 'End-to-end delivery',
+    title: 'From first principles to shipped product.',
+    body: 'One builder, end to end. From brief to deployed product with no dropped context.',
   },
 ];
 
@@ -64,7 +64,7 @@ export default function Features() {
         >
           <div>
             <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-              Our operating thesis
+              How we build
             </p>
             <DrawnUnderline className="mb-3" width={40} delay={0.2} />
             <h2
@@ -102,7 +102,7 @@ export default function Features() {
               style={{ letterSpacing: '-0.03em' }}
             >
               <SplitText stagger={0.03} delay={0.2}>
-                The AI economy rewards the early. We build what's needed before it's needed.
+                Built because we needed them. Shared because you might too.
               </SplitText>
             </p>
             <p className="mt-6 max-w-md text-base leading-7" style={{ color: 'rgba(255,255,255,0.42)' }}>

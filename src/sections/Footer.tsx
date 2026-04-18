@@ -7,9 +7,9 @@ import DrawnUnderline from '@/components/DrawnUnderline';
 const footerLinks = {
   products: [
     { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
-    { label: 'Shipd',      href: 'https://shipd-eight.vercel.app/' },
-    { label: 'B2DP',       href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
-    { label: 'Datafy MCP', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
+    { label: 'Shipd',      href: 'https://shipd-seven.vercel.app/' },
+    { label: 'B2DP',       href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
+    { label: 'Datafy MCP', href: 'https://edward-entire.vercel.app/' },
   ],
   company: [
     { label: 'How we work', href: '#features' },
@@ -25,7 +25,7 @@ const socials = [
 ];
 
 export default function Footer() {
-  const { openContact, openPricing } = useModal();
+  const { openContact } = useModal();
 
   return (
     <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}>
@@ -35,18 +35,18 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <div>
             <p className="text-lg font-semibold text-white">
-              Building for the AI economy? Let's talk.
+              Questions or ideas? Let's talk.
             </p>
             <DrawnUnderline className="my-2" width={40} delay={0.1} />
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
-              Open to product collaborations, AI deployments, and founding-stage partnerships.
+              Work directly with the founder. Open to collaborations, feedback, and founding-stage partnerships.
             </p>
           </div>
           <MagneticButton
             onClick={openContact}
             className="shrink-0 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-opacity hover:opacity-85"
           >
-            Contact sales
+            Start a conversation
           </MagneticButton>
         </div>
       </div>
@@ -147,15 +147,6 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
-              <li>
-                <button
-                  onClick={openPricing}
-                  className="text-sm transition-colors hover:text-white"
-                  style={{ color: 'rgba(255,255,255,0.45)' }}
-                >
-                  Pricing
-                </button>
-              </li>
             </ul>
           </div>
         </motion.div>
@@ -169,13 +160,13 @@ export default function Footer() {
             © 2026 Serendepify AI. Infrastructure for the AI economy.
           </p>
           <div className="flex gap-5">
-            <button
-              onClick={openPricing}
+            <a
+              href="mailto:edwardktwumasi1000@gmail.com"
               className="text-xs transition-colors hover:text-white"
               style={{ color: 'rgba(255,255,255,0.25)' }}
             >
-              Pricing
-            </button>
+              edwardktwumasi1000@gmail.com
+            </a>
             <button
               onClick={openContact}
               className="text-xs transition-colors hover:text-white"

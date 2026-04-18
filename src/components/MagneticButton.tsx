@@ -9,6 +9,8 @@ interface MagneticButtonProps {
   onClick?: () => void;
   as?: 'button' | 'a';
   href?: string;
+  target?: string;
+  rel?: string;
   type?: 'button' | 'submit';
 }
 
@@ -20,6 +22,8 @@ export default function MagneticButton({
   onClick,
   as = 'button',
   href,
+  target,
+  rel,
   type = 'button',
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
@@ -52,6 +56,8 @@ export default function MagneticButton({
       <motion.a
         {...baseProps}
         href={href}
+        target={target}
+        rel={rel}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}

@@ -7,12 +7,13 @@ import MagneticButton from '@/components/MagneticButton';
 const navLinks = [
   { label: 'Products',    href: '#products' },
   { label: 'How we work', href: '#features' },
+  { label: 'About',       href: '#about' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { openPricing, openContact } = useModal();
+  const { openContact } = useModal();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -76,17 +77,20 @@ export default function Navbar() {
           {/* Desktop actions */}
           <div className="hidden items-center gap-3 md:flex">
             <motion.button
-              onClick={openPricing}
+              onClick={openContact}
               whileHover={{ opacity: 1 }}
               className="px-4 py-2 text-sm text-white/55 transition-colors hover:text-white"
             >
-              Pricing
+              Get started
             </motion.button>
             <MagneticButton
-              onClick={openContact}
+              as="a"
+              href="https://shipd-seven.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black"
             >
-              Contact sales
+              Try Shipd
             </MagneticButton>
           </div>
 
@@ -119,17 +123,20 @@ export default function Navbar() {
                 </a>
               ))}
               <button
-                onClick={() => { setMobileOpen(false); openPricing(); }}
+                onClick={() => { setMobileOpen(false); openContact(); }}
                 className="px-2 py-3 text-left text-sm text-white/55 hover:text-white"
               >
-                Pricing
+                Get started
               </button>
-              <button
-                onClick={() => { setMobileOpen(false); openContact(); }}
+              <a
+                href="https://shipd-seven.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
                 className="mt-3 rounded-full bg-white py-3 text-center text-sm font-medium text-black"
               >
-                Contact sales
-              </button>
+                Try Shipd
+              </a>
             </nav>
           </motion.div>
         )}

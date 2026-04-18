@@ -1,19 +1,59 @@
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X, ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
+import { X, ArrowRight, LoaderCircle } from 'lucide-react';
 import DrawnUnderline from '@/components/DrawnUnderline';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/lib/modal-context';
-import { siteConfig } from '@/lib/site-config';
 
 const fields = [
   { name: 'name',         label: 'Full name',            type: 'text',  required: true,  placeholder: 'Your name' },
   { name: 'email',        label: 'Email',                 type: 'email', required: true,  placeholder: 'you@company.com' },
   { name: 'company',      label: 'Company or startup',    type: 'text',  required: false, placeholder: 'Company name' },
   { name: 'project_type', label: 'Product or focus area', type: 'text',  required: false, placeholder: 'e.g. MPP Studio, deployment, AI workflow' },
-];
+] as const;
 
 export default function ContactModal() {
   const { contactOpen, closeContact } = useModal();
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState<Record<string, string>>({
+    name: '',
+    email: '',
+    company: '',
+    project_type: '',
+    message: '',
+  });
+
+  const update = (key: string, value: string) => {
+    setForm((f) => ({ ...f, [key]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      toast.success("Message sent. We'll reply within 24 hours.");
+      setForm({ name: '', email: '', company: '', project_type: '', message: '' });
+      closeContact();
+    } catch (err: any) {
+      toast.error(err.message || 'Something went wrong. Please try again or email us directly.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -36,7 +76,7 @@ export default function ContactModal() {
             {/* Top bar */}
             <div className="glass-strong sticky top-0 z-10 flex h-14 items-center justify-between border-b border-white/[0.06] px-6 sm:px-10">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
-                Contact sales
+                Get in touch
               </span>
               <button
                 onClick={closeContact}
@@ -57,7 +97,7 @@ export default function ContactModal() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
                   >
-                    Let's figure out if we're the right fit.
+                    Tell us what you're building.
                   </motion.h1>
                   <DrawnUnderline className="mt-3" width={56} delay={0.4} color="#D4A5B0" />
 
@@ -67,7 +107,7 @@ export default function ContactModal() {
                     transition={{ duration: 0.5, delay: 0.16 }}
                     className="mt-5 text-base leading-7 text-white/50"
                   >
-                    Open to new work, partnerships, and grant collaborations. Real problem, clear outcome — we want to hear it.
+                    We're building in public. If something here almost fits your problem, tell us. We read every message.
                   </motion.p>
 
                   <motion.div
@@ -77,9 +117,9 @@ export default function ContactModal() {
                     className="mt-10 space-y-0 border-t border-white/[0.06]"
                   >
                     {[
-                      'You want to evaluate one of our products for a real workflow — not a proof of concept that lives in a slide.',
-                      'You need product direction that moves into implementation, not just concepting.',
-                      "You're a startup, operator, or grant-funded team building AI into a product with real users at the end.",
+                      "You have a workflow or product surface that almost works, but needs the last 20%.",
+                      'You want a builder who thinks in products and ships in code.',
+                      "You're tired of AI demos and want something you can actually use.",
                     ].map((signal) => (
                       <div
                         key={signal}
@@ -93,17 +133,11 @@ export default function ContactModal() {
 
                 {/* Right — form */}
                 <motion.form
-                  action={`https://formsubmit.co/${siteConfig.contactEmail}`}
-                  method="POST"
+                  onSubmit={handleSubmit}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.18 }}
                 >
-                  <input type="hidden" name="_subject" value="New project request — Serendepify AI" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {fields.map((field) => (
                       <div key={field.name} className="glass-card rounded-xl p-5">
@@ -114,7 +148,8 @@ export default function ContactModal() {
                           </span>
                           <input
                             type={field.type}
-                            name={field.name}
+                            value={form[field.name] || ''}
+                            onChange={(e) => update(field.name, e.target.value)}
                             required={field.required}
                             placeholder={field.placeholder}
                             className="w-full border-b border-white/10 bg-transparent pb-2 text-sm text-white placeholder-white/20 outline-none transition-colors focus:border-white/40"
@@ -131,7 +166,8 @@ export default function ContactModal() {
                         Message <span className="text-white/20">*</span>
                       </span>
                       <textarea
-                        name="message"
+                        value={form.message || ''}
+                        onChange={(e) => update('message', e.target.value)}
                         required
                         rows={5}
                         placeholder="Describe the problem, the current workflow, and what success looks like."
@@ -143,10 +179,20 @@ export default function ContactModal() {
                   <div className="mt-6">
                     <Button
                       type="submit"
-                      className="group rounded-full bg-white px-8 py-5 text-sm font-medium text-black hover:bg-white/90"
+                      disabled={loading}
+                      className="group rounded-full bg-white px-8 py-5 text-sm font-medium text-black hover:bg-white/90 disabled:opacity-60"
                     >
-                      Send project brief
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      {loading ? (
+                        <>
+                          <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send project brief
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </>
+                      )}
                     </Button>
                   </div>
                 </motion.form>

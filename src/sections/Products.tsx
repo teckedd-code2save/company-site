@@ -4,21 +4,21 @@ import { ArrowUpRight } from 'lucide-react';
 
 const products = [
   {
-    id: 'mpp-studio',
-    name: 'MPP Studio',
-    category: 'API Infrastructure',
-    status: 'Live' as const,
-    tagline: 'Your API charges itself.',
-    summary: 'You built the workflow. MPP Studio turns it into a service agents can discover, test in sandbox, and pay for with a real Stripe-backed checkout path.',
+    id: 'b2dp',
+    name: 'B2DP (Business to Data Platform)',
+    category: 'Product Design',
+    status: 'Active' as const,
+    tagline: 'Brief to Data Product. Architecture out.',
+    summary: 'Describe what you\'re building in plain language. B2DP maps it to data models, services, and an architecture your engineers can build from immediately.',
     highlights: [
-      'HTTP 402 flows, Stripe-integrated, ready out of the box',
-      'Sandbox that mirrors production exactly',
-      'From registration to live payment in one session',
+      'Business logic mapped to data models and services',
+      'AI-guided scaffolding from plain language input',
+      'Output your team can hand off or build from directly',
     ],
-    link: 'https://agent-exchange-web.vercel.app/',
-    cta: 'Open MPP Studio',
-    image: '/images/products/mpp-studio-surface.gif',
-    kind: 'app' as const,
+    link: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
+    cta: 'Explore B2DP',
+    image: '/images/products/b2dp-surface.gif',
+    kind: 'site' as const,
   },
   {
     id: 'shipd',
@@ -38,21 +38,21 @@ const products = [
     kind: 'app' as const,
   },
   {
-    id: 'b2dp',
-    name: 'B2DP',
-    category: 'Product Design',
-    status: 'Active' as const,
-    tagline: 'Brief in. Architecture out.',
-    summary: 'Describe what you\'re building in plain language. B2DP maps it to data models, services, and an architecture your engineers can build from immediately.',
+    id: 'mpp-studio',
+    name: 'MPP Studio',
+    category: 'API Infrastructure',
+    status: 'Live' as const,
+    tagline: 'The payment layer for AI services.',
+    summary: 'Register any HTTP API and get a proxy endpoint instantly. Test the full 402 payment flow with fake money, graduate to real USDC on Base Sepolia, and get discovered by AI agents that pay automatically per call.',
     highlights: [
-      'Business logic mapped to data models and services',
-      'AI-guided scaffolding from plain language input',
-      'Output your team can hand off or build from directly',
+      'HTTP 402 flows with fake-money sandbox testing',
+      'Real USDC on Base Sepolia via Circle faucet',
+      'Agents discover and pay automatically per call',
     ],
-    link: 'https://teckedd-code2save.github.io/ai-build-tools/',
-    cta: 'Explore B2DP',
-    image: '/images/products/b2dp-surface.gif',
-    kind: 'site' as const,
+    link: 'https://agent-exchange-web.vercel.app/',
+    cta: 'Open MPP Studio',
+    image: '/images/products/mpp-studio-surface.gif',
+    kind: 'app' as const,
   },
   {
     id: 'datafy',
@@ -66,8 +66,8 @@ const products = [
       'Replaces static mock data with live operational signals',
       'Reduces hallucination at the input, not the output',
     ],
-    link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
-    cta: 'Watch Datafy in action',
+    link: 'https://www.npmjs.com/package/@teckedd-code2save/datafy',
+    cta: 'View package',
     image: '/images/products/datafy-surface.png',
     kind: 'video' as const,
   },
@@ -255,7 +255,7 @@ export default function Products() {
             </span>
           </h2>
           <p className="mt-5 max-w-xl text-base leading-7 text-slate-500 dark:text-slate-400 sm:text-lg">
-            Four live products. No waitlist. No pitch. No procurement loop. Built to earn their place in your stack.
+            No pitch. No procurement loop. Built to earn their place in your stack.
           </p>
         </motion.div>
       </div>
@@ -298,6 +298,10 @@ export default function Products() {
           />
         ))}
       </div>
+
+      <p className="mt-5 text-center text-xs font-light uppercase tracking-widest text-slate-400 dark:text-slate-500">
+        More tools coming soon
+      </p>
     </section>
   );
 }
