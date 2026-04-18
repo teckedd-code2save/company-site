@@ -5,23 +5,8 @@ import SplitText from '@/components/SplitText';
 import DrawnUnderline from '@/components/DrawnUnderline';
 import LightningFlash from '@/components/LightningFlash';
 
-const testimonials = [
-  {
-    quote: 'Serendepify cut our deployment planning time from three days to under an hour. The intelligence layer is the real differentiator.',
-    name: 'Engineering Lead',
-    org: 'Series A AI startup',
-  },
-  {
-    quote: 'We went from a product brief to a working data architecture in one afternoon. That velocity is impossible to find elsewhere.',
-    name: 'Founder',
-    org: 'Fintech infrastructure',
-  },
-  {
-    quote: 'The MCP integration gave our agents live context for the first time. It changed what we thought was possible with internal tooling.',
-    name: 'Head of Product',
-    org: 'Enterprise SaaS',
-  },
-];
+/* Testimonials removed until we have named, verifiable social proof.
+   The live metrics strip below provides real, checkable signals instead. */
 
 function LivePill() {
   return (
@@ -63,34 +48,13 @@ export default function SocialProof() {
           className="mb-16 text-center"
         >
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-            What teams are saying
+            Live signals
           </p>
           <DrawnUnderline className="mb-3 mx-auto" width={40} delay={0.2} />
           <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl" style={{ letterSpacing: '-0.02em' }}>
-            <SplitText stagger={0.03}>Built for teams that ship.</SplitText>
+            <SplitText stagger={0.03}>Check the proof, not the pitch.</SplitText>
           </h2>
         </motion.div>
-
-        {/* Testimonials */}
-        <div className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="glass-card rounded-2xl p-8 sm:p-10"
-            >
-              <div className="mb-6 text-3xl leading-none text-[#FFFFFF]/40">“</div>
-              <p className="text-lg font-light leading-relaxed text-white/85">{t.quote}</p>
-              <div className="mt-8">
-                <p className="text-sm font-light text-white">{t.name}</p>
-                <p className="text-sm font-light uppercase tracking-wider text-white/40">{t.org}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Live metrics strip */}
         <motion.div

@@ -17,8 +17,8 @@ const plans = {
       key: 'starter' as const,
       name: 'Starter',
       badge: null,
-      description: 'Pick one product. Run a real evaluation with a concrete starting point.',
-      price: 20,
+      description: 'Pick one product and try it properly. One scoped deliverable, no long-term commitment.',
+      price: 49,
       priceNote: 'one-time',
       features: [
         'One product surface of your choice',
@@ -34,8 +34,8 @@ const plans = {
       key: 'delivery' as const,
       name: 'Delivery',
       badge: 'Most popular',
-      description: 'Full product access, direction, and a path to something shippable.',
-      price: 50,
+      description: 'Full access, direction, and a path to something shippable.',
+      price: 149,
       priceNote: 'one-time',
       features: [
         'Full access across all product surfaces',
@@ -52,7 +52,7 @@ const plans = {
       key: 'enterprise' as const,
       name: 'Enterprise',
       badge: null,
-      description: 'Custom scope for organisations with internal AI platforms at scale.',
+      description: 'Custom scope for teams with broader rollouts or multi-product integrations.',
       price: null,
       priceNote: null,
       features: [
@@ -72,8 +72,8 @@ const plans = {
       key: 'starter' as const,
       name: 'Starter',
       badge: null,
-      description: 'A consistent monthly touchpoint — guidance, check-ins, and iterative support.',
-      price: 49,
+      description: 'Monthly guidance and iterative support for one product surface. Cancel anytime.',
+      price: 20,
       priceNote: '/ month',
       features: [
         'Monthly engagement on one surface',
@@ -89,8 +89,8 @@ const plans = {
       key: 'delivery' as const,
       name: 'Delivery',
       badge: 'Most popular',
-      description: 'Active build mode, monthly. Full access, direction, and continuous delivery.',
-      price: 149,
+      description: 'Active build mode, monthly. Full access, direction, and continuous delivery. Cancel anytime.',
+      price: 50,
       priceNote: '/ month',
       features: [
         'Full access across all surfaces',
@@ -107,7 +107,7 @@ const plans = {
       key: 'enterprise' as const,
       name: 'Enterprise',
       badge: null,
-      description: 'Dedicated monthly engagement for organisations with complex AI rollouts.',
+      description: 'Dedicated monthly engagement for teams running internal AI platforms or complex integrations.',
       price: null,
       priceNote: null,
       features: [
@@ -192,7 +192,7 @@ export default function PricingModal() {
                 </h1>
                 <DrawnUnderline className="mt-4" width={64} delay={0.3} color={MAUVE} />
                 <p className="mt-5 max-w-lg text-base text-white/50">
-                  No procurement loops. No black-box quotes. Pick a tier and get going.
+                  No procurement loops. Try a product for $20. Upgrade only if it earns its place.
                 </p>
 
                 {/* Billing toggle */}

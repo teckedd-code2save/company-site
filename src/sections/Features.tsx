@@ -10,20 +10,20 @@ const principles = [
   {
     num: '01',
     tag: 'The core stack',
-    title: 'Payment rails, deployment intelligence, architecture generation, data grounding.',
+    title: 'Payments, deployment, architecture, and data — handled.',
     body: 'We mapped the hardest problems in AI deployment and built a product for each one — running in production, not on a roadmap.',
   },
   {
     num: '02',
     tag: 'Shipped, not promised',
     title: 'Live software you can use right now.',
-    body: 'MPP Studio, Shipd, B2DP, and Datafy MCP are running in production. Put them in front of your team today.',
+    body: 'B2DP (Business to Data Platform), Shipd, MPP Studio, and Datafy MCP are in active development and available to explore.',
   },
   {
     num: '03',
     tag: 'End-to-end delivery',
     title: 'From first principles to shipped product.',
-    body: "One team, no handoffs. We move from brief to deployed product — and stay accountable for the outcome.",
+    body: 'One builder, end to end. From brief to deployed product with no dropped context.',
   },
 ];
 
@@ -102,7 +102,7 @@ export default function Features() {
               style={{ letterSpacing: '-0.03em' }}
             >
               <SplitText stagger={0.03} delay={0.2}>
-                The AI economy rewards the early. We build what's needed before it's needed.
+                Built because we needed them. Shared because you might too.
               </SplitText>
             </p>
             <p className="mt-6 max-w-md text-base leading-7" style={{ color: 'rgba(255,255,255,0.42)' }}>

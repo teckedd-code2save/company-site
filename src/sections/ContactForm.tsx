@@ -1,15 +1,55 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2 } from 'lucide-react';
-import { siteConfig } from '@/lib/site-config';
+import { Mail, User, MessageSquare, Briefcase, Building2, CheckCircle2, LoaderCircle } from 'lucide-react';
 
 const fitSignals = [
-  'You have a live workflow, internal process, or product surface that needs to become usable.',
-  'You want an implementation partner who can work from product thinking through engineering detail.',
-  'You need something grounded in actual systems, not another speculative AI demo.',
+  "You have a workflow or product surface that almost works, but needs the last 20%.",
+  'You want a builder who thinks in products and ships in code.',
+  "You're tired of AI demos and want something you can actually use.",
 ] as const;
 
 export default function ContactForm() {
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    company: '',
+    project_type: '',
+    message: '',
+  });
+
+  const update = (key: string, value: string) => {
+    setForm((f) => ({ ...f, [key]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      toast.success("Message sent. We'll reply within 24 hours.");
+      setForm({ name: '', email: '', company: '', project_type: '', message: '' });
+    } catch (err: any) {
+      toast.error(err.message || 'Something went wrong. Please try again or email us directly.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative overflow-hidden bg-[linear-gradient(180deg,#f4f4f2_0%,#ece9e3_100%)] py-24 dark:bg-[linear-gradient(180deg,#0a1628_0%,#020617_100%)] lg:py-28">
       <div className="pointer-events-none absolute inset-0">
@@ -28,10 +68,10 @@ export default function ContactForm() {
             Get in touch
           </p>
           <h2 className="mb-4 text-4xl font-semibold tracking-tight text-black dark:text-white lg:text-5xl">
-            Start a project.
+            Get in touch.
           </h2>
           <p className="mx-auto max-w-md text-base text-slate-500 dark:text-slate-400">
-            Tell us what you're building. We'll respond within 24 hours.
+            We're early-stage and hands-on. If you have a real problem, we want to hear it.
           </p>
         </motion.div>
 
@@ -44,7 +84,7 @@ export default function ContactForm() {
             className="rounded-[2rem] border border-slate-200 bg-white p-8 text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl dark:border-slate-800/70 dark:bg-slate-950/38 dark:text-white"
           >
             <h3 className="text-3xl font-semibold leading-tight">
-              Best for teams with a real problem and a clear outcome in mind.
+              Early-stage and hands-on. If you have a real problem, we want to hear it.
             </h3>
             <div className="mt-8 space-y-4">
               {fitSignals.map((signal) => (
@@ -57,19 +97,13 @@ export default function ContactForm() {
           </motion.div>
 
           <motion.form
-            action={`https://formsubmit.co/${siteConfig.contactEmail}`}
-            method="POST"
+            onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.7, delay: 0.05 }}
             className="rounded-2xl border border-white/55 bg-white/92 p-6 shadow-[0_16px_48px_rgba(15,23,42,0.12)] backdrop-blur-3xl dark:border-slate-700/50 dark:bg-slate-900/80 sm:p-8"
           >
-            <input type="hidden" name="_subject" value="New project request from serendepifywebsite" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-
             <div className="mb-5 grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className="mb-2 inline-flex text-sm font-medium text-gray-700 dark:text-gray-200">
@@ -78,7 +112,8 @@ export default function ContactForm() {
                 </span>
                 <input
                   type="text"
-                  name="name"
+                  value={form.name}
+                  onChange={(e) => update('name', e.target.value)}
                   required
                   className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                   placeholder="Your name"
@@ -92,7 +127,8 @@ export default function ContactForm() {
                 </span>
                 <input
                   type="email"
-                  name="email"
+                  value={form.email}
+                  onChange={(e) => update('email', e.target.value)}
                   required
                   className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                   placeholder="you@company.com"
@@ -108,7 +144,8 @@ export default function ContactForm() {
                 </span>
                 <input
                   type="text"
-                  name="company"
+                  value={form.company}
+                  onChange={(e) => update('company', e.target.value)}
                   className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                   placeholder="Your company name"
                 />
@@ -121,7 +158,8 @@ export default function ContactForm() {
                 </span>
                 <input
                   type="text"
-                  name="project_type"
+                  value={form.project_type}
+                  onChange={(e) => update('project_type', e.target.value)}
                   className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
                   placeholder="e.g. MPP Studio, Shipd, internal AI workflow, data product"
                 />
@@ -135,7 +173,8 @@ export default function ContactForm() {
                   Message
                 </span>
                 <textarea
-                  name="message"
+                  value={form.message}
+                  onChange={(e) => update('message', e.target.value)}
                   required
                   rows={6}
                   className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-slate-400/40 dark:border-slate-700 dark:bg-slate-950 dark:text-gray-100"
@@ -147,9 +186,17 @@ export default function ContactForm() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button
                 type="submit"
-                className="rounded-lg bg-black px-7 py-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                disabled={loading}
+                className="rounded-lg bg-black px-7 py-5 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-gray-200"
               >
-                Send project brief
+                {loading ? (
+                  <>
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  'Send project brief'
+                )}
               </Button>
             </div>
           </motion.form>
@@ -158,4 +205,3 @@ export default function ContactForm() {
     </section>
   );
 }
-

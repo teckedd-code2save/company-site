@@ -6,11 +6,11 @@ export default function CheckoutNotice() {
     const status = params.get('checkout');
 
     if (status === 'success') {
-      return 'Payment successful. Serendepify should follow up with the next steps shortly.';
+      return "Payment successful. We'll follow up within 24 hours with next steps.";
     }
 
     if (status === 'cancelled') {
-      return 'Checkout was cancelled. You can still request a demo or continue through contact when ready.';
+      return "Checkout cancelled. No worries — reach out whenever you're ready.";
     }
 
     return '';

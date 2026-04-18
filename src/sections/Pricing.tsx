@@ -13,8 +13,8 @@ const plans = {
       key: 'starter' as const,
       name: 'Starter',
       badge: null,
-      description: 'The entry point for teams that want to validate fit with a real stake in the outcome. One scoped deliverable, one product surface.',
-      price: 20,
+      description: 'Pick one product and try it properly. One scoped deliverable, no long-term commitment.',
+      price: 49,
       priceNote: 'one-time',
       features: [
         'Access to one product surface of your choice',
@@ -30,8 +30,8 @@ const plans = {
       key: 'delivery' as const,
       name: 'Delivery',
       badge: 'Most popular',
-      description: 'For teams actively building. Includes product direction, implementation support, and a clear path to a shippable outcome.',
-      price: 50,
+      description: 'For teams actively building. Product direction, implementation support, and a clear path to something shippable.',
+      price: 149,
       priceNote: 'one-time',
       features: [
         'Full access across all product surfaces',
@@ -48,7 +48,7 @@ const plans = {
       key: 'enterprise' as const,
       name: 'Enterprise',
       badge: null,
-      description: 'For organizations running broader rollouts, internal AI platforms, or multi-product integrations at scale.',
+      description: 'Custom scope for teams with broader rollouts or multi-product integrations.',
       price: null,
       priceNote: null,
       features: [
@@ -68,8 +68,8 @@ const plans = {
       key: 'starter' as const,
       name: 'Starter',
       badge: null,
-      description: 'Ongoing access for teams that want a consistent touchpoint — regular check-ins, product guidance, and iterative support each month.',
-      price: 49,
+      description: 'Monthly guidance and iterative support for one product surface. Cancel anytime.',
+      price: 20,
       priceNote: 'per month',
       features: [
         'Monthly scoped engagement on one product surface',
@@ -85,8 +85,8 @@ const plans = {
       key: 'delivery' as const,
       name: 'Delivery',
       badge: 'Most popular',
-      description: 'For teams in active build mode. Monthly retainer with full product direction, implementation support, and continuous delivery momentum.',
-      price: 149,
+      description: 'Active build mode, monthly. Full access, direction, and continuous delivery momentum. Cancel anytime.',
+      price: 50,
       priceNote: 'per month',
       features: [
         'Full product surface access, all tools included',
@@ -103,7 +103,7 @@ const plans = {
       key: 'enterprise' as const,
       name: 'Enterprise',
       badge: null,
-      description: 'Dedicated monthly engagement for organizations running internal AI platforms, multi-product rollouts, or complex integrations.',
+      description: 'Dedicated monthly engagement for teams running internal AI platforms or complex integrations.',
       price: null,
       priceNote: null,
       features: [
@@ -197,7 +197,7 @@ export default function Pricing() {
             Pricing
           </p>
           <h2 className="mb-3 text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl lg:text-5xl">
-            Simple, transparent pricing.
+            Start small. See if it fits.
           </h2>
 
           {/* Billing mode toggle */}
@@ -299,7 +299,7 @@ export default function Pricing() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-8 text-center text-sm text-slate-400 dark:text-slate-500"
         >
-          Stripe-secured · receipt issued on payment · <a href="#contact" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">not sure which plan? get in touch</a>
+          Stripe-secured · receipt issued on payment · <a href="#contact" className="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300">questions? just ask</a>
         </motion.p>
       </div>
     </section>

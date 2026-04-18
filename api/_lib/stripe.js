@@ -2,6 +2,11 @@ import Stripe from 'stripe';
 
 let stripeClient;
 
+/**
+ * Initialise and cache the Stripe client.
+ * Returns `null` when `STRIPE_SECRET_KEY` is missing so callers can
+ * fall back gracefully (e.g. redirect to a direct payment link).
+ */
 export function getStripeClient() {
   if (!process.env.STRIPE_SECRET_KEY) {
     return null;
@@ -9,6 +14,8 @@ export function getStripeClient() {
 
   if (!stripeClient) {
     stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      // If you upgrade the `stripe` npm package, verify this API version
+      // is still supported or let Stripe auto-negotiate by omitting it.
       apiVersion: '2025-02-24.acacia',
     });
   }
@@ -16,6 +23,11 @@ export function getStripeClient() {
   return stripeClient;
 }
 
+/**
+ * Resolve the canonical site URL for Stripe success/cancel redirects.
+ * Prefers the explicit `SITE_URL` env var, then the request origin,
+ * then infers from `Host` / `X-Forwarded-Proto` headers.
+ */
 export function getBaseUrl(req, originFromBody) {
   if (process.env.SITE_URL) {
     return process.env.SITE_URL;
@@ -33,6 +45,10 @@ export function getBaseUrl(req, originFromBody) {
   return `${protocol}://${host}`;
 }
 
+/**
+ * Build the Stripe Checkout Session config for a given plan + billing mode.
+ * Returns `null` for unknown plans so the API can return a 400.
+ */
 export function getCheckoutConfig(plan, billingMode) {
   const isRetainer = billingMode === 'retainer';
 
@@ -67,6 +83,11 @@ export function getCheckoutConfig(plan, billingMode) {
   return configs[plan] || null;
 }
 
+/**
+ * Read the raw request body as a Buffer.
+ * Required for Stripe webhook signature verification because
+ * JSON parsing would alter the payload bytes.
+ */
 export async function readRawBody(req) {
   const chunks = [];
 

@@ -119,7 +119,7 @@ function InterstitialQuote({ q }: { q: Quote }) {
       <motion.div style={{ rotateX, y, opacity }} className={`relative ${s.wrap}`}>
         <p className={s.mainClass} style={s.mainStyle}>{q.main}</p>
         <p className={s.subClass}  style={s.subStyle}>{q.sub}</p>
-        <p className={s.srcClass}  style={{ color: '#FFFFFF' }}>{q.source}</p>
+        {q.source && <p className={s.srcClass} style={{ color: '#FFFFFF' }}>{q.source}</p>}
       </motion.div>
     </div>
   );
@@ -130,20 +130,20 @@ function InterstitialQuote({ q }: { q: Quote }) {
 ═══════════════════════════════════════════════════════════════════════ */
 const products = [
   {
-    id:       'mpp-studio',
-    eyebrow:  'API Infrastructure · Live',
-    name:     'MPP Studio',
-    headline: 'Turn your workflow into a revenue stream.',
-    sub:      'MPP Studio handles the full monetization loop — discovery, sandbox, and live payment — without touching billing code. Ship once, charge forever.',
-    cta:      'Open MPP Studio',
-    link:     'https://agent-exchange-web.vercel.app/',
-    videoSrc: '/images/products/mpp-studio-surface.webm',
-    mp4Src:   '/images/products/mpp-studio-surface.mp4',
+    id:       'b2dp',
+    eyebrow:  'Product Architecture · Active',
+    name:     'B2DP (Business to Data Platform)',
+    headline: 'Brief to architecture in minutes.',
+    sub:      "Describe what you're building in plain language. B2DP returns data models, service contracts, and system structure — ready for engineers immediately.",
+    cta:      'Explore B2DP',
+    link:     'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
+    videoSrc: '/images/products/b2dp-surface.webm',
+    mp4Src:   '/images/products/b2dp-surface.mp4',
     isVideo:  true,
     flip:     false,
     proof: {
-      verb:      'Monetized with',
-      statement: 'From sandbox to live payment — without writing a single billing integration.',
+      verb:      'Designed with',
+      statement: 'Business brief in — data models, services, and architecture out. Ready for engineers immediately.',
     },
   },
   {
@@ -164,20 +164,20 @@ const products = [
     },
   },
   {
-    id:       'b2dp',
-    eyebrow:  'Product Architecture · Active',
-    name:     'B2DP',
-    headline: 'Brief to architecture in minutes.',
-    sub:      "Describe what you're building in plain language. B2DP returns data models, service contracts, and system structure — ready for engineers immediately.",
-    cta:      'Explore B2DP',
-    link:     'https://teckedd-code2save.github.io/ai-build-tools/',
-    videoSrc: '/images/products/b2dp-surface.webm',
-    mp4Src:   '/images/products/b2dp-surface.mp4',
+    id:       'mpp-studio',
+    eyebrow:  'API Infrastructure · Live',
+    name:     'MPP Studio',
+    headline: 'The payment layer for AI services.',
+    sub:      'Register any HTTP API and get a proxy endpoint instantly. Test the full 402 payment flow with fake money, graduate to real USDC on Base Sepolia, and get discovered by AI agents that pay automatically per call.',
+    cta:      'Open MPP Studio',
+    link:     'https://agent-exchange-web.vercel.app/',
+    videoSrc: '/images/products/mpp-studio-surface.webm',
+    mp4Src:   '/images/products/mpp-studio-surface.mp4',
     isVideo:  true,
     flip:     false,
     proof: {
-      verb:      'Designed with',
-      statement: 'Business brief in — data models, services, and architecture out. Ready for engineers immediately.',
+      verb:      'Monetized with',
+      statement: 'From sandbox to live payment — without writing a single billing integration.',
     },
   },
   {
@@ -186,8 +186,8 @@ const products = [
     name:     'Datafy MCP',
     headline: 'Ground your agents in reality.',
     sub:      "Connect AI agents to your live operational data through MCP. They reason from what's true today — not stale training data or hallucinated context.",
-    cta:      'Watch Datafy',
-    link:     'https://www.youtube.com/watch?v=eUEZqX97i6I',
+    cta:      'View package',
+    link:     'https://www.npmjs.com/package/@teckedd-code2save/datafy',
     videoSrc: null,
     mp4Src:   null,
     imgSrc:   '/images/products/datafy-surface.png',
@@ -203,21 +203,21 @@ const products = [
 /* Interstitial content */
 const interstitials: Quote[] = [
   {
-    main:    'We went from idea to\ncharging customers in\nunder a week.',
-    sub:     'No billing team. No integration sprint. The stack handled the parts that usually kill momentum.',
-    source:  'Founder, AI tooling startup',
+    main:    'Good architecture\nstarts with a clear brief.',
+    sub:     'When business logic is mapped to data models early, the rest of the build falls into place.',
+    source:  '',
     variant: 'left-heavy',
   },
   {
-    main:    '"The deployment decision used to take three days of debate. Now it takes three minutes."',
-    sub:     'The shift isn\'t about the tools — it\'s about what your team stops worrying about.',
-    source:  'Engineering lead, Series A company',
+    main:    '"Shipping should feel inevitable,\nnot uncertain."',
+    sub:     'The right deployment decision removes friction — so your team can focus on the product, not the platform.',
+    source:  '',
     variant: 'center-light',
   },
   {
-    main:    'Every hour spent on\ninfrastructure is an hour\nnot spent on the product.',
-    sub:     'That trade-off is optional now.',
-    source:  'Serendepify AI · operating thesis',
+    main:    'The best payment flow\nis the one you never have to build.',
+    sub:     'Focus on the API. Let the infrastructure handle discovery, negotiation, and settlement.',
+    source:  '',
     variant: 'right-mixed',
   },
 ];

@@ -75,7 +75,7 @@ export default function Hero() {
                 style={{ color: '#D4A5B0' }}
               >
                 <ScrambleText delay={400} duration={900}>
-                  Building for the AI economy
+                  Early-stage AI tools. Shipped, not slid.
                 </ScrambleText>
               </p>
               <DrawnUnderline width={32} delay={1.2} />
@@ -88,7 +88,7 @@ export default function Hero() {
                 style={{ letterSpacing: '-0.03em' }}
               >
                 <SplitText trigger="animate" stagger={0.035} delay={0.6}>
-                  We build the stack that makes AI autonomous.
+                  Tools for teams building with AI.
                 </SplitText>
               </h1>
             </motion.div>
@@ -99,9 +99,8 @@ export default function Hero() {
               className="mt-7 max-w-xl text-lg font-light leading-[1.65] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]"
               style={{ color: 'rgba(255,255,255,0.55)' }}
             >
-              The transition from AI-assisted to AI-autonomous is already underway.
-              We build the tools that close that gap — agents that transact,
-              systems that self-deploy, architecture that writes itself.
+              We're building the tools we wish existed — from payment-ready APIs
+              to deployment intelligence. Early, real, and iterating fast.
             </motion.p>
 
             {/* CTAs */}
