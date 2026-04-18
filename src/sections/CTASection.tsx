@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
 import SplitText from '@/components/SplitText';
 import MagneticButton from '@/components/MagneticButton';
-import DrawnUnderline from '@/components/DrawnUnderline';
+
 import LightningFlash from '@/components/LightningFlash';
 
 /* ── Stagger variants ──────────────────────────────────────────────── */
@@ -37,11 +37,7 @@ export default function CTASection() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
           >
-            <motion.p variants={colItem} className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#E898A8' }}>
-              Open for work
-            </motion.p>
-            <DrawnUnderline className="mb-4" width={36} delay={0.3} />
-            <motion.div variants={colItem}>
+            <motion.div variants={colItem} className="mb-4">
               <h2
                 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
                 style={{ letterSpacing: '-0.03em' }}

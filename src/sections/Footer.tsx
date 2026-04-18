@@ -12,9 +12,8 @@ const footerLinks = {
     { label: 'Datafy MCP', href: 'https://edward-entire.vercel.app/' },
   ],
   company: [
-    { label: 'How we work', href: '#features' },
-    { label: 'LinkedIn',    href: 'https://www.linkedin.com/in/edward-twumasi/' },
-    { label: 'Portfolio',   href: 'https://edward-entire.vercel.app/' },
+    { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/edward-twumasi/' },
+    { label: 'Portfolio', href: 'https://edward-entire.vercel.app/' },
   ],
 };
 

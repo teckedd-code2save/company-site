@@ -3,7 +3,7 @@ import { useModal } from '@/lib/modal-context';
 
 import SplitText from '@/components/SplitText';
 import MagneticButton from '@/components/MagneticButton';
-import DrawnUnderline from '@/components/DrawnUnderline';
+
 import LightningFlash from '@/components/LightningFlash';
 
 const principles = [
@@ -63,10 +63,6 @@ export default function Features() {
           className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <div>
-            <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-              How we build
-            </p>
-            <DrawnUnderline className="mb-3" width={40} delay={0.2} />
             <h2
               className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
               style={{ letterSpacing: '-0.03em' }}

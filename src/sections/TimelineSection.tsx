@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import SplitText from '@/components/SplitText';
-import DrawnUnderline from '@/components/DrawnUnderline';
+
 import LightningFlash from '@/components/LightningFlash';
 
 const PINK = '#D4A5B0';
@@ -182,10 +182,6 @@ export default function TimelineSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <p className="mb-2 text-sm font-medium uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-            How we work
-          </p>
-          <DrawnUnderline className="mb-3 mx-auto" width={40} delay={0.2} color="#D4A5B0" />
           <h2
             className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
             style={{ letterSpacing: '-0.03em' }}

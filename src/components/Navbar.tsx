@@ -5,9 +5,8 @@ import { useModal } from '@/lib/modal-context';
 import MagneticButton from '@/components/MagneticButton';
 
 const navLinks = [
-  { label: 'Products',    href: '#products' },
-  { label: 'How we work', href: '#features' },
-  { label: 'About',       href: '#about' },
+  { label: 'Products', href: '#products' },
+  { label: 'About',    href: '#about' },
 ];
 
 export default function Navbar() {
