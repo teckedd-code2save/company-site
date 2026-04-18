@@ -63,7 +63,7 @@ export default function SocialProof() {
           className="mb-16 text-center"
         >
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-            Social proof
+            What teams are saying
           </p>
           <DrawnUnderline className="mb-3 mx-auto" width={40} delay={0.2} />
           <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl" style={{ letterSpacing: '-0.02em' }}>

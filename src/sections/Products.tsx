@@ -49,7 +49,7 @@ const products = [
       'AI-guided scaffolding from plain language input',
       'Output your team can hand off or build from directly',
     ],
-    link: 'https://teckedd-code2save.github.io/ai-build-tools/',
+    link: 'https://edward-entire.vercel.app/',
     cta: 'Explore B2DP',
     image: '/images/products/b2dp-surface.gif',
     kind: 'site' as const,
@@ -66,8 +66,8 @@ const products = [
       'Replaces static mock data with live operational signals',
       'Reduces hallucination at the input, not the output',
     ],
-    link: 'https://www.youtube.com/watch?v=eUEZqX97i6I',
-    cta: 'Watch Datafy in action',
+    link: 'https://edward-entire.vercel.app/',
+    cta: 'See Datafy MCP',
     image: '/images/products/datafy-surface.png',
     kind: 'video' as const,
   },
@@ -255,7 +255,7 @@ export default function Products() {
             </span>
           </h2>
           <p className="mt-5 max-w-xl text-base leading-7 text-slate-500 dark:text-slate-400 sm:text-lg">
-            Four live products. No waitlist. No pitch. No procurement loop. Built to earn their place in your stack.
+            No pitch. No procurement loop. Built to earn their place in your stack.
           </p>
         </motion.div>
       </div>
@@ -298,6 +298,10 @@ export default function Products() {
           />
         ))}
       </div>
+
+      <p className="mt-5 text-center text-xs font-light uppercase tracking-widest text-slate-400 dark:text-slate-500">
+        More products in development
+      </p>
     </section>
   );
 }

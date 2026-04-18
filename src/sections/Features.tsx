@@ -9,21 +9,21 @@ import LightningFlash from '@/components/LightningFlash';
 const principles = [
   {
     num: '01',
-    tag: 'Four layers of the stack',
+    tag: 'The core stack',
     title: 'Payment rails, deployment intelligence, architecture generation, data grounding.',
-    body: 'We mapped the four hardest problems in AI deployment and built a product for each one — live today, not roadmapped.',
+    body: 'We mapped the hardest problems in AI deployment and built a product for each one — running in production, not on a roadmap.',
   },
   {
     num: '02',
     tag: 'Shipped, not promised',
     title: 'Live software you can use right now.',
-    body: 'No waitlists. No private betas. MPP Studio, Shipd, B2DP, and Datafy are running in production — put them in front of your team today.',
+    body: 'MPP Studio, Shipd, B2DP, and Datafy MCP are running in production. Put them in front of your team today.',
   },
   {
     num: '03',
-    tag: 'Founder delivery',
-    title: 'We stay in until it works.',
-    body: "One team, no handoff theater. We go from first principles to deployed product without disappearing after the wireframes.",
+    tag: 'End-to-end delivery',
+    title: 'From first principles to shipped product.',
+    body: "One team, no handoffs. We move from brief to deployed product — and stay accountable for the outcome.",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function Features() {
         >
           <div>
             <p className="mb-2 text-xs font-medium uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-              Our operating thesis
+              How we build
             </p>
             <DrawnUnderline className="mb-3" width={40} delay={0.2} />
             <h2

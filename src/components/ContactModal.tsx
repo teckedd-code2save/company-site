@@ -36,7 +36,7 @@ export default function ContactModal() {
             {/* Top bar */}
             <div className="glass-strong sticky top-0 z-10 flex h-14 items-center justify-between border-b border-white/[0.06] px-6 sm:px-10">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
-                Contact sales
+                Get in touch
               </span>
               <button
                 onClick={closeContact}
@@ -57,7 +57,7 @@ export default function ContactModal() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
                   >
-                    Let's figure out if we're the right fit.
+                    Tell us what you're building.
                   </motion.h1>
                   <DrawnUnderline className="mt-3" width={56} delay={0.4} color="#D4A5B0" />
 

@@ -86,7 +86,7 @@ export default function Navbar() {
               onClick={openContact}
               className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black"
             >
-              Contact sales
+              Get started
             </MagneticButton>
           </div>
 
@@ -128,7 +128,7 @@ export default function Navbar() {
                 onClick={() => { setMobileOpen(false); openContact(); }}
                 className="mt-3 rounded-full bg-white py-3 text-center text-sm font-medium text-black"
               >
-                Contact sales
+                Get started
               </button>
             </nav>
           </motion.div>

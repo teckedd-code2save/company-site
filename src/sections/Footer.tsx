@@ -8,8 +8,8 @@ const footerLinks = {
   products: [
     { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
     { label: 'Shipd',      href: 'https://shipd-eight.vercel.app/' },
-    { label: 'B2DP',       href: 'https://teckedd-code2save.github.io/ai-build-tools/' },
-    { label: 'Datafy MCP', href: 'https://www.youtube.com/watch?v=eUEZqX97i6I' },
+    { label: 'B2DP',       href: 'https://edward-entire.vercel.app/' },
+    { label: 'Datafy MCP', href: 'https://edward-entire.vercel.app/' },
   ],
   company: [
     { label: 'How we work', href: '#features' },
@@ -46,7 +46,7 @@ export default function Footer() {
             onClick={openContact}
             className="shrink-0 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-opacity hover:opacity-85"
           >
-            Contact sales
+            Start a conversation
           </MagneticButton>
         </div>
       </div>

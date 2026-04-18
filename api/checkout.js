@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   try {
     const baseUrl = getBaseUrl(req, origin);
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
+      mode: checkout.mode,
       customer_email: email || undefined,
       line_items: [
         {

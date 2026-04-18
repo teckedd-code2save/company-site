@@ -34,19 +34,24 @@ export function getBaseUrl(req, originFromBody) {
 }
 
 export function getCheckoutConfig(plan, billingMode) {
+  const isRetainer = billingMode === 'retainer';
+
   const configs = {
     starter: {
-      priceId: process.env.STRIPE_PRICE_STARTER || '',
+      priceId: (isRetainer
+        ? process.env.STRIPE_PRICE_STARTER_RETAINER
+        : process.env.STRIPE_PRICE_STARTER) || '',
       fallbackUrl: process.env.VITE_PAYMENT_STARTER_URL || '#contact',
-      label: 'starter',
+      label: isRetainer ? 'starter-retainer' : 'starter',
+      mode: isRetainer ? 'subscription' : 'payment',
     },
     delivery: {
-      priceId:
-        billingMode === 'retainer'
-          ? process.env.STRIPE_PRICE_DELIVERY_RETAINER || ''
-          : process.env.STRIPE_PRICE_DELIVERY_PROJECT || '',
+      priceId: (isRetainer
+        ? process.env.STRIPE_PRICE_DELIVERY_RETAINER
+        : process.env.STRIPE_PRICE_DELIVERY_PROJECT) || '',
       fallbackUrl: process.env.VITE_PAYMENT_DELIVERY_URL || '#contact',
-      label: billingMode === 'retainer' ? 'delivery-retainer' : 'delivery-project',
+      label: isRetainer ? 'delivery-retainer' : 'delivery-project',
+      mode: isRetainer ? 'subscription' : 'payment',
     },
     enterprise: {
       priceId: process.env.STRIPE_PRICE_ENTERPRISE || '',
@@ -55,6 +60,7 @@ export function getCheckoutConfig(plan, billingMode) {
         process.env.VITE_CALENDLY_URL ||
         '#contact',
       label: 'enterprise',
+      mode: 'payment',
     },
   };
 
