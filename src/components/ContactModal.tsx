@@ -95,7 +95,8 @@ export default function ContactModal() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+                    className="font-serif tracking-[-0.03em] text-white"
+                    style={{ fontSize: 'clamp(2.2rem, 4vw, 3.6rem)', lineHeight: 1.05 }}
                   >
                     Tell us what you're building.
                   </motion.h1>
