@@ -29,7 +29,7 @@ const evolutionChain: EvolutionNode[] = [
   },
   {
     number: '03',
-    name: 'd2dp',
+    name: 'b2dp',
     role: 'system shape',
     description:
       'Skills and CLI for building products from a short description. Shapes the architecture before any deploy happens.',
@@ -205,7 +205,7 @@ export default function TimelineSection() {
           </h2>
           <p className="mt-5 max-w-[640px] text-base leading-[1.75] text-[var(--fg-2)]">
             Shipd was built first. Convoy is what Shipd wanted to become —
-            agentic deployment from first commit to live canary. d2dp shapes the
+            agentic deployment from first commit to live canary. b2dp shapes the
             system before any deploy happens.
           </p>
         </motion.div>

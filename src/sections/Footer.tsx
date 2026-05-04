@@ -6,14 +6,13 @@ import DrawnUnderline from '@/components/DrawnUnderline';
 
 const footerLinks = {
   products: [
-    { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
-    { label: 'Shipd',      href: 'https://shipd-seven.vercel.app/' },
-    { label: 'd2dp',       href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
-    { label: 'Datafy MCP', href: 'https://edward-entire.vercel.app/' },
+    { label: 'Convoy', href: 'https://convoy-home.vercel.app/' },
+    { label: 'Shipd',  href: 'https://shipd-seven.vercel.app/' },
+    { label: 'b2dp',   href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
   ],
   company: [
-    { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/edward-twumasi/' },
-    { label: 'Portfolio', href: 'https://edward-entire.vercel.app/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/edward-twumasi/' },
+    { label: 'GitHub',   href: 'https://github.com/teckedd-code2save' },
   ],
 };
 
@@ -81,7 +80,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="max-w-xs text-sm leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
-              Autonomy from ideation to production. Convoy, Shipd, and d2dp — built for teams that ship.
+              Autonomy from ideation to production. Convoy, Shipd, and b2dp — built for teams that ship.
             </p>
             <div className="mt-5 flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (
@@ -159,16 +158,9 @@ export default function Footer() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
         >
           <p className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
-            © 2026 Serendepify AI. Infrastructure for the AI economy.
+            © 2026 Serendepify. Infrastructure for autonomous AI.
           </p>
           <div className="flex gap-5">
-            <a
-              href="mailto:edwardktwumasi1000@gmail.com"
-              className="text-xs transition-colors hover:text-white"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-            >
-              edwardktwumasi1000@gmail.com
-            </a>
             <button
               onClick={openContact}
               className="text-xs transition-colors hover:text-white"

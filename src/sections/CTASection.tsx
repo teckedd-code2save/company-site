@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useModal } from '@/lib/modal-context';
-import SplitText from '@/components/SplitText';
 import MagneticButton from '@/components/MagneticButton';
 
 import LightningFlash from '@/components/LightningFlash';
@@ -39,12 +38,10 @@ export default function CTASection() {
           >
             <motion.div variants={colItem} className="mb-4">
               <h2
-                className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
-                style={{ letterSpacing: '-0.03em' }}
+                className="font-serif tracking-[-0.03em] text-white"
+                style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', lineHeight: 1.05 }}
               >
-                <SplitText stagger={0.03}>
-                  Ready to go from idea to production?
-                </SplitText>
+                Ready to go from idea to production?
               </h2>
             </motion.div>
           </motion.div>

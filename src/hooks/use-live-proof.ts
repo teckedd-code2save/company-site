@@ -27,7 +27,7 @@ const fallbackCards: ProofCard[] = [
     cta: 'Open package',
   },
   {
-    name: 'd2dp',
+    name: 'b2dp',
     eyebrow: 'NPM package',
     headline: 'Product builder CLI',
     detail: 'Fallback mode keeps the proof section useful even when external calls fail.',
@@ -85,7 +85,7 @@ export function useLiveProof() {
           : fallbackCards[0],
         b2dpPkg.status === 'fulfilled'
           ? {
-              name: 'd2dp',
+              name: 'b2dp',
               eyebrow: 'NPM package',
               headline: `Version ${b2dpPkg.value.latestVersion} is live`,
               detail:

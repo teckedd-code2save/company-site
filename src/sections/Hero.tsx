@@ -6,7 +6,7 @@ import { useModal } from '@/lib/modal-context';
 const productLinks = [
   { label: 'Convoy', href: '#convoy', accent: true },
   { label: 'Shipd', href: '#shipd' },
-  { label: 'd2dp', href: '#d2dp' },
+  { label: 'b2dp', href: '#b2dp' },
 ];
 
 const easeEnter = [0.0, 0, 0.2, 1] as [number, number, number, number];
@@ -27,7 +27,7 @@ export default function Hero() {
         <div className="mx-auto w-full max-w-[1240px]">
           <motion.h1
             className="max-w-[900px] font-serif leading-[0.95] tracking-[-0.04em] text-[var(--fg)]"
-            style={{ fontSize: 'clamp(3rem, 8vw, 7.1rem)' }}
+            style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.08, ease: easeEnter }}
@@ -46,7 +46,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.22, ease: easeEnter }}
           >
-            Serendepify builds agent systems that ship. From a short description to a live deployment — Convoy, Shipd, and d2dp handle the full path.
+            From a spark of an idea to a deployed product. Our agents handle the
+            architecture, routing, and rollout — so you ship at the speed of thought.
           </motion.p>
 
           <motion.div

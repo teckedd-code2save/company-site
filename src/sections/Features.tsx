@@ -4,8 +4,8 @@ import { useModal } from '@/lib/modal-context';
 
 type FlowNode = { name: string; role: string; tone: 'mauve' | 'coral' };
 
-const autonomyLane: FlowNode[] = [
-  { name: 'd2dp', role: 'describe', tone: 'coral' },
+const workflowSteps: FlowNode[] = [
+  { name: 'b2dp', role: 'describe', tone: 'coral' },
   { name: 'Shipd', role: 'route', tone: 'mauve' },
   { name: 'Convoy', role: 'deploy', tone: 'coral' },
   { name: 'Production', role: 'live system', tone: 'mauve' },
@@ -40,7 +40,7 @@ function DeploymentLane() {
           }}
         />
 
-        {autonomyLane.map((node, index) => {
+        {workflowSteps.map((node, index) => {
           const toneColor = node.tone === 'mauve' ? 'var(--mauve)' : 'var(--coral)';
 
           return (
@@ -140,11 +140,13 @@ export default function Features() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2 1.5-3.5A6 6 0 0 0 6 8c0 1 .5 2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+                  <path d="M9 18h6"/>
+                  <path d="M10 22h4"/>
                 </svg>
               </div>
               <span className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/34">
-                Origin
+                Ideation
               </span>
             </div>
 
@@ -173,7 +175,7 @@ export default function Features() {
           className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <p className="max-w-[640px] text-sm leading-[1.8] text-white/42">
-            Serendepify connects ideation to production: d2dp shapes the system, Shipd routes the path, and Convoy carries the rollout.
+            Serendepify connects ideation to production: b2dp shapes the system, Shipd routes the path, and Convoy carries the rollout.
           </p>
           <MagneticButton
             onClick={openContact}

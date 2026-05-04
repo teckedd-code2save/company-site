@@ -27,9 +27,9 @@ const products: Product[] = [
     status: 'flagship',
     tone: 'mauve',
     title: 'Convoy',
-    blurb: 'Agentic deployment intelligence that rehearses, ships, and observes — from first commit to live canary.',
+    blurb: 'Agentic deployment with rehearsal, canary rollout, and observability — from first commit to live system.',
     detail:
-      'Convoy does what Shipd started: it reads the system, chooses the path, and carries the rollout with agentic intelligence from first commit to live canary.',
+      'Convoy is what Shipd grows into when you are ready to ship. The agent stays in the loop, rehearses every deploy, and observes the canary — Claude-native, fully autonomous. Check Convoy home.',
     stack: ['Opus 4.7', 'Claude Code', 'deployment loops', 'observability'],
     link: 'https://convoy-home.vercel.app/',
     visual: 'convoy',
@@ -41,9 +41,9 @@ const products: Product[] = [
     status: 'live',
     tone: 'coral',
     title: 'Shipd',
-    blurb: 'Read the repository. Return the platform path with evidence.',
+    blurb: 'Reads your repository and scores the best deployment options.',
     detail:
-      'Repo-aware deployment intelligence that scores the tradeoffs before the team burns cycles on the wrong infra choice.',
+      'Shipd helps you plan and score the best options before you commit to an infra path. Need more than planning? Convoy carries the rollout with the agent in the loop.',
     stack: ['repo scan', 'platform scoring', 'comparison view'],
     link: 'https://shipd-seven.vercel.app/',
     visual: 'video',
@@ -51,16 +51,16 @@ const products: Product[] = [
     mp4Src: '/images/products/shipd-surface.mp4',
   },
   {
-    id: 'd2dp',
+    id: 'b2dp',
     number: '03',
     tag: 'product builder',
     status: 'active',
     tone: 'coral',
-    title: 'd2dp',
-    blurb: 'A short product description in. A buildable product out.',
+    title: 'b2dp',
+    blurb: 'A business spec in. A complete end-to-end platform out.',
     detail:
-      'd2dp is a business to data platform tool with skills and a CLI for building products from a short product description. It maps intent to data models, service boundaries, and scaffolded output.',
-    stack: ['skills system', 'CLI', 'scaffold output', 'data models'],
+      'b2dp is a business-to-data-platform CLI. Provision skills, configure MCP servers, and generate full applications with the agent of your choice — Claude, Gemini, Codex, and more.',
+    stack: ['skills system', 'CLI', 'MCP servers', 'agent orchestrator'],
     link: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
     visual: 'video',
     videoSrc: '/images/products/b2dp-surface.webm',
@@ -229,6 +229,13 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
   const reverse = index % 2 === 1;
   const toneColor = product.tone === 'mauve' ? 'var(--mauve)' : 'var(--coral)';
 
+  const ctaText =
+    product.id === 'convoy'
+      ? 'Check it out'
+      : product.id === 'shipd'
+        ? 'Explore Shipd'
+        : 'Get the CLI';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -295,7 +302,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             rel="noopener noreferrer"
             className="group mt-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-white/72 transition-colors hover:text-white"
           >
-            Open product
+            {ctaText}
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
