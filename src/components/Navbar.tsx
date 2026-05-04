@@ -5,7 +5,7 @@ import { useModal } from '@/lib/modal-context';
 import MagneticButton from '@/components/MagneticButton';
 
 const navLinks = [
-  { label: 'Products', href: '#products' },
+  { label: 'Stack', href: '#products' },
   { label: 'About',    href: '#about' },
 ];
 
@@ -36,27 +36,13 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5">
-            <svg width="20" height="20" viewBox="0 0 20 20" className="overflow-visible">
-              <motion.rect
-                x="1" y="1" width="18" height="18" rx="3"
-                fill="none"
-                stroke="#FFFFFF"
-                strokeWidth="1.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              />
-              <motion.rect
-                x="1" y="1" width="18" height="18" rx="3"
-                fill="#FFFFFF"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
-              />
+          <a href="#" className="flex items-center gap-3">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="overflow-visible">
+              <rect x="2" y="2" width="24" height="24" rx="5" stroke="white" strokeWidth="2"/>
+              <path d="M18 10H12C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14H16C17.1 14 18 14.9 18 16C18 17.1 17.1 18 16 18H10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span className="text-sm font-semibold tracking-tight text-white">
-              Serendepify AI
+            <span className="text-base font-semibold tracking-tight text-white">
+              Serendepify
             </span>
           </a>
 
@@ -66,7 +52,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-white/55 transition-colors hover:text-white"
+                className="text-sm text-white/70 transition-colors hover:text-white"
               >
                 {link.label}
               </a>
@@ -78,18 +64,18 @@ export default function Navbar() {
             <motion.button
               onClick={openContact}
               whileHover={{ opacity: 1 }}
-              className="px-4 py-2 text-sm text-white/55 transition-colors hover:text-white"
+              className="px-4 py-2 text-sm text-white/70 transition-colors hover:text-white"
             >
-              Get started
+              Contact
             </motion.button>
             <MagneticButton
               as="a"
-              href="https://shipd-seven.vercel.app/"
+              href="https://convoy-home.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-white px-5 py-2 text-sm font-medium text-black"
             >
-              Try Shipd
+              View Convoy
             </MagneticButton>
           </div>
 
@@ -116,25 +102,25 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="px-2 py-3 text-sm text-white/55 hover:text-white"
+                  className="px-2 py-3 text-sm text-white/70 hover:text-white"
                 >
                   {link.label}
                 </a>
               ))}
               <button
                 onClick={() => { setMobileOpen(false); openContact(); }}
-                className="px-2 py-3 text-left text-sm text-white/55 hover:text-white"
+                className="px-2 py-3 text-left text-sm text-white/70 hover:text-white"
               >
-                Get started
+                Contact
               </button>
               <a
-                href="https://shipd-seven.vercel.app/"
+                href="https://convoy-home.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="mt-3 rounded-full bg-white py-3 text-center text-sm font-medium text-black"
               >
-                Try Shipd
+                View Convoy
               </a>
             </nav>
           </motion.div>

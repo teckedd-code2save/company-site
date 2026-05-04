@@ -19,16 +19,11 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="mx-auto mb-20 max-w-4xl text-center"
         >
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-            Mission
-          </p>
           <blockquote
             className="text-3xl font-light leading-snug tracking-tight text-white sm:text-4xl lg:text-5xl"
             style={{ letterSpacing: '-0.02em' }}
           >
-            &ldquo;We build AI infrastructure that actually works &mdash; payment layers,
-            deployment intelligence, data architecture, and agent grounding. Each tool
-            is built because we needed it first, then refined for teams like yours.&rdquo;
+            &ldquo;We build agent systems that turn ideas into deployed products. No handoffs. No drift. Just autonomy that ships.&rdquo;
           </blockquote>
         </motion.div>
 
@@ -40,16 +35,11 @@ export default function About() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mx-auto max-w-4xl text-center"
         >
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-            Vision
-          </p>
           <blockquote
             className="text-3xl font-light leading-snug tracking-tight text-white sm:text-4xl lg:text-5xl"
             style={{ letterSpacing: '-0.02em' }}
           >
-            &ldquo;AI tools should be judged by what they ship, not what they promise.
-            We are building toward a stack where every piece earns its place through
-            real usage.&rdquo;
+            &ldquo;The future of software isn't more tools — it's fewer handoffs. We're building the stack where description becomes deployment.&rdquo;
           </blockquote>
         </motion.div>
 

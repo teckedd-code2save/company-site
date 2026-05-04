@@ -1,268 +1,230 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import SplitText from '@/components/SplitText';
+import { motion } from 'framer-motion';
 
-import LightningFlash from '@/components/LightningFlash';
+const easeEnter = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-const PINK = '#D4A5B0';
-const CORAL = '#E898A8';
+type EvolutionNode = {
+  number: string;
+  name: string;
+  role: string;
+  description: string;
+  tone: 'mauve' | 'coral';
+};
 
-const VB_W = 1100;
-const VB_H = 380;
-const SPINE_Y = 200;
-const START_X = 80;
-const END_X = 1020;
-const PHASES = 5;
-const GAP = (END_X - START_X) / (PHASES - 1);
-
-function spineX(i: number) {
-  return START_X + i * GAP;
-}
-
-const phases = [
-  { label: 'Business Context', pill: 'Discover', dir: -1 as const },
-  { label: 'Data Model',       pill: 'Architect', dir: 1  as const },
-  { label: 'MPP Studio',       pill: 'Build',     dir: -1 as const },
-  { label: 'Shipd',            pill: 'Deploy',    dir: 1  as const },
-  { label: 'Datafy MCP',       pill: 'Scale',     dir: -1 as const },
+const evolutionChain: EvolutionNode[] = [
+  {
+    number: '01',
+    name: 'Shipd',
+    role: 'first deploy',
+    description:
+      'Repo-aware deployment intelligence. Scored tradeoffs and surfaced the right platform path.',
+    tone: 'coral',
+  },
+  {
+    number: '02',
+    name: 'Convoy',
+    role: 'flagship operator',
+    description:
+      'Does what Shipd does, then carries you through deployment with agentic intelligence — rehearse, ship, observe.',
+    tone: 'mauve',
+  },
+  {
+    number: '03',
+    name: 'd2dp',
+    role: 'system shape',
+    description:
+      'Skills and CLI for building products from a short description. Shapes the architecture before any deploy happens.',
+    tone: 'coral',
+  },
 ];
 
-/* ── Hard geometric icon (filled, no stroke, rounded corners) ───────────
-   Rounded "F" / block shape — 32×32 viewBox, filled white, no stroke
-──────────────────────────────────────────────────────────────────────── */
-function HardIcon({ cx, cy, delay }: { cx: number; cy: number; delay: number }) {
-  const s = 16; // half-size
+function OriginNode() {
   return (
-    <motion.g
-      initial={{ opacity: 0, scale: 0.7 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 22, delay }}
-    >
-      {/* Main filled block — rounded rect shape */}
-      <rect x={cx - s} y={cy - s} width={s * 2} height={s * 2} rx={6} fill="white" opacity={0.9} />
-      {/* Horizontal bar cuts — giving an F-like negative space */}
-      <rect x={cx - s + 5} y={cy - s + 5} width={s * 1.2} height={3.5} rx={1.5} fill="black" />
-      <rect x={cx - s + 5} y={cy - 1.75} width={s * 0.9} height={3.5} rx={1.5} fill="black" />
-    </motion.g>
+    <div className="flex flex-col items-center justify-center">
+      <div
+        className="flex items-center justify-center"
+        style={{
+          width: 88,
+          height: 88,
+          borderRadius: '50%',
+          border: '1px solid rgba(232,152,168,0.5)',
+          backgroundColor: '#000000',
+          boxShadow:
+            '0 0 32px rgba(232,152,168,0.14), inset 0 0 20px rgba(232,152,168,0.05)',
+        }}
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--coral)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+        </svg>
+      </div>
+      <span className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/34">
+        Origin
+      </span>
+    </div>
   );
 }
 
-/* ── Branch path: 90° perpendicular protrusion from spine ──────────────
-   Spine point → vertical line (perpendicular) → rounded corner → 
-   horizontal line → rounded corner → vertical to pill center
-──────────────────────────────────────────────────────────────────────── */
-function branchPath(sx: number, dir: number, len: number, extend: number) {
-  const r = 10; // corner radius
-  const vy = dir * len;
-  const ey = dir * (len + extend);
-  // Go perpendicular from spine → turn with rounded corner → go parallel → turn → go to pill
-  return `M ${sx} ${SPINE_Y} L ${sx} ${SPINE_Y + vy - dir * r} Q ${sx} ${SPINE_Y + vy} ${sx + r} ${SPINE_Y + vy} L ${sx + extend - r} ${SPINE_Y + vy} Q ${sx + extend} ${SPINE_Y + vy} ${sx + extend} ${SPINE_Y + vy + dir * r} L ${sx + extend} ${SPINE_Y + ey}`;
-}
-
-/* ── Avatar sub-branch from last branch end to icon ──────────────────── */
-function avatarPath(sx: number, dir: number, len: number, extend: number) {
-  const branchEndY = SPINE_Y + dir * (len + extend);
-  const r = 8;
-  // From branch end, go further in same vertical direction then turn right to icon
-  return `M ${sx + extend} ${branchEndY} L ${sx + extend} ${branchEndY + dir * 35 - dir * r} Q ${sx + extend} ${branchEndY + dir * 35} ${sx + extend + r} ${branchEndY + dir * 35} L ${sx + extend + 45} ${branchEndY + dir * 35}`;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   Components
-═══════════════════════════════════════════════════════════════════════ */
-
-function Pill({ x, y, text, delay, outline = false }: { x: number; y: number; text: string; delay: number; outline?: boolean }) {
-  const w = text.length * 8 + 32;
-  const h = 32;
+function Connector() {
   return (
-    <motion.g
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 22, delay }}
-    >
-      <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx={16} fill={outline ? 'none' : '#fff'} stroke={outline ? 'rgba(255,255,255,0.3)' : 'none'} strokeWidth={1.2} />
-      <text x={x} y={y + 4} textAnchor="middle" fontSize="12" fontWeight={600} fill={outline ? 'rgba(255,255,255,0.8)' : '#000'} fontFamily="Inter, system-ui, sans-serif" letterSpacing="0.02em">
-        {text}
-      </text>
-    </motion.g>
+    <div className="pointer-events-none relative flex w-14 shrink-0 flex-col py-8">
+      <div className="absolute left-0 top-8 bottom-8 w-px dash-march-v" />
+      <div className="flex flex-1 flex-col justify-center">
+        <div className="h-px w-full dash-march-h" />
+      </div>
+    </div>
   );
 }
 
-function SpineLine({ delay }: { delay: number }) {
+function EvolutionChain() {
   return (
-    <motion.line
-      x1={START_X} y1={SPINE_Y} x2={END_X} y2={SPINE_Y}
-      stroke={PINK} strokeWidth={2} strokeLinecap="round"
-      initial={{ pathLength: 0, opacity: 0 }}
-      animate={{ pathLength: 1, opacity: 1 }}
-      transition={{ duration: 1.5, ease: 'easeOut', delay }}
-    />
+    <div className="w-full">
+      <div className="relative">
+        {/* Background track */}
+        <div
+          className="pointer-events-none absolute hidden h-px sm:block"
+          style={{
+            top: 28,
+            left: '8%',
+            right: '8%',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+          }}
+        />
+        {/* Animated gradient track */}
+        <motion.div
+          className="pointer-events-none absolute hidden h-px sm:block"
+          initial={{ width: '0%' }}
+          whileInView={{ width: '84%' }}
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 1.2, ease: easeEnter, delay: 0.3 }}
+          style={{
+            top: 28,
+            left: '8%',
+            background:
+              'linear-gradient(90deg, var(--coral), var(--mauve), var(--coral))',
+            boxShadow: '0 0 12px rgba(232,152,168,0.28)',
+          }}
+        />
+
+        <div className="relative grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6">
+          {evolutionChain.map((node, index) => {
+            const toneColor =
+              node.tone === 'mauve' ? 'var(--mauve)' : 'var(--coral)';
+            const glowColor =
+              node.tone === 'mauve'
+                ? 'rgba(212,165,176,0.12)'
+                : 'rgba(232,152,168,0.12)';
+            const borderColor =
+              node.tone === 'mauve'
+                ? 'rgba(212,165,176,0.5)'
+                : 'rgba(232,152,168,0.5)';
+
+            return (
+              <motion.div
+                key={node.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10% 0px' }}
+                transition={{
+                  duration: 0.7,
+                  delay: index * 0.12,
+                  ease: easeEnter,
+                }}
+                className="relative flex flex-col items-center text-center"
+              >
+                <motion.span
+                  className="relative z-[1] flex h-14 w-14 items-center justify-center rounded-full border bg-black font-mono text-[10px] font-medium tracking-widest"
+                  style={{
+                    borderColor,
+                    color: toneColor,
+                    boxShadow: `0 0 24px ${glowColor}`,
+                  }}
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{
+                    duration: 2.8 + index * 0.4,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: 'easeInOut',
+                  }}
+                >
+                  {node.number}
+                </motion.span>
+
+                <span
+                  className="mt-4 font-sans font-medium"
+                  style={{
+                    fontSize: '1.05rem',
+                    color: 'var(--fg)',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  {node.name}
+                </span>
+                <span className="mt-1 font-mono text-[10px] uppercase tracking-widest text-white/34">
+                  {node.role}
+                </span>
+                <p className="mt-3 max-w-[260px] text-[13px] leading-[1.7] text-white/50">
+                  {node.description}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
-
-function SpineDot({ index, delay }: { index: number; delay: number }) {
-  const cx = spineX(index);
-  return (
-    <motion.circle
-      cx={cx} cy={SPINE_Y} r={5} fill="#000"
-      stroke={index === 2 ? CORAL : PINK} strokeWidth={1.5}
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 500, damping: 20, delay }}
-    />
-  );
-}
-
-function SpineLabel({ index, label, delay }: { index: number; label: string; delay: number }) {
-  const x = spineX(index);
-  return (
-    <motion.text
-      x={x} y={SPINE_Y + 28} textAnchor="middle" fontSize="11" fontWeight={600}
-      fill="rgba(255,255,255,0.45)" fontFamily="Inter, system-ui, sans-serif" letterSpacing="0.12em"
-      initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-    >
-      {label}
-    </motion.text>
-  );
-}
-
-function BranchPath({ d, delay }: { d: string; delay: number }) {
-  return (
-    <motion.path
-      d={d} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth={1.2}
-      strokeLinecap="round" strokeLinejoin="round"
-      initial={{ pathLength: 0, opacity: 0 }}
-      animate={{ pathLength: 1, opacity: 1 }}
-      transition={{ duration: 0.7, delay, ease: 'easeOut' }}
-    />
-  );
-}
-
-function BranchLabel({ x, y, text, dir, delay }: { x: number; y: number; text: string; dir: number; delay: number }) {
-  return (
-    <motion.text
-      x={x} y={y + (dir === -1 ? -14 : 20)} textAnchor="middle" fontSize="11" fontWeight={500}
-      fill="rgba(255,255,255,0.6)" fontFamily="Inter, system-ui, sans-serif" letterSpacing="0.04em"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: delay + 0.2 }}
-    >
-      {text}
-    </motion.text>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   Main section — starts with a pill node, then spine animates out
-═══════════════════════════════════════════════════════════════════════ */
 
 export default function TimelineSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.25 });
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    if (inView) setKey((k) => k + 1);
-  }, [inView]);
-
   return (
     <section
-      ref={ref}
-      className="relative overflow-hidden py-24 lg:py-32"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
+      id="timeline"
+      className="relative overflow-hidden border-t border-white/10 bg-black"
     >
-      <LightningFlash intensity={0.03} />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+      <div className="noise-bg" style={{ opacity: 0.03 }} />
+      <div className="mx-auto max-w-[1200px] px-5 py-[90px] md:px-10 md:py-[130px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 0.7, ease: easeEnter }}
+          className="mb-16 max-w-[760px]"
         >
           <h2
-            className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
-            style={{ letterSpacing: '-0.03em' }}
+            className="font-serif tracking-[-0.035em] text-[var(--fg)]"
+            style={{ fontSize: 'clamp(2.4rem, 5vw, 4.8rem)', lineHeight: 0.98 }}
           >
-            <SplitText stagger={0.035}>From idea to deployed product.</SplitText>
+            From origin to{' '}
+            <span style={{ color: 'var(--mauve)' }}>operator</span>.
           </h2>
+          <p className="mt-5 max-w-[640px] text-base leading-[1.75] text-[var(--fg-2)]">
+            Shipd was built first. Convoy is what Shipd wanted to become —
+            agentic deployment from first commit to live canary. d2dp shapes the
+            system before any deploy happens.
+          </p>
         </motion.div>
 
-        {/* Timeline SVG */}
-        <div className="mx-auto w-full" style={{ maxWidth: 1100 }}>
-          <svg
-            key={key}
-            viewBox={`0 0 ${VB_W} ${VB_H}`}
-            className="w-full"
-            preserveAspectRatio="xMidYMid meet"
-            style={{ height: 'auto', maxHeight: 400 }}
-          >
-            {/* ── START: Pill node at the beginning of the spine ── */}
-            <Pill x={START_X} y={SPINE_Y} text="Start" delay={0} outline />
+        <div className="relative hidden items-stretch gap-6 lg:flex">
+          <div className="flex w-[200px] shrink-0 flex-col items-center justify-center">
+            <OriginNode />
+          </div>
 
-            {/* ── SPINE: draws from start pill outward ── */}
-            <SpineLine delay={0.3} />
+          <Connector />
 
-            {/* ── Spine dots + labels ── */}
-            {phases.map((p, i) => (
-              <g key={`spine-${i}`}>
-                <SpineDot index={i} delay={i * 0.35 + 0.5} />
-                <SpineLabel index={i} label={p.pill} delay={i * 0.35 + 0.65} />
-              </g>
-            ))}
+          <div className="flex flex-1 items-center">
+            <EvolutionChain />
+          </div>
+        </div>
 
-            {/* ── Branches: 90° perpendicular protrusion from spine ── */}
-            {phases.map((p, i) => {
-              const sx = spineX(i);
-              const len = 55;
-              const extend = 60 + (i % 2) * 30;
-              const d = branchPath(sx, p.dir, len, extend);
-              const pillX = sx + extend;
-              const pillY = SPINE_Y + p.dir * (len + extend);
-              return (
-                <g key={`branch-${i}`}>
-                  <BranchPath d={d} delay={i * 0.35 + 0.8} />
-                  <Pill x={pillX} y={pillY} text={p.label} delay={i * 0.35 + 1.2} />
-                  <BranchLabel x={pillX} y={pillY} text={p.label} dir={p.dir} delay={i * 0.35 + 1.2} />
-                </g>
-              );
-            })}
-
-            {/* ── Avatar sub-branch on last phase ── */}
-            {(() => {
-              const last = phases[phases.length - 1];
-              const sx = spineX(phases.length - 1);
-              const len = 55;
-              const extend = 60 + ((PHASES - 1) % 2) * 30;
-              const d = avatarPath(sx, last.dir, len, extend);
-              const iconX = sx + extend + 45;
-              const iconY = SPINE_Y + last.dir * (len + extend + 35);
-              return (
-                <g key="avatar-branch">
-                  <BranchPath d={d} delay={4 * 0.35 + 1.4} />
-                  <HardIcon cx={iconX} cy={iconY} delay={4 * 0.35 + 1.8} />
-                  <motion.text
-                    x={iconX} y={iconY + 28} textAnchor="middle" fontSize="11" fontWeight={500}
-                    fill="rgba(255,255,255,0.5)" fontFamily="Inter, system-ui, sans-serif"
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ delay: 4 * 0.35 + 2.0 }}
-                  >
-                    Founder
-                  </motion.text>
-                </g>
-              );
-            })()}
-
-            {/* ── Pulse on center spine dot ── */}
-            <motion.circle
-              cx={spineX(2)} cy={SPINE_Y} r={5} fill="none" stroke={CORAL} strokeWidth={1}
-              initial={{ opacity: 0 }}
-              animate={{ r: [5, 16, 5], opacity: [0.3, 0, 0.3] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeOut', delay: 1.5 }}
-            />
-          </svg>
+        <div className="mt-16 flex flex-col items-center gap-10 lg:hidden">
+          <OriginNode />
+          <EvolutionChain />
         </div>
       </div>
     </section>

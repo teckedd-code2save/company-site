@@ -8,7 +8,7 @@ const footerLinks = {
   products: [
     { label: 'MPP Studio', href: 'https://agent-exchange-web.vercel.app/' },
     { label: 'Shipd',      href: 'https://shipd-seven.vercel.app/' },
-    { label: 'B2DP',       href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
+    { label: 'd2dp',       href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
     { label: 'Datafy MCP', href: 'https://edward-entire.vercel.app/' },
   ],
   company: [
@@ -71,14 +71,17 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="col-span-2 md:col-span-2">
-            <a href="#" className="mb-4 flex items-center gap-2.5">
-              <div className="h-5 w-5 rounded-sm" style={{ backgroundColor: '#FFFFFF' }} />
-              <span className="text-sm font-semibold tracking-tight text-white">
-                Serendepify AI
+            <a href="#" className="mb-4 flex items-center gap-3">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="overflow-visible">
+                <rect x="2" y="2" width="24" height="24" rx="5" stroke="white" strokeWidth="2"/>
+                <path d="M18 10H12C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14H16C17.1 14 18 14.9 18 16C18 17.1 17.1 18 16 18H10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-base font-semibold tracking-tight text-white">
+                Serendepify
               </span>
             </a>
             <p className="max-w-xs text-sm leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
-              We build the infrastructure of autonomous AI — transacting, deploying, reasoning, and grounding in production.
+              Autonomy from ideation to production. Convoy, Shipd, and d2dp — built for teams that ship.
             </p>
             <div className="mt-5 flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (

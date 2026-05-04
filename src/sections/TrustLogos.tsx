@@ -73,9 +73,6 @@ export default function TrustLogos() {
         transition={{ duration: 0.5 }}
         className="mb-14 text-center"
       >
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#FFFFFF' }}>
-          Tools & platforms we build with
-        </p>
         <DrawnUnderline className="mx-auto mb-4" width={48} delay={0.2} />
         <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl" style={{ letterSpacing: '-0.02em' }}>
           Built with the same stack you already use.

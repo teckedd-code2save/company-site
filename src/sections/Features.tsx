@@ -1,46 +1,93 @@
 import { motion } from 'framer-motion';
+import MagneticButton from '@/components/MagneticButton';
 import { useModal } from '@/lib/modal-context';
 
-import SplitText from '@/components/SplitText';
-import MagneticButton from '@/components/MagneticButton';
+type FlowNode = { name: string; role: string; tone: 'mauve' | 'coral' };
 
-import LightningFlash from '@/components/LightningFlash';
-
-const principles = [
-  {
-    num: '01',
-    tag: 'The core stack',
-    title: 'Payments, deployment, architecture, and data — handled.',
-    body: 'We mapped the hardest problems in AI deployment and built a product for each one — running in production, not on a roadmap.',
-  },
-  {
-    num: '02',
-    tag: 'Shipped, not promised',
-    title: 'Live software you can use right now.',
-    body: 'B2DP (Business to Data Platform), Shipd, MPP Studio, and Datafy MCP are in active development and available to explore.',
-  },
-  {
-    num: '03',
-    tag: 'End-to-end delivery',
-    title: 'From first principles to shipped product.',
-    body: 'One builder, end to end. From brief to deployed product with no dropped context.',
-  },
+const autonomyLane: FlowNode[] = [
+  { name: 'd2dp', role: 'describe', tone: 'coral' },
+  { name: 'Shipd', role: 'route', tone: 'mauve' },
+  { name: 'Convoy', role: 'deploy', tone: 'coral' },
+  { name: 'Production', role: 'live system', tone: 'mauve' },
 ];
 
-/* ── Stagger variants ──────────────────────────────────────────────── */
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const easeEnter = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-const gridContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-  },
-};
+function DeploymentLane() {
+  return (
+    <div className="w-full">
+      <div className="relative grid grid-cols-2 gap-y-10 sm:grid-cols-4 sm:gap-0">
+        <div
+          className="pointer-events-none absolute hidden h-px sm:block"
+          style={{
+            top: 28,
+            left: '12.5%',
+            right: '12.5%',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+          }}
+        />
+        <motion.div
+          className="pointer-events-none absolute hidden h-px sm:block"
+          initial={{ width: '0%' }}
+          whileInView={{ width: '75%' }}
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 1.2, ease: easeEnter, delay: 0.3 }}
+          style={{
+            top: 28,
+            left: '12.5%',
+            background: 'linear-gradient(90deg, var(--coral), var(--mauve), var(--coral))',
+            boxShadow: '0 0 12px rgba(0,217,255,0.28)',
+          }}
+        />
 
-const gridCard = {
-  hidden:   { opacity: 0, y: 28 },
-  visible:  { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
-};
+        {autonomyLane.map((node, index) => {
+          const toneColor = node.tone === 'mauve' ? 'var(--mauve)' : 'var(--coral)';
+
+          return (
+            <motion.div
+              key={node.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, delay: index * 0.08, ease: easeEnter }}
+              className="relative flex flex-col items-center text-center"
+            >
+              <motion.span
+                className="relative z-[1] flex h-14 w-14 items-center justify-center rounded-full border bg-black font-mono text-[10px] font-medium tracking-widest"
+                style={{
+                  borderColor: node.tone === 'mauve' ? 'rgba(0,230,153,0.5)' : 'rgba(0,217,255,0.5)',
+                  color: toneColor,
+                  boxShadow:
+                    node.tone === 'mauve'
+                      ? '0 0 24px rgba(0,230,153,0.12)'
+                      : '0 0 24px rgba(0,217,255,0.12)',
+                }}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2.8 + index * 0.4, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+              >
+                {String(index + 1).padStart(2, '0')}
+              </motion.span>
+
+              <span
+                className="mt-4 font-sans font-medium"
+                style={{
+                  fontSize: '1rem',
+                  color: 'var(--fg)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                {node.name}
+              </span>
+              <span className="mt-1 font-mono text-[10px] uppercase tracking-widest text-white/34">
+                {node.role}
+              </span>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function Features() {
   const { openContact } = useModal();
@@ -49,124 +96,91 @@ export default function Features() {
     <section
       id="features"
       className="py-20 lg:py-28"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
+      style={{ background: '#000000', borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
-      <LightningFlash intensity={0.035} />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        {/* Header */}
+      <div className="mx-auto max-w-[1200px] px-5 md:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 0.7, ease: easeEnter }}
         >
-          <div>
-            <h2
-              className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
-              style={{ letterSpacing: '-0.03em' }}
-            >
-              <SplitText stagger={0.035}>
-                Strong conviction. Zero compromise.
-              </SplitText>
-            </h2>
-          </div>
-          <MagneticButton
-            onClick={openContact}
-            className="shrink-0 text-sm font-light text-white lg:pb-1"
+          <h2
+            className="font-serif tracking-[-0.03em] text-[var(--fg)]"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.4rem)', lineHeight: 1.05 }}
           >
-            Work with us →
-          </MagneticButton>
+            How it <span style={{ color: 'var(--mauve)' }}>works</span>.
+          </h2>
+          <p className="mt-3 max-w-[640px] text-[14px] leading-[1.7] text-[var(--fg-2)]">
+            Describe what you want. The system shapes the architecture, picks the deployment path, and executes the rollout — all in one continuous flow.
+          </p>
         </motion.div>
 
-        {/* Bento grid — staggered */}
-        <motion.div
-          variants={gridContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 gap-4 lg:grid-cols-3"
-        >
-          {/* Large identity card */}
-          <motion.div
-            variants={gridCard}
-            className="glass-card col-span-1 rounded-2xl p-8 text-white sm:p-10 lg:col-span-2 lg:row-span-2"
-          >
-            <p
-              className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
-              style={{ letterSpacing: '-0.03em' }}
-            >
-              <SplitText stagger={0.03} delay={0.2}>
-                Built because we needed them. Shared because you might too.
-              </SplitText>
-            </p>
-            <p className="mt-6 max-w-md text-base leading-7" style={{ color: 'rgba(255,255,255,0.42)' }}>
-              Every product in our stack is live proof of that conviction.
-            </p>
-            <MagneticButton
-              onClick={openContact}
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black"
-            >
-              Work with us
-            </MagneticButton>
-          </motion.div>
-
-          {/* Principle cards */}
-          {principles.map((p) => (
-            <motion.div
-              key={p.num}
-              variants={gridCard}
-              whileHover="hover"
-              initial="rest"
-              className="group relative cursor-default glass-card rounded-2xl p-7 sm:p-8"
-            >
-              {/* Hover border trace */}
-              <svg
-                className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-                preserveAspectRatio="none"
+        <div className="mt-16 rounded-[1.8rem] border border-white/10 bg-white/[0.02] px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
+          <div className="relative hidden items-stretch gap-6 lg:flex">
+            <div className="flex w-[200px] shrink-0 flex-col items-center justify-center">
+              <div
+                className="flex items-center justify-center"
+                style={{
+                  width: 88,
+                  height: 88,
+                  borderRadius: '50%',
+                  border: '1px solid rgba(0,217,255,0.5)',
+                  backgroundColor: '#000000',
+                  boxShadow: '0 0 32px rgba(0,217,255,0.14), inset 0 0 20px rgba(0,217,255,0.05)',
+                }}
               >
-                <motion.rect
-                  x={0}
-                  y={0}
-                  width="100%"
-                  height="100%"
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
                   fill="none"
-                  stroke="rgba(255,255,255,0.4)"
-                  strokeWidth={1}
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  variants={{
-                    rest: { pathLength: 0, opacity: 0 },
-                    hover: { pathLength: 1, opacity: 0.6 },
-                  }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                />
-              </svg>
-
-              <motion.span
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-4 block text-4xl font-semibold tracking-tighter"
-                style={{ color: 'rgba(255,255,255,0.08)' }}
-              >
-                {p.num}
-              </motion.span>
-              <span
-                className="mb-3 inline-block text-sm font-light uppercase tracking-widest"
-                style={{ color: 'rgba(255,255,255,0.5)' }}
-              >
-                {p.tag}
+                  stroke="var(--coral)"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                </svg>
+              </div>
+              <span className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/34">
+                Origin
               </span>
-              <h3 className="text-base font-light leading-snug text-white">
-                {p.title}
-              </h3>
-              <p className="mt-3 text-base font-light leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                {p.body}
-              </p>
-            </motion.div>
-          ))}
+            </div>
+
+            <div className="pointer-events-none relative flex w-14 shrink-0 flex-col py-8">
+              <div className="absolute left-0 top-8 bottom-8 w-px bg-[repeating-linear-gradient(180deg,rgba(0,217,255,0.55)_0,rgba(0,217,255,0.55)_4px,transparent_4px,transparent_10px)]" />
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="h-px w-full bg-[repeating-linear-gradient(90deg,rgba(0,217,255,0.55)_0,rgba(0,217,255,0.55)_4px,transparent_4px,transparent_10px)]" />
+              </div>
+            </div>
+
+            <div className="flex flex-1 items-center">
+              <DeploymentLane />
+            </div>
+          </div>
+
+          <div className="lg:hidden">
+            <DeploymentLane />
+          </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 0.7, delay: 0.18, ease: easeEnter }}
+          className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+        >
+          <p className="max-w-[640px] text-sm leading-[1.8] text-white/42">
+            Serendepify connects ideation to production: d2dp shapes the system, Shipd routes the path, and Convoy carries the rollout.
+          </p>
+          <MagneticButton
+            onClick={openContact}
+            className="inline-flex w-fit items-center rounded-full border border-white/14 px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white/30"
+          >
+            Work with us
+          </MagneticButton>
         </motion.div>
       </div>
     </section>

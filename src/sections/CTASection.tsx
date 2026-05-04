@@ -43,7 +43,7 @@ export default function CTASection() {
                 style={{ letterSpacing: '-0.03em' }}
               >
                 <SplitText stagger={0.03}>
-                  Tell us what you're building. We'll figure out the rest.
+                  Ready to go from idea to production?
                 </SplitText>
               </h2>
             </motion.div>
@@ -63,7 +63,7 @@ export default function CTASection() {
                 href="#products"
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-medium text-black"
               >
-                See our products
+                See the stack
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </MagneticButton>
               <MagneticButton

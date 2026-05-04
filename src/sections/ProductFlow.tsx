@@ -1,26 +1,83 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import SplitText from '@/components/SplitText';
-import MagneticButton from '@/components/MagneticButton';
-import BrowserFrame from '@/components/BrowserFrame';
-import ProductLightbox from '@/components/ProductLightbox';
-import DrawnUnderline from '@/components/DrawnUnderline';
-import LightningFlash from '@/components/LightningFlash';
-import MouseReactiveGrid from '@/components/MouseReactiveGrid';
 
-/* ══════════════════════════════════════════════════════════════════════
-   LoopVideo — imperative play() so autoplay always fires, even inside
-   Framer Motion animated trees where the `autoPlay` attr is ignored.
-═══════════════════════════════════════════════════════════════════════ */
-function LoopVideo({ webm, mp4, className }: { webm: string; mp4: string; className?: string }) {
+type Product = {
+  id: string;
+  number: string;
+  tag: string;
+  status: string;
+  tone: 'mauve' | 'coral';
+  title: string;
+  blurb: string;
+  detail: string;
+  stack: string[];
+  link: string;
+  visual: 'convoy' | 'video' | 'image';
+  videoSrc?: string;
+  mp4Src?: string;
+  imgSrc?: string;
+};
+
+const products: Product[] = [
+  {
+    id: 'convoy',
+    number: '01',
+    tag: 'deployment operator',
+    status: 'flagship',
+    tone: 'mauve',
+    title: 'Convoy',
+    blurb: 'Agentic deployment intelligence that rehearses, ships, and observes — from first commit to live canary.',
+    detail:
+      'Convoy does what Shipd started: it reads the system, chooses the path, and carries the rollout with agentic intelligence from first commit to live canary.',
+    stack: ['Opus 4.7', 'Claude Code', 'deployment loops', 'observability'],
+    link: 'https://convoy-home.vercel.app/',
+    visual: 'convoy',
+  },
+  {
+    id: 'shipd',
+    number: '02',
+    tag: 'deployment intelligence',
+    status: 'live',
+    tone: 'coral',
+    title: 'Shipd',
+    blurb: 'Read the repository. Return the platform path with evidence.',
+    detail:
+      'Repo-aware deployment intelligence that scores the tradeoffs before the team burns cycles on the wrong infra choice.',
+    stack: ['repo scan', 'platform scoring', 'comparison view'],
+    link: 'https://shipd-seven.vercel.app/',
+    visual: 'video',
+    videoSrc: '/images/products/shipd-surface.webm',
+    mp4Src: '/images/products/shipd-surface.mp4',
+  },
+  {
+    id: 'd2dp',
+    number: '03',
+    tag: 'product builder',
+    status: 'active',
+    tone: 'coral',
+    title: 'd2dp',
+    blurb: 'A short product description in. A buildable product out.',
+    detail:
+      'd2dp is a business to data platform tool with skills and a CLI for building products from a short product description. It maps intent to data models, service boundaries, and scaffolded output.',
+    stack: ['skills system', 'CLI', 'scaffold output', 'data models'],
+    link: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
+    visual: 'video',
+    videoSrc: '/images/products/b2dp-surface.webm',
+    mp4Src: '/images/products/b2dp-surface.mp4',
+  },
+];
+
+const easeEnter = [0.0, 0, 0.2, 1] as [number, number, number, number];
+
+function LoopVideo({ webm, mp4 }: { webm: string; mp4: string }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.muted = true;
-    el.play().catch(() => {});
+    const element = ref.current;
+    if (!element) return;
+    element.muted = true;
+    element.play().catch(() => {});
   }, []);
 
   return (
@@ -29,455 +86,266 @@ function LoopVideo({ webm, mp4, className }: { webm: string; mp4: string; classN
       muted
       playsInline
       preload="auto"
-      className={className}
+      className="h-full w-full object-cover"
       style={{ display: 'block' }}
     >
       <source src={webm} type="video/webm" />
-      <source src={mp4}  type="video/mp4"  />
+      <source src={mp4} type="video/mp4" />
     </video>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   InterstitialQuote — 3-D scroll parallax + sticky pin breathing moment.
-═══════════════════════════════════════════════════════════════════════ */
-type QuoteVariant = 'left-heavy' | 'center-light' | 'right-mixed';
-
-interface Quote {
-  main:    string;
-  sub:     string;
-  source:  string;
-  variant: QuoteVariant;
-}
-
-const VARIANT_STYLES: Record<QuoteVariant, {
-  wrap: string;
-  mainClass: string;
-  mainStyle: React.CSSProperties;
-  subClass: string;
-  subStyle: React.CSSProperties;
-  srcClass: string;
-}> = {
-  'left-heavy': {
-    wrap:      'px-6 sm:px-12 lg:px-20 xl:px-28 text-left max-w-4xl',
-    mainClass: 'text-5xl sm:text-6xl lg:text-7xl xl:text-[5rem] font-light leading-[1.04] tracking-tight',
-    mainStyle: { letterSpacing: '-0.03em', color: '#fff' },
-    subClass:  'mt-4 text-xl sm:text-2xl font-light leading-relaxed',
-    subStyle:  { color: 'rgba(255,255,255,0.38)', fontStyle: 'italic' },
-    srcClass:  'mt-8 text-[10px] font-semibold uppercase tracking-[0.26em]',
-  },
-  'center-light': {
-    wrap:      'px-6 sm:px-14 lg:px-24 text-center mx-auto max-w-3xl',
-    mainClass: 'text-3xl sm:text-4xl lg:text-5xl font-extralight leading-[1.18] tracking-tight italic',
-    mainStyle: { letterSpacing: '-0.02em', color: 'rgba(255,255,255,0.85)' },
-    subClass:  'mt-5 text-base font-normal leading-7',
-    subStyle:  { color: 'rgba(255,255,255,0.42)' },
-    srcClass:  'mt-7 text-[10px] font-semibold uppercase tracking-[0.26em]',
-  },
-  'right-mixed': {
-    wrap:      'px-6 sm:px-12 lg:px-20 xl:px-28 text-right ml-auto max-w-4xl',
-    mainClass: 'text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[1.08] tracking-tight',
-    mainStyle: { letterSpacing: '-0.03em', color: '#fff' },
-    subClass:  'mt-4 text-lg sm:text-xl font-light leading-relaxed',
-    subStyle:  { color: 'rgba(255,255,255,0.35)', fontStyle: 'italic' },
-    srcClass:  'mt-7 text-[10px] font-semibold uppercase tracking-[0.26em]',
-  },
-};
-
-function InterstitialQuote({ q }: { q: Quote }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [6, 0, -6]);
-  const y       = useTransform(scrollYProgress, [0, 1],       [50, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.16, 0.84, 1], [0, 1, 1, 0]);
-
-  const s = VARIANT_STYLES[q.variant];
+function ConvoyCanvas() {
+  const phases = ['rehearse', 'ship', 'observe'];
 
   return (
-    <div
-      ref={ref}
-      className="relative overflow-hidden py-28 lg:py-40"
-      style={{ perspective: '1400px' }}
-    >
-      {/* Mouse-reactive dot grid */}
-      <MouseReactiveGrid />
+    <div className="group/media relative h-full min-h-[520px] overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#090909] transition-transform duration-300 hover:scale-[1.01]">
+      <div className="noise-bg" style={{ opacity: 0.03 }} />
+      <div className="grid-drift absolute inset-0 opacity-40" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(0,230,153,0.18),transparent_32%),radial-gradient(circle_at_76%_72%,rgba(0,217,255,0.16),transparent_34%)]" />
 
-      {/* Ambient glow */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background: q.variant === 'left-heavy'
-            ? 'radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 100%)'
-            : q.variant === 'right-mixed'
-              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(255,255,255,0.04) 0%, transparent 100%)'
-              : 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 100%)',
-        }}
-      />
+      <div className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-8">
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+          <span>Convoy operator loop</span>
+          <span>no code writes</span>
+        </div>
 
-      <motion.div style={{ rotateX, y, opacity }} className={`relative ${s.wrap}`}>
-        <p className={s.mainClass} style={s.mainStyle}>{q.main}</p>
-        <p className={s.subClass}  style={s.subStyle}>{q.sub}</p>
-        {q.source && <p className={s.srcClass} style={{ color: '#FFFFFF' }}>{q.source}</p>}
-      </motion.div>
+        <div className="mt-10 grid gap-8">
+          <div className="relative flex items-center justify-between gap-4">
+            <div className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2 bg-white/10" />
+            <motion.div
+              className="absolute left-[10%] right-[10%] top-1/2 h-px -translate-y-1/2"
+              style={{
+                background:
+                  'linear-gradient(90deg, rgba(0,230,153,0.85), rgba(0,217,255,0.35), rgba(0,230,153,0.85))',
+              }}
+              animate={{ opacity: [0.35, 1, 0.35] }}
+              transition={{ duration: 2.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+            />
+            {phases.map((phase, index) => (
+              <div key={phase} className="relative z-10 flex flex-1 flex-col items-center text-center">
+                <motion.div
+                  className="flex h-14 w-14 items-center justify-center rounded-full border border-white/12 bg-black/70 font-mono text-[10px] uppercase tracking-[0.2em]"
+                  style={{ color: index === 1 ? 'var(--coral)' : 'var(--fg)' }}
+                  animate={{ y: [0, -4, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 0 28px rgba(0,217,255,0.14)', '0 0 0 rgba(0,0,0,0)'] }}
+                  transition={{ duration: 3 + index * 0.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </motion.div>
+                <span className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/62">
+                  {phase}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid gap-3">
+            {[
+              '$ convoy rehearse --env production',
+              '> rollout strategy selected: canary',
+              '> observation loop armed for post-deploy anomalies',
+            ].map((line, index) => (
+              <motion.div
+                key={line}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.18 + index * 0.08, duration: 0.5, ease: easeEnter }}
+                className="rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3 font-mono text-sm text-white/76"
+              >
+                {line}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/34">
+          <span>human approval at each gate</span>
+          <span>stateful loop</span>
+        </div>
+      </div>
     </div>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   Product data
-═══════════════════════════════════════════════════════════════════════ */
-const products = [
-  {
-    id:       'b2dp',
-    eyebrow:  'Product Architecture · Active',
-    name:     'B2DP (Business to Data Platform)',
-    headline: 'Brief to architecture in minutes.',
-    sub:      "Describe what you're building in plain language. B2DP returns data models, service contracts, and system structure — ready for engineers immediately.",
-    cta:      'Explore B2DP',
-    link:     'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
-    videoSrc: '/images/products/b2dp-surface.webm',
-    mp4Src:   '/images/products/b2dp-surface.mp4',
-    isVideo:  true,
-    flip:     false,
-    proof: {
-      verb:      'Designed with',
-      statement: 'Business brief in — data models, services, and architecture out. Ready for engineers immediately.',
-    },
-  },
-  {
-    id:       'shipd',
-    eyebrow:  'Deployment Intelligence · Live',
-    name:     'Shipd',
-    headline: 'Read the codebase. Return a plan.',
-    sub:      'Point Shipd at your repo. It scores every deployment path and returns a recommendation — so you ship with conviction, not guesswork.',
-    cta:      'See Shipd',
-    link:     'https://shipd-seven.vercel.app/',
-    videoSrc: '/images/products/shipd-surface.webm',
-    mp4Src:   '/images/products/shipd-surface.mp4',
-    isVideo:  true,
-    flip:     true,
-    proof: {
-      verb:      'Shipped with',
-      statement: 'Repo read. Platform scored. Deployment plan returned. No more deployment guesswork.',
-    },
-  },
-  {
-    id:       'mpp-studio',
-    eyebrow:  'API Infrastructure · Live',
-    name:     'MPP Studio',
-    headline: 'The payment layer for AI services.',
-    sub:      'Register any HTTP API and get a proxy endpoint instantly. Test the full 402 payment flow with fake money, graduate to real USDC on Base Sepolia, and get discovered by AI agents that pay automatically per call.',
-    cta:      'Open MPP Studio',
-    link:     'https://agent-exchange-web.vercel.app/',
-    videoSrc: '/images/products/mpp-studio-surface.webm',
-    mp4Src:   '/images/products/mpp-studio-surface.mp4',
-    isVideo:  true,
-    flip:     false,
-    proof: {
-      verb:      'Monetized with',
-      statement: 'From sandbox to live payment — without writing a single billing integration.',
-    },
-  },
-  {
-    id:       'datafy',
-    eyebrow:  'AI Data Grounding · Beta',
-    name:     'Datafy MCP',
-    headline: 'Ground your agents in reality.',
-    sub:      "Connect AI agents to your live operational data through MCP. They reason from what's true today — not stale training data or hallucinated context.",
-    cta:      'View package',
-    link:     'https://www.npmjs.com/package/@teckedd-code2save/datafy',
-    videoSrc: null,
-    mp4Src:   null,
-    imgSrc:   '/images/products/datafy-surface.png',
-    isVideo:  false,
-    flip:     true,
-    proof: {
-      verb:      'Grounded by',
-      statement: 'Analysis grounded in your own live data. Not approximations.',
-    },
-  },
-] as const;
+function MediaPanel({ product }: { product: Product }) {
+  return (
+    <div className="group/media relative h-full min-h-[520px] overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#090909] transition-transform duration-300 hover:scale-[1.01]">
+      <div className="noise-bg" style={{ opacity: 0.03 }} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(0,230,153,0.10),transparent_26%),radial-gradient(circle_at_78%_82%,rgba(0,217,255,0.10),transparent_28%)]" />
 
-/* Interstitial content */
-const interstitials: Quote[] = [
-  {
-    main:    'Good architecture\nstarts with a clear brief.',
-    sub:     'When business logic is mapped to data models early, the rest of the build falls into place.',
-    source:  '',
-    variant: 'left-heavy',
-  },
-  {
-    main:    '"Shipping should feel inevitable,\nnot uncertain."',
-    sub:     'The right deployment decision removes friction — so your team can focus on the product, not the platform.',
-    source:  '',
-    variant: 'center-light',
-  },
-  {
-    main:    'The best payment flow\nis the one you never have to build.',
-    sub:     'Focus on the API. Let the infrastructure handle discovery, negotiation, and settlement.',
-    source:  '',
-    variant: 'right-mixed',
-  },
-];
-
-/* ══════════════════════════════════════════════════════════════════════
-   Proof strip
-═══════════════════════════════════════════════════════════════════════ */
-const b2dpTags = [
-  'MPP Studio', 'Agent Workflows', 'Data Models', 'Service Contracts',
-  'Serendepify Platform', 'API Service Layer', 'Event Schemas', 'DB Architecture',
-];
-const shipdServices = [
-  { name: 'MPP Studio', tags: ['Next.js', 'Vercel'] },
-  { name: 'Shipd',      tags: ['Vite', 'Vercel'] },
-  { name: 'B2DP',       tags: ['GitHub Pages'] },
-  { name: 'Datafy MCP', tags: ['Node.js', 'MCP'] },
-];
-
-function ProofStrip({ id, verb, name, statement }: {
-  id: string; verb: string; name: string; statement: string;
-}) {
-  if (id === 'b2dp') {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.5 }}
-        className="glass-card rounded-none"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-5 flex items-baseline gap-3">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="text-lg font-semibold tracking-tight text-white">{name}</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {b2dpTags.map((tag, i) => (
-              <span
-                key={tag}
-                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-light tracking-wide"
-                style={i % 3 === 0
-                  ? { background: '#FFFFFF', color: '#000', border: '1px solid #FFFFFF' }
-                  : { background: 'transparent', color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.1)' }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+      <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-5 py-4">
+        <div className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         </div>
-      </motion.div>
-    );
-  }
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/38">
+          live surface
+        </span>
+      </div>
 
-  if (id === 'shipd') {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.5 }}
-        className="glass-card rounded-none"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-5 flex items-baseline gap-3">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="text-lg font-semibold tracking-tight text-white">{name}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {shipdServices.map((svc) => (
-              <div key={svc.name} className="glass-card rounded-xl px-4 py-4">
-                <p className="text-sm font-light text-white">{svc.name}</p>
-                <div className="mt-1.5 flex flex-wrap gap-1">
-                  {svc.tags.map((t) => (
-                    <span key={t} className="text-[10px] font-medium uppercase tracking-wider" style={{ color: '#FFFFFF' }}>{t}</span>
-                  ))}
-                </div>
+      <div className="relative h-[calc(100%-57px)] overflow-hidden">
+        <div className="absolute left-6 right-6 top-5 z-20 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/44">
+          <span>{product.status}</span>
+          <span className="h-px flex-1 bg-white/10" />
+          <span>{product.tag}</span>
+        </div>
+
+        {product.visual === 'video' && product.videoSrc && product.mp4Src ? (
+          <LoopVideo webm={product.videoSrc} mp4={product.mp4Src} />
+        ) : product.visual === 'image' && product.imgSrc ? (
+          <motion.img
+            src={product.imgSrc}
+            alt={product.title}
+            className="h-full w-full object-cover"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 16, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+          />
+        ) : (
+          <ConvoyCanvas />
+        )}
+
+        {product.visual !== 'convoy' && (
+          <>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/10" />
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute left-5 top-20 h-px w-[30%] bg-white/12" />
+              <div className="absolute right-6 top-28 flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[#00D9FF] animate-pulse-dot" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/38">
+                  stepper active
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ProductRow({ product, index }: { product: Product; index: number }) {
+  const reverse = index % 2 === 1;
+  const toneColor = product.tone === 'mauve' ? 'var(--mauve)' : 'var(--coral)';
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5 }}
-      className="glass-card rounded-none"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+      viewport={{ once: true, margin: '-8% 0px' }}
+      transition={{ duration: 0.75, ease: easeEnter, delay: index * 0.04 }}
     >
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8">
-          <div className="shrink-0">
-            <p className="text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.3)' }}>{verb}</p>
-            <p className="mt-0.5 text-xl font-semibold tracking-tight text-white">{name}</p>
+      <div
+        id={product.id}
+        className={`grid items-center gap-10 lg:gap-[4.5rem] ${reverse ? 'lg:grid-cols-[1.05fr_0.95fr]' : 'lg:grid-cols-[0.95fr_1.05fr]'}`}
+      >
+        <div className={reverse ? 'lg:order-2' : ''}>
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/28">
+              {product.number}
+            </span>
+            <span className="h-px w-8 bg-white/12" />
+            <span
+              className="font-mono text-[10px] uppercase tracking-[0.18em]"
+              style={{ color: toneColor }}
+            >
+              {product.tag}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/36">
+              {product.status}
+            </span>
           </div>
-          <div className="hidden h-10 w-px sm:block" style={{ background: 'rgba(255,255,255,0.08)' }} />
-          <p className="text-sm leading-6" style={{ color: 'rgba(255,255,255,0.5)' }}>{statement}</p>
+
+          <div
+            className="mt-6 font-mono text-[6rem] leading-none text-white/6 sm:text-[7rem] lg:text-[8rem]"
+            aria-hidden="true"
+          >
+            {product.number}
+          </div>
+
+          <h3
+            className="mt-[-2.8rem] max-w-[620px] font-serif tracking-[-0.03em] text-[var(--fg)] sm:mt-[-3.1rem]"
+            style={{ fontSize: 'clamp(2.6rem, 5vw, 5rem)', lineHeight: 0.98 }}
+          >
+            {product.title}
+          </h3>
+
+          <p className="mt-5 max-w-[560px] text-[1.1rem] leading-[1.65] text-[var(--fg)]">
+            {product.blurb}
+          </p>
+          <p className="mt-3 max-w-[560px] text-sm leading-[1.7] text-white/48">
+            {product.detail}
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {product.stack.map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/48"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <a
+            href={product.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-white/72 transition-colors hover:text-white"
+          >
+            Open product
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        </div>
+
+        <div className={reverse ? 'lg:order-1' : ''}>
+          <MediaPanel product={product} />
         </div>
       </div>
     </motion.div>
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   Helpers
-═══════════════════════════════════════════════════════════════════════ */
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
-
-/* Symmetric padding so text breathes equally on both sides regardless of flip */
-const TEXT_PAD = 'p-10 sm:p-14 lg:p-16 xl:p-20';
-
-/* ══════════════════════════════════════════════════════════════════════
-   ProductFlow
-═══════════════════════════════════════════════════════════════════════ */
 export default function ProductFlow() {
-  const [lightbox, setLightbox] = useState<{ open: boolean; type: 'video' | 'image'; src: string; srcFallback?: string; alt?: string }>({
-    open: false,
-    type: 'video',
-    src: '',
-  });
-
-  const openLightbox = (product: typeof products[number]) => {
-    if (product.isVideo && product.videoSrc) {
-      setLightbox({ open: true, type: 'video', src: product.videoSrc, srcFallback: product.mp4Src || undefined, alt: product.name });
-    } else if (!product.isVideo && product.imgSrc) {
-      setLightbox({ open: true, type: 'image', src: product.imgSrc, alt: product.name });
-    }
-  };
-
   return (
-    <>
-      <div id="products">
-        {products.map((product, idx) => (
-          <div key={product.id}>
+    <section
+      id="products"
+      className="relative overflow-hidden border-t border-white/10 bg-black"
+    >
+      <div className="noise-bg" style={{ opacity: 0.03 }} />
+      <div className="mx-auto max-w-[1240px] px-5 py-[110px] md:px-10 md:py-[150px]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 0.7, ease: easeEnter }}
+          className="mb-16 max-w-[760px]"
+        >
+          <h2
+            className="font-serif tracking-[-0.035em] text-[var(--fg)]"
+            style={{ fontSize: 'clamp(2.4rem, 5vw, 4.8rem)', lineHeight: 0.98 }}
+          >
+            The full stack.
+            <span style={{ color: 'var(--mauve)' }}> From idea to production.</span>
+          </h2>
+          <p className="mt-5 max-w-[640px] text-base leading-[1.75] text-[var(--fg-2)]">
+            Three products. One continuous path: describe the system, choose the deployment path, then let the operator carry the rollout.
+          </p>
+        </motion.div>
 
-            {/* ── Product section ──────────────────────────────────────── */}
-            <section
-              id={product.id}
-              className="overflow-hidden"
-              style={{ borderTop: '1px solid rgba(255,255,255,0.06)', backgroundColor: '#000000' }}
+        <div className="flex flex-col gap-20 lg:gap-28">
+          {products.map((product, index) => (
+            <div
+              key={product.id}
+              className="border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
             >
-              {idx === 0 && <LightningFlash intensity={0.03} />}
-              <div className={`flex flex-col lg:flex-row lg:items-stretch lg:min-h-[720px] ${product.flip ? 'lg:flex-row-reverse' : ''}`}>
-
-                {/* Text panel */}
-                <motion.div
-                  initial={{ opacity: 0, x: product.flip ? 32 : -32 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.7, ease: EASE }}
-                  className={`flex shrink-0 items-center lg:w-[480px] xl:w-[560px] ${TEXT_PAD}`}
-                >
-                  <div className="w-full">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]" style={{ color: '#D4A5B0' }}>
-                      {product.eyebrow}
-                    </p>
-                    <DrawnUnderline className="mb-4" width={28} delay={0.2} />
-                    <h2
-                      className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
-                      style={{ letterSpacing: '-0.02em' }}
-                    >
-                      <SplitText stagger={0.03} delay={0.1}>
-                        {product.headline}
-                      </SplitText>
-                    </h2>
-                    <p className="mt-5 text-base font-light leading-7" style={{ color: 'rgba(255,255,255,0.52)' }}>
-                      {product.sub}
-                    </p>
-                    <MagneticButton
-                      as="a"
-                      href={product.link}
-                      className="group mt-8 inline-flex items-center gap-1.5 rounded-full border px-6 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/50"
-                      style={{ borderColor: 'rgba(255,255,255,0.18)' }}
-                    >
-                      {product.cta}
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </MagneticButton>
-                  </div>
-                </motion.div>
-
-                {/* Media panel — framed in browser chrome, clickable */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.9, delay: 0.12 }}
-                  className="relative flex-1 min-h-[520px] p-4 sm:p-6 lg:min-h-0 lg:p-10"
-                  style={{ backgroundColor: '#000000' }}
-                >
-                  <BrowserFrame
-                    className="h-full w-full cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
-                    delay={0.3}
-                    onClick={() => openLightbox(product)}
-                  >
-                    {product.isVideo && product.videoSrc ? (
-                      <LoopVideo
-                        webm={product.videoSrc}
-                        mp4={product.mp4Src!}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="h-full w-full overflow-hidden">
-                        <img
-                          src={(product as { imgSrc?: string }).imgSrc ?? ''}
-                          alt={product.name}
-                          className="h-full w-full object-cover"
-                          style={{
-                            display: 'block',
-                            animation: 'ken-burns 24s ease-in-out infinite alternate',
-                          }}
-                        />
-                      </div>
-                    )}
-                  </BrowserFrame>
-
-                  {/* Soft directional shadow for text-edge blending */}
-                  <div
-                    className={`pointer-events-none absolute inset-y-0 ${product.flip ? 'right-0' : 'left-0'}`}
-                    style={{
-                      width: '18%',
-                      background: product.flip
-                        ? 'linear-gradient(to left,  #000 0%, transparent 100%)'
-                        : 'linear-gradient(to right, #000 0%, transparent 100%)',
-                    }}
-                  />
-                </motion.div>
-
-              </div>
-            </section>
-
-            {/* Proof strip */}
-            <ProofStrip id={product.id} verb={product.proof.verb} name={product.name} statement={product.proof.statement} />
-
-            {/* 3-D scroll quote */}
-            {idx < products.length - 1 && (
-              <InterstitialQuote q={interstitials[idx]} />
-            )}
-
-          </div>
-        ))}
+              <ProductRow product={product} index={index} />
+            </div>
+          ))}
+        </div>
       </div>
-
-      <style>{`
-        @keyframes ken-burns {
-          0% { transform: scale(1) translate(0, 0); }
-          100% { transform: scale(1.08) translate(-1%, -1%); }
-        }
-      `}</style>
-
-      <ProductLightbox
-        open={lightbox.open}
-        onClose={() => setLightbox((s) => ({ ...s, open: false }))}
-        media={{ type: lightbox.type, src: lightbox.src, srcFallback: lightbox.srcFallback, alt: lightbox.alt }}
-      />
-    </>
+    </section>
   );
 }

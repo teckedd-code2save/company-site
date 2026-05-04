@@ -1,146 +1,113 @@
-import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import HeroBackdrop from '@/components/HeroBackdrop';
 import { useModal } from '@/lib/modal-context';
-import ScrambleText from '@/components/ScrambleText';
-import SplitText from '@/components/SplitText';
-import MagneticButton from '@/components/MagneticButton';
-import HeroBlueprint from '@/components/HeroBlueprint';
-import DrawnUnderline from '@/components/DrawnUnderline';
-import LightningFlash from '@/components/LightningFlash';
 
-const HeroParticles = lazy(() => import('@/components/HeroParticles'));
+const productLinks = [
+  { label: 'Convoy', href: '#convoy', accent: true },
+  { label: 'Shipd', href: '#shipd' },
+  { label: 'd2dp', href: '#d2dp' },
+];
 
-/* ── Animation variants ─────────────────────────────────────────────── */
-const heroContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
-  },
-};
-
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
-
-const heroItem = {
-  hidden:   { opacity: 0, y: 22 },
-  visible:  { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
-};
+const easeEnter = [0.0, 0, 0.2, 1] as [number, number, number, number];
 
 export default function Hero() {
   const { openContact } = useModal();
 
   return (
-    <section className="relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
-      <LightningFlash intensity={0.03} />
+    <section className="relative min-h-[100dvh] overflow-hidden border-b border-white/10 bg-black">
+      <HeroBackdrop />
 
-      {/* ── Blueprint drawing layer ────────────────────────────────── */}
-      <HeroBlueprint />
-
-      {/* ── WebGL particle field ─────────────────────────────────────── */}
-      <Suspense fallback={null}>
-        <HeroParticles />
-      </Suspense>
-
-      {/* ── Bottom fade ─────────────────────────────────────────────── */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/80 to-transparent" />
-
-      {/* ── Left text-guard gradient ────────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[48%] bg-gradient-to-r from-black via-black/50 to-transparent" />
-
-      {/* ── Background shine behind typography ──────────────────────── */}
-      <div
-        className="pointer-events-none absolute left-0 top-1/2 z-0 -translate-y-1/2"
-        style={{
-          width: '60%',
-          height: '70%',
-          background: 'radial-gradient(ellipse 50% 45% at 30% 50%, rgba(255,255,255,0.055) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        <div className="flex min-h-[72vh] items-end pb-24 pt-36 sm:pb-28 sm:pt-44">
-          <motion.div
-            className="max-w-4xl"
-            variants={heroContainer}
-            initial="hidden"
-            animate="visible"
-          >
-
-            {/* Eyebrow */}
-            <motion.div variants={heroItem} className="mb-6">
-              <p
-                className="mb-2 text-xs font-medium uppercase tracking-[0.28em]"
-                style={{ color: '#D4A5B0' }}
-              >
-                <ScrambleText delay={400} duration={900}>
-                  Early-stage AI tools. Shipped, not slid.
-                </ScrambleText>
-              </p>
-              <DrawnUnderline width={32} delay={1.2} />
-            </motion.div>
-
-            {/* H1 */}
-            <motion.div variants={heroItem} className="mb-2">
-              <h1
-                className="text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[5.5rem] lg:leading-[0.98] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
-                style={{ letterSpacing: '-0.03em' }}
-              >
-                <SplitText trigger="animate" stagger={0.035} delay={0.6}>
-                  Tools for teams building with AI.
-                </SplitText>
-              </h1>
-            </motion.div>
-
-            {/* Sub */}
-            <motion.p
-              variants={heroItem}
-              className="mt-7 max-w-xl text-lg font-light leading-[1.65] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]"
-              style={{ color: 'rgba(255,255,255,0.55)' }}
-            >
-              We're building the tools we wish existed — from payment-ready APIs
-              to deployment intelligence. Early, real, and iterating fast.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              variants={heroItem}
-              className="mt-10 flex flex-wrap items-center gap-4"
-            >
-              <MagneticButton
-                as="a"
-                href="#products"
-                className="rounded-full bg-white px-7 py-3 text-sm font-medium text-black"
-              >
-                Explore our products
-              </MagneticButton>
-
-              <MagneticButton
-                onClick={openContact}
-                className="rounded-full border px-7 py-3 text-sm font-medium text-white transition-colors hover:border-white/45"
-                style={{ borderColor: 'rgba(255,255,255,0.18)' }}
-              >
-                Start a conversation
-              </MagneticButton>
-            </motion.div>
-
-          </motion.div>
-        </div>
-
-      </div>
-
-      {/* ── Scroll hint ──────────────────────────────────────────────── */}
       <motion.div
+        className="relative z-10 flex min-h-[100dvh] items-center px-5 py-24 md:px-10"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: easeEnter }}
+      >
+        <div className="mx-auto w-full max-w-[1240px]">
+          <motion.h1
+            className="max-w-[900px] font-serif leading-[0.95] tracking-[-0.04em] text-[var(--fg)]"
+            style={{ fontSize: 'clamp(3rem, 8vw, 7.1rem)' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.08, ease: easeEnter }}
+          >
+            Autonomy from
+            <br />
+            Ideation to{' '}
+            <span style={{ color: 'var(--mauve)' }}>production</span>,
+            <br />
+            and beyond.
+          </motion.h1>
+
+          <motion.p
+            className="mt-7 max-w-[720px] text-lg leading-[1.6] text-[var(--fg-2)] md:text-[1.2rem]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.75, delay: 0.22, ease: easeEnter }}
+          >
+            Serendepify builds agent systems that ship. From a short description to a live deployment — Convoy, Shipd, and d2dp handle the full path.
+          </motion.p>
+
+          <motion.div
+            className="mt-10 flex flex-wrap items-center gap-4"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.32, ease: easeEnter }}
+          >
+            <a
+              href="#convoy"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              View Convoy
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#products"
+              className="rounded-full border border-white/14 px-7 py-3 text-sm font-medium text-white transition-colors hover:border-white/30"
+            >
+              Browse product line
+            </a>
+            <button
+              onClick={openContact}
+              className="rounded-full border border-transparent px-2 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white/56 transition-colors hover:text-white"
+            >
+              Start a conversation
+            </button>
+          </motion.div>
+
+          <motion.div
+            className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.42, ease: easeEnter }}
+          >
+            {productLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="font-mono text-[11px] uppercase tracking-[0.18em] transition-colors"
+                style={{ color: link.accent ? 'var(--mauve)' : 'var(--fg-2)' }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
+        transition={{ delay: 1.5, duration: 0.6 }}
       >
-        <ArrowDown
-          className="h-3.5 w-3.5 animate-bounce"
-          style={{ color: 'rgba(255,255,255,0.18)' }}
-        />
+        <div className="h-10 w-px overflow-hidden bg-white/12">
+          <div className="scroll-line h-full w-full bg-[#00D9FF]" />
+        </div>
+        <span className="font-mono text-[9px] text-white/28">scroll</span>
+        <ArrowDown className="h-3.5 w-3.5 text-white/18" />
       </motion.div>
     </section>
   );

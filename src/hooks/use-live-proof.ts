@@ -27,9 +27,9 @@ const fallbackCards: ProofCard[] = [
     cta: 'Open package',
   },
   {
-    name: 'B2DP',
+    name: 'd2dp',
     eyebrow: 'NPM package',
-    headline: 'Business-to-data-platform workflow',
+    headline: 'Product builder CLI',
     detail: 'Fallback mode keeps the proof section useful even when external calls fail.',
     href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
     cta: 'View package',
@@ -85,7 +85,7 @@ export function useLiveProof() {
           : fallbackCards[0],
         b2dpPkg.status === 'fulfilled'
           ? {
-              name: 'B2DP',
+              name: 'd2dp',
               eyebrow: 'NPM package',
               headline: `Version ${b2dpPkg.value.latestVersion} is live`,
               detail:

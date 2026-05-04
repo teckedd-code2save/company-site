@@ -99,7 +99,7 @@ export default function ContactModal() {
                   >
                     Tell us what you're building.
                   </motion.h1>
-                  <DrawnUnderline className="mt-3" width={56} delay={0.4} color="#D4A5B0" />
+                  <DrawnUnderline className="mt-3" width={56} delay={0.4} color="#00E699" />
 
                   <motion.p
                     initial={{ opacity: 0, y: 12 }}
