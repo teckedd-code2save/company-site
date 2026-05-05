@@ -338,7 +338,7 @@ export default function ProductFlow() {
             <span style={{ color: 'var(--mauve)' }}> From idea to production.</span>
           </h2>
           <p className="mt-5 max-w-[640px] text-base leading-[1.75] text-[var(--fg-2)]">
-            Three products. One continuous path: describe the system, choose the deployment path, then let the operator carry the rollout.
+            Three products. One continuous path: describe the system, choose the deployment path, then let the operator carry the rollout - with you in charge.
           </p>
         </motion.div>
 
