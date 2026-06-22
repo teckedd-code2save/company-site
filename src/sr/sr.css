@@ -4,6 +4,22 @@
  * structural CSS. */
 @import './sr-tokens.css';
 
+/* ── Scroll container ─────────────────────────────────────────────
+ * The ported tokens put `overflow-x: hidden` on <body>. ANY overflow on
+ * <html>/<body> confuses GSAP ScrollTrigger's scroller detection (it ends up
+ * reading the wrong element's scrollTop), which silently zeroes out every
+ * scroll-driven animation — including the flip-scroll beat's scrub. And
+ * `overflow-x: hidden` additionally breaks `position: sticky` descendants.
+ *
+ * So keep the document scroll fully native (visible) and clip horizontal
+ * overflow on the page wrapper instead, using `overflow-x: clip` — see
+ * `.sr-page` below. `clip` clips without creating a scroll container, so it
+ * breaks neither sticky nor ScrollTrigger. */
+html,
+body { overflow-x: visible; }
+
+.sr-page { overflow-x: clip; }
+
 /* ── Nav ──────────────────────────────────────────────────────── */
 .sr-nav-scrolled {
   background: rgba(231, 229, 223, 0.82);

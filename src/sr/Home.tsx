@@ -179,7 +179,7 @@ function FlipBeat() {
   const stationSub: CSSProperties = { fontSize: 13, fontWeight: 600, color: 'var(--sr-text-35)' };
   const marker: CSSProperties = { position: 'absolute' };
   return (
-    <section data-sr-flip-scroll style={{ height: '340vh', position: 'relative', background: 'var(--sr-bg)' }}>
+    <section data-sr-flip-scroll style={{ height: '300vh', position: 'relative', background: 'var(--sr-bg)' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div className="sr-container" style={{ paddingTop: 96 }}>
           <h2
@@ -194,19 +194,19 @@ function FlipBeat() {
           </p>
         </div>
 
-        <div data-sr-flip-marker style={{ ...marker, left: '7%', top: '42%', width: 300, height: 210 }} />
-        <div data-sr-flip-marker style={{ ...marker, left: '40%', top: '56%', width: 260, height: 180 }} />
-        <div data-sr-flip-marker style={{ ...marker, left: '64%', top: '38%', width: 360, height: 250 }} />
+        <div data-sr-flip-marker style={{ ...marker, left: '7%', top: '47%', width: 300, height: 210 }} />
+        <div data-sr-flip-marker style={{ ...marker, left: '40%', top: '61%', width: 260, height: 180 }} />
+        <div data-sr-flip-marker style={{ ...marker, left: '64%', top: '43%', width: 360, height: 250 }} />
 
-        <div style={{ ...station, left: 'calc(7% + 150px)', top: '42%' }}>
+        <div style={{ ...station, left: 'calc(7% + 150px)', top: '47%' }}>
           <div className="sr-display" style={stationName}>Forge</div>
           <div style={stationSub}>builds it</div>
         </div>
-        <div style={{ ...station, left: 'calc(40% + 130px)', top: '56%' }}>
+        <div style={{ ...station, left: 'calc(40% + 130px)', top: '61%' }}>
           <div className="sr-display" style={stationName}>Convoy</div>
           <div style={stationSub}>ships it</div>
         </div>
-        <div style={{ ...station, left: 'calc(64% + 180px)', top: '38%' }}>
+        <div style={{ ...station, left: 'calc(64% + 180px)', top: '43%' }}>
           <div className="sr-display" style={stationName}>Ground Control</div>
           <div style={stationSub}>runs it</div>
         </div>
@@ -216,7 +216,7 @@ function FlipBeat() {
           style={{
             position: 'absolute',
             left: '7%',
-            top: '42%',
+            top: '47%',
             width: 300,
             height: 210,
             borderRadius: 'var(--radius-lg)',
@@ -739,8 +739,11 @@ function Footer() {
 
 export default function Home() {
   useSerendepifyMotion();
+  // `.sr-page` clips horizontal overflow with `overflow-x: clip` (not
+  // `hidden`), which keeps `position: sticky` and ScrollTrigger working. See
+  // the scroll-container note in sr.css.
   return (
-    <div style={{ background: 'var(--sr-bg)', overflowX: 'hidden' }}>
+    <div className="sr-page" style={{ background: 'var(--sr-bg)' }}>
       <div className="sr-scroll-progress" data-sr-scroll-progress />
       <Nav />
       <Hero />

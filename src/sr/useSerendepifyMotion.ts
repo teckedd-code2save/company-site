@@ -81,6 +81,22 @@ export function useSerendepifyMotion() {
         SM.SR.initialized = false;
         SM.init();
 
+        // ScrollTrigger detects its scroller at init time, when the page is at
+        // scrollTop 0 and it can't yet tell <html> from <body> apart — it can
+        // latch onto the wrong one, which zeroes out every scroll-driven
+        // animation (notably the flip-scroll scrub). Re-running refresh() once
+        // layout/fonts/images have settled forces correct scroller detection.
+        const refresh = () => {
+          try {
+            ScrollTrigger.refresh();
+          } catch {
+            /* noop */
+          }
+        };
+        requestAnimationFrame(() => requestAnimationFrame(refresh));
+        setTimeout(refresh, 400);
+        window.addEventListener('load', refresh, { once: true });
+
         // Safety net: if the rAF ticker never advanced, force hidden content
         // visible so nothing is ever stuck (mirrors the reference behavior).
         setTimeout(() => {
