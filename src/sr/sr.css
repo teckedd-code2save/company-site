@@ -1,0 +1,79 @@
+/* Serendepify marketing site — global styles.
+ * Imports the brand tokens, then layers the interaction styles that lived in
+ * the design reference's <helmet> <style> block, plus the Products snap-page
+ * structural CSS. */
+@import './sr-tokens.css';
+
+/* ── Scroll container ─────────────────────────────────────────────
+ * The ported tokens put `overflow-x: hidden` on <body>. ANY overflow on
+ * <html>/<body> confuses GSAP ScrollTrigger's scroller detection (it ends up
+ * reading the wrong element's scrollTop), which silently zeroes out every
+ * scroll-driven animation — including the flip-scroll beat's scrub. And
+ * `overflow-x: hidden` additionally breaks `position: sticky` descendants.
+ *
+ * So keep the document scroll fully native (visible) and clip horizontal
+ * overflow on the page wrapper instead, using `overflow-x: clip` — see
+ * `.sr-page` below. `clip` clips without creating a scroll container, so it
+ * breaks neither sticky nor ScrollTrigger. */
+html,
+body { overflow-x: visible; }
+
+.sr-page { overflow-x: clip; }
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+.sr-nav-scrolled {
+  background: rgba(231, 229, 223, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(27, 25, 22, 0.08) !important;
+}
+
+.sr-navlink { position: relative; transition: color 0.25s; }
+.sr-navlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--sr-coral);
+  transition: width 0.32s var(--ease-back);
+}
+.sr-navlink:hover::after { width: 100%; }
+.sr-navlink:hover { color: var(--sr-text-90) !important; }
+
+.sr-mark { transition: transform 0.5s var(--ease-spring); }
+.sr-mark:hover { transform: rotate(-22deg); }
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Products snap page ───────────────────────────────────────── */
+.sr-snap-page { position: fixed; inset: 0; background: #16150F; overflow: hidden; }
+.snap { position: fixed; inset: 0; }
+.snap section { position: fixed; inset: 0; visibility: hidden; }
+.snap .outer,
+.snap .inner { width: 100%; height: 100%; overflow: hidden; }
+.snap .bg { position: absolute; inset: -8% 0; background-size: cover; background-position: center; }
+.snap .content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 clamp(28px, 8vw, 140px);
+  z-index: 2;
+}
+.snap .section-heading { will-change: transform; }
+.clip-text { overflow: hidden; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .sr-grid-2 { grid-template-columns: 1fr !important; }
+  .sr-grid-3 { grid-template-columns: 1fr !important; }
+  .sr-hero-stats { justify-content: flex-start !important; }
+  .sr-bento { grid-template-columns: repeat(2, 1fr) !important; }
+  .sr-bento > * { grid-column: span 2 !important; }
+  .sr-nav-links { display: none !important; }
+}
