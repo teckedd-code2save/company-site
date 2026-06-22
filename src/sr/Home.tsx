@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
 import { ImageSlot, LogoMark, Wordmark } from './ui';
@@ -40,51 +41,101 @@ const textLink: CSSProperties = {
 
 /* ── Nav ────────────────────────────────────────────────────────── */
 
+const NAV_LINKS = [
+  { href: '#lifecycle', label: 'Lifecycle' },
+  { href: '#agents', label: 'For agents' },
+  { href: '/products', label: 'Products' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#docs', label: 'Docs' },
+];
+
 function Nav() {
+  const [open, setOpen] = useState(false);
   const link: CSSProperties = { fontSize: '14.5px', fontWeight: 600, color: 'var(--sr-text-55)' };
   return (
-    <header
-      data-sr-nav
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 80,
-        height: 'var(--nav-height)',
-        borderBottom: '1px solid transparent',
-        transition: 'background 0.35s, border-color 0.35s, backdrop-filter 0.35s',
-      }}
-    >
-      <div
-        className="sr-container"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}
+    <>
+      <header
+        data-sr-nav
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 80,
+          height: 'var(--nav-height)',
+          borderBottom: '1px solid transparent',
+          transition: 'background 0.35s, border-color 0.35s, backdrop-filter 0.35s',
+        }}
       >
-        <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-          <LogoMark className="sr-mark" size={28} />
-          <Wordmark />
-        </a>
-        <nav className="sr-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-          <a href="#lifecycle" className="sr-body sr-navlink" style={link}>Lifecycle</a>
-          <a href="#agents" className="sr-body sr-navlink" style={link}>For agents</a>
-          <a href="/products" className="sr-body sr-navlink" style={link}>Products</a>
-          <a href="#pricing" className="sr-body sr-navlink" style={link}>Pricing</a>
-          <a href="#docs" className="sr-body sr-navlink" style={link}>Docs</a>
+        <div
+          className="sr-container"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}
+        >
+          <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+            <LogoMark className="sr-mark" size={28} />
+            <Wordmark />
+          </a>
+          <nav className="sr-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+            {NAV_LINKS.map((l) => (
+              <a key={l.href} href={l.href} className="sr-body sr-navlink" style={link}>
+                {l.label}
+              </a>
+            ))}
+            <a
+              href={GC_URL}
+              {...ext}
+              data-sr-magnetic
+              data-sr-strength="0.35"
+              className="sr-btn sr-btn-primary"
+              style={{ padding: '11px 20px', fontSize: '14.5px', fontWeight: 700 }}
+            >
+              <span data-sr-magnetic-inner style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                Open Ground Control ↗
+              </span>
+            </a>
+          </nav>
+          <button
+            className="sr-nav-toggle"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((o) => !o)}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              {open ? (
+                <>
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="7" x2="21" y2="7" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="17" x2="21" y2="17" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
+      </header>
+      {open && (
+        <div className="sr-mobile-menu">
+          {NAV_LINKS.map((l) => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+              {l.label}
+            </a>
+          ))}
           <a
             href={GC_URL}
             {...ext}
-            data-sr-magnetic
-            data-sr-strength="0.35"
             className="sr-btn sr-btn-primary"
-            style={{ padding: '11px 20px', fontSize: '14.5px', fontWeight: 700 }}
+            style={{ marginTop: 16, justifyContent: 'center', fontWeight: 700 }}
+            onClick={() => setOpen(false)}
           >
-            <span data-sr-magnetic-inner style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-              Open Ground Control ↗
-            </span>
+            Open Ground Control ↗
           </a>
-        </nav>
-      </div>
-    </header>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -160,7 +211,7 @@ function Hero() {
           </div>
         </div>
         <div
-          data-sr-reveal="clip"
+          data-sr-image
           className="sr-card"
           style={{ marginTop: 56, aspectRatio: '16 / 7', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
         >
@@ -173,13 +224,52 @@ function Hero() {
 
 /* ── Flip-scroll beat ───────────────────────────────────────────── */
 
+// The card morphs through the three stages of the line as it travels. It's the
+// same piece of work the whole way down — built, shipped, then run — never
+// changing hands.
+const FLIP_STAGES = [
+  { tag: 'your idea', title: 'Building', sub: 'Forge — b2dp CLI + your agent' },
+  { tag: 'your build', title: 'Shipping', sub: 'Convoy — deploy to production' },
+  { tag: 'in production', title: 'Running', sub: 'Ground Control — built for VPS' },
+];
+
 function FlipBeat() {
-  const station: CSSProperties = { position: 'absolute', transform: 'translate(-50%, -130%)', textAlign: 'center' };
+  const sectionRef = useRef<HTMLElement>(null);
+  const [stage, setStage] = useState(0);
+
+  // Drive the card's content from scroll progress through the pinned section.
+  // (The card's *position* is driven by the GSAP Flip scrub; we mirror the same
+  // progress here so the copy changes as the card reaches each station.)
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const start = section.offsetTop;
+        const end = start + section.offsetHeight - window.innerHeight;
+        const p = (window.scrollY - start) / Math.max(1, end - start);
+        // thresholds nudged past the midpoints to line up with the scrubbed card
+        const s = p < 0.4 ? 0 : p < 0.74 ? 1 : 2;
+        setStage((prev) => (prev === s ? prev : s));
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   const stationName: CSSProperties = { fontSize: 26, fontWeight: 800, color: 'var(--sr-text-35)' };
   const stationSub: CSSProperties = { fontSize: 13, fontWeight: 600, color: 'var(--sr-text-35)' };
-  const marker: CSSProperties = { position: 'absolute' };
+  const s = FLIP_STAGES[stage];
+
   return (
-    <section data-sr-flip-scroll style={{ height: '300vh', position: 'relative', background: 'var(--sr-bg)' }}>
+    <section ref={sectionRef} data-sr-flip-scroll style={{ height: '300vh', position: 'relative', background: 'var(--sr-bg)' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div className="sr-container" style={{ paddingTop: 96 }}>
           <h2
@@ -194,50 +284,49 @@ function FlipBeat() {
           </p>
         </div>
 
-        <div data-sr-flip-marker style={{ ...marker, left: '7%', top: '47%', width: 300, height: 210 }} />
-        <div data-sr-flip-marker style={{ ...marker, left: '40%', top: '61%', width: 260, height: 180 }} />
-        <div data-sr-flip-marker style={{ ...marker, left: '64%', top: '43%', width: 360, height: 250 }} />
+        <div data-sr-flip-marker className="sr-fmarker sr-fm0" />
+        <div data-sr-flip-marker className="sr-fmarker sr-fm1" />
+        <div data-sr-flip-marker className="sr-fmarker sr-fm2" />
 
-        <div style={{ ...station, left: 'calc(7% + 150px)', top: '47%' }}>
+        <div className="sr-fstation sr-fs0">
           <div className="sr-display" style={stationName}>Forge</div>
           <div style={stationSub}>builds it</div>
         </div>
-        <div style={{ ...station, left: 'calc(40% + 130px)', top: '61%' }}>
+        <div className="sr-fstation sr-fs1">
           <div className="sr-display" style={stationName}>Convoy</div>
           <div style={stationSub}>ships it</div>
         </div>
-        <div style={{ ...station, left: 'calc(64% + 180px)', top: '43%' }}>
+        <div className="sr-fstation sr-fs2">
           <div className="sr-display" style={stationName}>Ground Control</div>
           <div style={stationSub}>runs it</div>
         </div>
 
         <div
           data-sr-flip-target
+          className="sr-fcard"
           style={{
-            position: 'absolute',
-            left: '7%',
-            top: '47%',
-            width: 300,
-            height: 210,
             borderRadius: 'var(--radius-lg)',
-            background: 'var(--sr-coral)',
+            background: 'var(--grad-coral)',
             boxShadow: 'var(--shadow-lg)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
             padding: 22,
             overflow: 'hidden',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#fff' }} />
-            <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>your product</span>
-          </div>
-          <div>
-            <div className="sr-display" style={{ fontSize: 28, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
-              orchard-bot
+          <div
+            key={stage}
+            className="sr-fcard-content"
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+              <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#fff' }} />
+              <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.85)' }}>{s.tag}</span>
             </div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.8)', marginTop: 4 }}>idea → production</div>
+            <div>
+              <div className="sr-display" style={{ fontSize: 28, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                {s.title}
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.85)', marginTop: 6 }}>{s.sub}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -329,9 +418,7 @@ function LifecycleText({ row }: { row: LifeRow }) {
 function LifecycleImage({ row }: { row: LifeRow }) {
   return (
     <div
-      data-sr-parallax
-      data-sr-speed="0.85"
-      data-sr-reveal="clip"
+      data-sr-image
       className="sr-card"
       style={{ aspectRatio: '4 / 3', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
     >
@@ -623,7 +710,7 @@ function WhatsNew() {
         <div className="sr-bento" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gridAutoRows: '200px', gap: 18 }}>
           {/* Large image card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 4', gridRow: 'span 2', overflow: 'hidden', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-            <ImageSlot absolute label="Ground Control — hero" />
+            <ImageSlot absolute label="Ground Control — hero" background="var(--grad-dusk-sky)" labelColor="rgba(22,21,15,0.5)" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(22,21,15,0.85))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 30, pointerEvents: 'none' }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Product</p>
@@ -632,25 +719,25 @@ function WhatsNew() {
             </div>
           </div>
           {/* Coral text card */}
-          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--sr-coral)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-md)' }}>
+          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--grad-coral)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-md)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>Release</p>
             <h3 className="sr-display" style={{ fontSize: 23, fontWeight: 800, letterSpacing: '-0.02em', color: '#fff', lineHeight: 1.1 }}>Convoy now reads any stack</h3>
           </div>
           {/* Paper text card */}
-          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--sr-paper)', border: '1px solid var(--sr-stone)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-sm)' }}>
+          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--grad-paper)', border: '1px solid var(--sr-stone)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-sm)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-coral)' }}>Beta</p>
             <h3 className="sr-display" style={{ fontSize: 23, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--sr-text-90)', lineHeight: 1.1 }}>Forge opens to everyone</h3>
           </div>
           {/* 3-col image card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 3', gridRow: 'span 1', overflow: 'hidden', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-            <ImageSlot absolute label="Convoy — deploy" />
+            <ImageSlot absolute label="Convoy — deploy" background="var(--grad-dusk)" labelColor="rgba(22,21,15,0.5)" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(22,21,15,0.8))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 24, pointerEvents: 'none' }}>
               <h3 className="sr-display" style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0' }}>38-second deploys</h3>
             </div>
           </div>
           {/* Dark text card */}
-          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 3', gridRow: 'span 1', background: '#16150F', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-md)' }}>
+          <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 3', gridRow: 'span 1', background: 'var(--grad-warm-dark)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-md)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Engineering</p>
             <h3 className="sr-display" style={{ fontSize: 23, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0', lineHeight: 1.1 }}>How the pulse stays unbroken</h3>
           </div>

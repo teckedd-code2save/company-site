@@ -1,0 +1,290 @@
+/**
+ * ═════════════════════════════════════════════════════════════════
+ * Serendepify Design Tokens v3
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * Brand-locked colors, typography, spacing, and motion values.
+ * Import once. Use CSS custom properties everywhere.
+ * ═════════════════════════════════════════════════════════════════
+ */
+
+/* ── Fonts ─────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Root Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Brand Colors */
+  --sr-ink:        #0B0B0C;
+  --sr-ink-warm:   #16150F;
+  --sr-coral:      #E8542A;
+  --sr-coral-bright: #FF6A40;
+  --sr-paper:      #F5F4F0;
+  --sr-stone:      #ECEAE3;
+  --sr-bg:         #E7E5DF;
+  --sr-text-90:    #1B1916;
+  --sr-text-55:    #6E6A62;
+  --sr-text-35:    #9A968C;
+  --sr-text-20:    #8A8780;
+
+  /* Dark Theme Overrides (add .sr-dark to container) */
+  --sr-dark-bg:    #0A0A0B;
+  --sr-dark-surface: #16150F;
+  --sr-dark-text:  #F5F4F0;
+  --sr-dark-muted: rgba(245,244,240,0.55);
+  --sr-dark-border: rgba(255,255,255,0.09);
+
+  /* Typography */
+  --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Type Scale */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-lg:   19px;
+  --text-xl:   clamp(1.7rem, 3.2vw, 2.6rem);
+  --text-2xl:  clamp(2.2rem, 5vw, 4.2rem);
+  --text-3xl:  clamp(3rem, 6vw, 5.4rem);
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  14px;
+  --space-4:  22px;
+  --space-5:  36px;
+  --space-6:  56px;
+  --space-7:  90px;
+  --space-8:  140px;
+
+  /* Radii */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  20px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 26px 60px rgba(27,25,22,0.18);
+  --shadow-glow: 0 12px 32px rgba(255,106,64,0.30);
+
+  /* Easing */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-back: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Animation Durations */
+  --duration-fast: 0.25s;
+  --duration-normal: 0.45s;
+  --duration-slow: 0.8s;
+  --duration-slower: 1.3s;
+
+  /* Layout */
+  --max-width: 1200px;
+  --page-padding: clamp(22px, 5vw, 48px);
+  --nav-height: 72px;
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--sr-bg);
+  color: var(--sr-text-90);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--sr-coral);
+  color: var(--sr-paper);
+}
+
+/* ── Typography Helpers ──────────────────────────────────────── */
+.sr-display { font-family: var(--font-display); }
+.sr-body   { font-family: var(--font-body); }
+.sr-mono   { font-family: var(--font-mono); }
+
+.sr-text-ink      { color: var(--sr-text-90); }
+.sr-text-muted    { color: var(--sr-text-55); }
+.sr-text-faint    { color: var(--sr-text-35); }
+.sr-text-coral    { color: var(--sr-coral); }
+.sr-text-coral-bright { color: var(--sr-coral-bright); }
+
+/* ── Container ─────────────────────────────────────────────────── */
+.sr-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+}
+
+.sr-section {
+  padding: var(--space-7) 0;
+}
+
+/* ── Dark Theme ──────────────────────────────────────────────── */
+.sr-dark {
+  background: var(--sr-dark-bg);
+  color: var(--sr-dark-text);
+}
+
+.sr-dark .sr-text-ink   { color: var(--sr-dark-text); }
+.sr-dark .sr-text-muted { color: var(--sr-dark-muted); }
+
+/* ── Card Base ───────────────────────────────────────────────── */
+.sr-card {
+  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-normal) var(--ease-back),
+              box-shadow var(--duration-normal) var(--ease-back);
+  overflow: hidden;
+}
+
+.sr-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.sr-card .sr-card-media {
+  transition: transform var(--duration-slow) var(--ease-back);
+}
+
+.sr-card:hover .sr-card-media {
+  transform: scale(1.06);
+}
+
+/* ── Button Base ─────────────────────────────────────────────── */
+.sr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 28px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: transform var(--duration-fast) ease,
+              box-shadow var(--duration-fast) ease;
+}
+
+.sr-btn:hover {
+  transform: translateY(-2px);
+}
+
+.sr-btn-primary {
+  background: var(--sr-text-90);
+  color: var(--sr-paper);
+}
+
+.sr-btn-coral {
+  background: var(--sr-coral-bright);
+  color: var(--sr-ink);
+}
+
+.sr-btn-ghost {
+  background: transparent;
+  color: var(--sr-text-90);
+  border: 1px solid rgba(27,25,22,0.22);
+}
+
+.sr-dark .sr-btn-ghost {
+  color: var(--sr-dark-text);
+  border-color: rgba(255,255,255,0.18);
+}
+
+/* ── Pill / Tag ──────────────────────────────────────────────── */
+.sr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--sr-stone);
+}
+
+/* ── Label / Eyebrow ─────────────────────────────────────────── */
+.sr-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sr-coral);
+}
+
+/* ── Divider ──────────────────────────────────────────────────── */
+.sr-divider {
+  height: 1px;
+  background: var(--sr-stone);
+  border: none;
+}
+
+.sr-dark .sr-divider {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ── Grain Overlay ───────────────────────────────────────────── */
+.sr-grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Scrollbar Progress ──────────────────────────────────────── */
+.sr-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--sr-coral-bright);
+  z-index: 80;
+  pointer-events: none;
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Utility ─────────────────────────────────────────────────── */
+.sr-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
