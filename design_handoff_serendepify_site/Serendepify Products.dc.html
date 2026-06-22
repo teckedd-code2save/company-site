@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="sr/tokens.css">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Observer.min.js"></script>
+<script src="sr/serendepify-motion.js"></script>
+<script src="sr/image-slot.js"></script>
+<style>
+  html, body { height: 100%; margin: 0; overflow: hidden; background: #16150F; }
+  .snap { position: fixed; inset: 0; }
+  .snap section { position: fixed; inset: 0; visibility: hidden; }
+  .snap .outer, .snap .inner { width: 100%; height: 100%; overflow: hidden; }
+  .snap .bg { position: absolute; inset: -8% 0; background-size: cover; background-position: center; }
+  .snap .content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 clamp(28px, 8vw, 140px); z-index: 2; }
+  .snap .section-heading { will-change: transform; }
+  .clip-text { overflow: hidden; }
+  .snap image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+</style>
+</helmet>
+
+<div style="position: fixed; inset: 0; background: #16150F;">
+  <a href="Serendepify Site.dc.html" style="position: fixed; top: 26px; left: clamp(28px, 8vw, 140px); z-index: 40; display: flex; align-items: center; gap: 10px; color: #F5F4F0; text-decoration: none;">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none"><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#F5F4F0" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+    <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em;">serendepify<span style="color: var(--sr-coral);">.</span></span>
+  </a>
+  <div style="position: fixed; top: 30px; right: clamp(28px, 8vw, 140px); z-index: 40; font-size: 13px; font-weight: 600; color: rgba(245,244,240,0.55);">Scroll to move through the line &darr;</div>
+
+  <div class="snap" data-sr-snap>
+    <section>
+      <div class="outer"><div class="inner">
+        <div class="bg" style="background: radial-gradient(120% 120% at 70% 30%, #2a2820, #16150F 70%);"></div>
+        <div class="content">
+          <p style="font-size: 14px; font-weight: 700; color: var(--sr-coral-bright); margin: 0 0 18px;">Three products. One line.</p>
+          <h2 class="section-heading sr-display" style="margin: 0; font-size: clamp(3rem, 9vw, 8rem); font-weight: 800; letter-spacing: -0.045em; line-height: 0.92; color: #F5F4F0; max-width: 16ch;">From idea to production, owned end to end.</h2>
+        </div>
+      </div></div>
+    </section>
+
+    <section>
+      <div class="outer"><div class="inner">
+        <div class="bg"><image-slot id="sr-prod-forge" shape="rect" placeholder="Drop a Forge / build screenshot"></image-slot><div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(22,21,15,0.9) 0%, rgba(22,21,15,0.5) 45%, transparent 75%);"></div></div>
+        <div class="content">
+          <p style="font-size: 14px; font-weight: 700; color: var(--sr-coral-bright); margin: 0 0 16px;">01 &middot; Forge &middot; builds it</p>
+          <h2 class="section-heading sr-display" style="margin: 0; font-size: clamp(2.8rem, 8vw, 7rem); font-weight: 800; letter-spacing: -0.04em; line-height: 0.94; color: #F5F4F0;">Vague idea in.<br>Built product out.</h2>
+          <p style="margin: 22px 0 0; font-size: var(--text-lg); font-weight: 500; color: rgba(245,244,240,0.7); max-width: 48ch;">A skill set that turns a fuzzy brief into a well-built product &mdash; driven by the coding agent of your choice.</p>
+        </div>
+      </div></div>
+    </section>
+
+    <section>
+      <div class="outer"><div class="inner">
+        <div class="bg"><image-slot id="sr-prod-convoy" shape="rect" placeholder="Drop a Convoy / deploy screenshot"></image-slot><div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(22,21,15,0.9) 0%, rgba(22,21,15,0.5) 45%, transparent 75%);"></div></div>
+        <div class="content">
+          <p style="font-size: 14px; font-weight: 700; color: var(--sr-coral-bright); margin: 0 0 16px;">02 &middot; Convoy &middot; ships it</p>
+          <h2 class="section-heading sr-display" style="margin: 0; font-size: clamp(2.8rem, 8vw, 7rem); font-weight: 800; letter-spacing: -0.04em; line-height: 0.94; color: #F5F4F0;">Point it at your code.<br>It ships.</h2>
+          <p style="margin: 22px 0 0; font-size: var(--text-lg); font-weight: 500; color: rgba(245,244,240,0.7); max-width: 48ch;">Convoy reads your stack, picks the right deployment path, and carries the rollout all the way to production.</p>
+        </div>
+      </div></div>
+    </section>
+
+    <section>
+      <div class="outer"><div class="inner">
+        <div class="bg"><image-slot id="sr-prod-gc" shape="rect" placeholder="Drop a Ground Control screenshot"></image-slot><div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(22,21,15,0.9) 0%, rgba(22,21,15,0.5) 45%, transparent 75%);"></div></div>
+        <div class="content">
+          <p style="font-size: 14px; font-weight: 700; color: var(--sr-coral-bright); margin: 0 0 16px;">03 &middot; Ground Control &middot; runs it</p>
+          <h2 class="section-heading sr-display" style="margin: 0; font-size: clamp(2.8rem, 8vw, 7rem); font-weight: 800; letter-spacing: -0.04em; line-height: 0.94; color: #F5F4F0;">Eyes on production,<br>always.</h2>
+          <p style="margin: 22px 0 0; font-size: var(--text-lg); font-weight: 500; color: rgba(245,244,240,0.7); max-width: 48ch;">The operations cockpit &mdash; real logs, metrics and topology your agent can reason about and operate.</p>
+          <a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" class="sr-btn sr-btn-primary" style="margin-top: 30px; font-weight: 700;">Open Ground Control &#8599;</a>
+        </div>
+      </div></div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    let tries = 0;
+    const run = () => {
+      const SM = window.SerendepifyMotion;
+      if (!window.gsap || !SM) { if (tries++ < 250) return setTimeout(run, 40); return; }
+      if (window.__srProdInited) return;
+      window.__srProdInited = true;
+      try {
+        const g = window.gsap;
+        if (g.ticker) { try { g.ticker.lagSmoothing(0); g.ticker.wake(); } catch (e) {} }
+        SM.SR.initialized = false; SM.init();
+        // Safety net: if Observer/ticker never runs, reveal the first section so the page is never blank.
+        setTimeout(() => {
+          const first = document.querySelector('.snap section');
+          if (first && getComputedStyle(first).visibility === 'hidden') {
+            g.set('.snap section', { clearProps: 'visibility' });
+            g.set(first, { autoAlpha: 1, zIndex: 1 });
+            g.set(first.querySelectorAll('.outer, .inner'), { yPercent: 0 });
+          }
+        }, 1600);
+      } catch (e) { console.error('motion init', e); }
+    };
+    const start = () => { if (document.fonts && document.fonts.ready) { document.fonts.ready.then(run); setTimeout(run, 1200); } else { run(); } };
+    start();
+  }
+  componentWillUnmount() { window.__srProdInited = false; }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

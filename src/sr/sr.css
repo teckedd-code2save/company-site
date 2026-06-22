@@ -1,8 +1,18 @@
 /* Serendepify marketing site — global styles.
  * Imports the brand tokens, then layers the interaction styles that lived in
  * the design reference's <helmet> <style> block, plus the Products snap-page
- * structural CSS. */
+ * structural CSS, flip-scroll geometry, gradients, and responsive rules. */
 @import './sr-tokens.css';
+
+/* ── Brand gradients (from the design handoff Motion Library) ─────── */
+:root {
+  --grad-dusk: linear-gradient(165deg, #aeb6dd 0%, #d3a3bf 38%, #f0a368 73%, #e8854a 100%);
+  --grad-dusk-sky: linear-gradient(170deg, #b3c2d2 0%, #cdb89c 42%, #e0975c 78%, #c46a3e 100%);
+  --grad-coral: linear-gradient(135deg, var(--sr-coral) 0%, #c44a2a 100%);
+  --grad-coral-bright: linear-gradient(135deg, var(--sr-coral), var(--sr-coral-bright));
+  --grad-warm-dark: linear-gradient(160deg, #221f17 0%, #16150f 58%, #0e0d08 100%);
+  --grad-paper: linear-gradient(165deg, #f8f7f3 0%, #efe7dd 100%);
+}
 
 /* ── Scroll container ─────────────────────────────────────────────
  * The ported tokens put `overflow-x: hidden` on <body>. ANY overflow on
@@ -48,6 +58,95 @@ body { overflow-x: visible; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
+/* ── Mobile nav ───────────────────────────────────────────────── */
+.sr-nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(27, 25, 22, 0.16);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.5);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--sr-text-90);
+}
+.sr-mobile-menu {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  z-index: 79;
+  background: rgba(231, 229, 223, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--sr-stone);
+  padding: 18px var(--page-padding) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform-origin: top;
+  animation: sr-menu-in 0.28s var(--ease-out);
+}
+@keyframes sr-menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sr-mobile-menu a {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--sr-text-90);
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--sr-stone);
+}
+.sr-mobile-menu a:last-child { border-bottom: none; }
+
+@media (max-width: 860px) {
+  .sr-nav-links { display: none !important; }
+  .sr-nav-toggle { display: inline-flex; }
+}
+
+/* ── Flip-scroll beat geometry ────────────────────────────────────
+ * Markers define the geometries the card fits to (GSAP Flip.getState reads
+ * these rects). Stations are the ghost labels. Kept in CSS so they can be made
+ * responsive — the inline-style version couldn't be media-queried. */
+.sr-fmarker { position: absolute; }
+.sr-fm0 { left: 7%;  top: 47%; width: 300px; height: 210px; }
+.sr-fm1 { left: 40%; top: 61%; width: 260px; height: 180px; }
+.sr-fm2 { left: 64%; top: 43%; width: 360px; height: 250px; }
+
+.sr-fstation { position: absolute; transform: translate(-50%, -130%); text-align: center; }
+.sr-fs0 { left: calc(7% + 150px);  top: 47%; }
+.sr-fs1 { left: calc(40% + 130px); top: 61%; }
+.sr-fs2 { left: calc(64% + 180px); top: 43%; }
+
+/* card starts at marker 0 */
+.sr-fcard { position: absolute; left: 7%; top: 47%; width: 300px; height: 210px; }
+
+.sr-fcard-content { animation: sr-fcard-fade 0.4s var(--ease-out); }
+@keyframes sr-fcard-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 860px) {
+  /* On small screens the horizontal "line" doesn't fit; let the card travel
+     mostly vertically across near-full-width stations and hide the ghost
+     labels (the card content names each product instead). */
+  .sr-fstation { display: none; }
+  .sr-fm0, .sr-fcard { left: 6%;  top: 40%; width: 86vw; height: 150px; }
+  .sr-fm1 { left: 12%; top: 55%; width: 74vw; height: 138px; }
+  .sr-fm2 { left: 7%;  top: 43%; width: 84vw; height: 164px; }
+}
+
+/* ── Bento gradients ──────────────────────────────────────────── */
+.sr-grad-dusk { background: var(--grad-dusk); }
+.sr-grad-dusk-sky { background: var(--grad-dusk-sky); }
+.sr-grad-coral { background: var(--grad-coral); }
+.sr-grad-coral-bright { background: var(--grad-coral-bright); }
+.sr-grad-warm-dark { background: var(--grad-warm-dark); }
+.sr-grad-paper { background: var(--grad-paper); }
+
 /* ── Products snap page ───────────────────────────────────────── */
 .sr-snap-page { position: fixed; inset: 0; background: #16150F; overflow: hidden; }
 .snap { position: fixed; inset: 0; }
@@ -68,6 +167,22 @@ ul { list-style: none; }
 .snap .section-heading { will-change: transform; }
 .clip-text { overflow: hidden; }
 
+/* back-to-site button on the products page */
+.sr-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  color: #F5F4F0;
+  background: rgba(245, 244, 240, 0.08);
+  border: 1px solid rgba(245, 244, 240, 0.2);
+  transition: background 0.25s, transform 0.25s;
+}
+.sr-back-btn:hover { background: rgba(245, 244, 240, 0.16); transform: translateY(-1px); }
+
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 860px) {
   .sr-grid-2 { grid-template-columns: 1fr !important; }
@@ -75,5 +190,4 @@ ul { list-style: none; }
   .sr-hero-stats { justify-content: flex-start !important; }
   .sr-bento { grid-template-columns: repeat(2, 1fr) !important; }
   .sr-bento > * { grid-column: span 2 !important; }
-  .sr-nav-links { display: none !important; }
 }

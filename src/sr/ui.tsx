@@ -62,10 +62,15 @@ export function ImageSlot({
   label,
   style,
   absolute = false,
+  background = 'radial-gradient(120% 120% at 72% 28%, #2a2820 0%, #16150F 68%)',
+  labelColor = 'rgba(245,244,240,0.42)',
 }: {
   label: string;
   style?: CSSProperties;
   absolute?: boolean;
+  /** Override the placeholder backdrop (e.g. a brand dusk gradient). */
+  background?: string;
+  labelColor?: string;
 }) {
   return (
     <div
@@ -79,8 +84,7 @@ export function ImageSlot({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background:
-          'radial-gradient(120% 120% at 72% 28%, #2a2820 0%, #16150F 68%)',
+        background,
         ...style,
       }}
     >
@@ -101,7 +105,7 @@ export function ImageSlot({
           fontFamily: 'var(--font-mono)',
           fontSize: 12,
           letterSpacing: '0.04em',
-          color: 'rgba(245,244,240,0.42)',
+          color: labelColor,
           textAlign: 'center',
           padding: '0 18px',
         }}

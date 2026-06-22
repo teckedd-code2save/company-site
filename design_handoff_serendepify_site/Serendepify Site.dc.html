@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="sr/tokens.css">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Observer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
+<script src="sr/serendepify-motion.js"></script>
+<script src="sr/image-slot.js"></script>
+<style>
+  .sr-nav-scrolled { background: rgba(231,229,223,0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom-color: rgba(27,25,22,0.08) !important; }
+  .sr-navlink { position: relative; transition: color 0.25s; }
+  .sr-navlink::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--sr-coral); transition: width 0.32s var(--ease-back); }
+  .sr-navlink:hover::after { width: 100%; }
+  .sr-navlink:hover { color: var(--sr-text-90) !important; }
+  .sr-mark { transition: transform 0.5s var(--ease-spring); }
+  .sr-mark:hover { transform: rotate(-22deg); }
+  image-slot { display: block; }
+</style>
+</helmet>
+
+<div style="background: var(--sr-bg); overflow-x: hidden;">
+  <div class="sr-scroll-progress" data-sr-scroll-progress></div>
+  <header data-sr-nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 80; height: var(--nav-height); border-bottom: 1px solid transparent; transition: background 0.35s, border-color 0.35s, backdrop-filter 0.35s;">
+    <div class="sr-container" style="display: flex; align-items: center; justify-content: space-between; height: 100%;">
+      <a href="#top" style="display: flex; align-items: center; gap: 11px;">
+        <svg class="sr-mark" width="28" height="28" viewBox="0 0 64 64" fill="none"><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#16150F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+        <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: var(--sr-text-90);">serendepify<span style="color: var(--sr-coral);">.</span></span>
+      </a>
+      <nav style="display: flex; align-items: center; gap: 32px;">
+        <a href="#lifecycle" class="sr-body sr-navlink" style="font-size: 14.5px; font-weight: 600; color: var(--sr-text-55);">Lifecycle</a>
+        <a href="#agents" class="sr-body sr-navlink" style="font-size: 14.5px; font-weight: 600; color: var(--sr-text-55);">For agents</a>
+        <a href="Serendepify Products.dc.html" class="sr-body sr-navlink" style="font-size: 14.5px; font-weight: 600; color: var(--sr-text-55);">Products</a>
+        <a href="#pricing" class="sr-body sr-navlink" style="font-size: 14.5px; font-weight: 600; color: var(--sr-text-55);">Pricing</a>
+        <a href="#docs" class="sr-body sr-navlink" style="font-size: 14.5px; font-weight: 600; color: var(--sr-text-55);">Docs</a>
+        <a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" data-sr-magnetic data-sr-strength="0.35" class="sr-btn sr-btn-primary" style="padding: 11px 20px; font-size: 14.5px; font-weight: 700;"><span data-sr-magnetic-inner style="display: inline-flex; align-items: center; gap: 8px;">Open Ground Control &#8599;</span></a>
+      </nav>
+    </div>
+  </header>
+  <section id="top" style="position: relative; padding: 150px 0 96px; overflow: hidden;">
+    <div style="position: absolute; inset: 0; pointer-events: none; opacity: 0.55; background-image: radial-gradient(rgba(27,25,22,0.05) 1px, transparent 1px); background-size: 44px 44px; -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%); mask-image: linear-gradient(180deg, #000 0%, transparent 85%);"></div>
+    <div class="sr-container" style="position: relative;">
+      <div data-sr-hero style="max-width: 17ch;">
+        <h1 data-sr-hero-item data-sr-text class="sr-display" style="font-weight: 800; font-size: clamp(3.2rem, 8vw, 7rem); line-height: 0.98; letter-spacing: -0.04em; color: var(--sr-text-90);">Bring the idea. We own the rest.</h1>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-top: 44px;">
+        <div data-sr-hero style="max-width: 52ch;">
+          <p data-sr-hero-item style="font-size: var(--text-lg); line-height: 1.68; color: var(--sr-text-55); font-weight: 500;">Describe a product in plain language. Serendepify&#39;s agents take it from there &mdash; <span style="color: var(--sr-text-90); font-weight: 700;">building</span> it, <span style="color: var(--sr-text-90); font-weight: 700;">shipping</span> it, and <span style="color: var(--sr-text-90); font-weight: 700;">operating</span> it in production. One continuous line of ownership.</p>
+          <div data-sr-hero-item style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
+            <a href="#lifecycle" data-sr-magnetic data-sr-strength="0.4" class="sr-btn sr-btn-primary" style="font-weight: 700;"><span data-sr-magnetic-inner style="display: inline-flex; align-items: center; gap: 10px;">See the lifecycle &#8594;</span></a>
+            <a href="#agents" class="sr-btn sr-btn-ghost" style="font-weight: 600;">For agents</a>
+          </div>
+        </div>
+        <div data-sr-hero-item style="display: flex; gap: 40px; justify-content: flex-end;">
+          <div><div class="sr-display" style="font-size: 40px; font-weight: 800; color: var(--sr-text-90); letter-spacing: -0.03em;"><span data-sr-count="3">3</span></div><div style="font-size: 13px; font-weight: 600; color: var(--sr-text-55); margin-top: 2px;">products, one line</div></div>
+          <div><div class="sr-display" style="font-size: 40px; font-weight: 800; color: var(--sr-text-90); letter-spacing: -0.03em;"><span data-sr-count="100" data-sr-suffix="%">100%</span></div><div style="font-size: 13px; font-weight: 600; color: var(--sr-text-55); margin-top: 2px;">owned, idea to prod</div></div>
+        </div>
+      </div>
+      <div data-sr-reveal="clip" class="sr-card" style="margin-top: 56px; aspect-ratio: 16/7; box-shadow: var(--shadow-lg); overflow: hidden;">
+        <image-slot id="sr-hero-shot" shape="rect" placeholder="Drop a Ground Control screenshot" style="width: 100%; height: 100%;"></image-slot>
+      </div>
+    </div>
+  </section>
+  <section data-sr-flip-scroll style="height: 340vh; position: relative; background: var(--sr-bg);">
+    <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
+      <div class="sr-container" style="padding-top: 96px;">
+        <h2 class="sr-display" data-sr-text style="font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; max-width: 18ch;">One product. It never changes hands.</h2>
+        <p style="margin-top: 18px; font-size: var(--text-lg); font-weight: 500; color: var(--sr-text-55); max-width: 46ch;">Watch a single build travel the whole line &mdash; same ownership, start to finish.</p>
+      </div>
+
+      <div data-sr-flip-marker style="position: absolute; left: 7%; top: 42%; width: 300px; height: 210px;"></div>
+      <div data-sr-flip-marker style="position: absolute; left: 40%; top: 56%; width: 260px; height: 180px;"></div>
+      <div data-sr-flip-marker style="position: absolute; left: 64%; top: 38%; width: 360px; height: 250px;"></div>
+
+      <div style="position: absolute; left: calc(7% + 150px); top: 42%; transform: translate(-50%, -130%); text-align: center;"><div class="sr-display" style="font-size: 26px; font-weight: 800; color: var(--sr-text-35);">Forge</div><div style="font-size: 13px; font-weight: 600; color: var(--sr-text-35);">builds it</div></div>
+      <div style="position: absolute; left: calc(40% + 130px); top: 56%; transform: translate(-50%, -130%); text-align: center;"><div class="sr-display" style="font-size: 26px; font-weight: 800; color: var(--sr-text-35);">Convoy</div><div style="font-size: 13px; font-weight: 600; color: var(--sr-text-35);">ships it</div></div>
+      <div style="position: absolute; left: calc(64% + 180px); top: 38%; transform: translate(-50%, -130%); text-align: center;"><div class="sr-display" style="font-size: 26px; font-weight: 800; color: var(--sr-text-35);">Ground Control</div><div style="font-size: 13px; font-weight: 600; color: var(--sr-text-35);">runs it</div></div>
+
+      <div data-sr-flip-target style="position: absolute; left: 7%; top: 42%; width: 300px; height: 210px; border-radius: var(--radius-lg); background: var(--sr-coral); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; justify-content: space-between; padding: 22px; overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 9px;"><span style="width: 9px; height: 9px; border-radius: 50%; background: #fff;"></span><span style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85);">your product</span></div>
+        <div><div class="sr-display" style="font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.0;">orchard-bot</div><div style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 4px;">idea &#8594; production</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lifecycle" class="sr-section">
+    <div class="sr-container">
+      <div style="max-width: 760px; margin-bottom: var(--space-6);">
+        <h2 class="sr-display" data-sr-text style="font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;">One agent owns the whole line.</h2>
+        <p data-sr-reveal style="margin-top: 20px; font-size: var(--text-lg); line-height: 1.7; color: var(--sr-text-55); font-weight: 500; max-width: 56ch;">From a fuzzy brief to a running system. Forge builds it, Convoy ships it, Ground Control keeps it alive &mdash; one continuous handoff, no glue in between.</p>
+      </div>
+
+      <div data-sr-reveal style="display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center; padding-bottom: var(--space-6);">
+        <div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span class="sr-display" style="font-size: 19px; font-weight: 700; color: var(--sr-text-35);">01</span><h3 class="sr-display" style="font-size: clamp(2.1rem, 3.6vw, 3.1rem); font-weight: 800; letter-spacing: -0.03em;">Forge</h3></div>
+          <p class="sr-display" style="font-weight: 600; font-size: 21px; color: var(--sr-coral); margin-top: 8px;">Vague idea in. Built product out.</p>
+          <p style="margin-top: 18px; font-size: 16.5px; line-height: 1.72; color: var(--sr-text-55); font-weight: 500; max-width: 46ch;">A skill set that turns a fuzzy idea into a well-built product, driven by the coding agent of your choice. It plans the architecture, scaffolds the build, and hands your agent a path it can execute end to end.</p>
+          <ul style="margin-top: 22px; display: flex; flex-direction: column; gap: 12px; list-style: none;">
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Turns vague briefs into concrete build plans</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Bring your own agent &mdash; Claude, Cursor, whatever ships</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Architecture &amp; scaffolding, not just boilerplate</li>
+          </ul>
+          <a href="https://www.npmjs.com/package/@teckedd-code2save/b2dp" target="_blank" rel="noopener noreferrer" style="margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--sr-text-90); border-bottom: 2px solid var(--sr-coral); padding-bottom: 3px;">Explore Forge <span style="color: var(--sr-coral);">&#8599;</span></a>
+        </div>
+        <div data-sr-parallax data-sr-speed="0.85" data-sr-reveal="clip" class="sr-card" style="aspect-ratio: 4/3; box-shadow: var(--shadow-lg); overflow: hidden;">
+          <image-slot id="sr-forge-shot" shape="rect" placeholder="Drop a Forge / build screenshot" style="width: 100%; height: 100%;"></image-slot>
+        </div>
+      </div>
+
+      <div data-sr-reveal style="display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 56px; align-items: center; padding: var(--space-5) 0 var(--space-6); border-top: 1px solid var(--sr-stone);">
+        <div data-sr-parallax data-sr-speed="0.85" data-sr-reveal="clip" class="sr-card" style="aspect-ratio: 4/3; box-shadow: var(--shadow-lg); overflow: hidden;">
+          <image-slot id="sr-convoy-shot" shape="rect" placeholder="Drop a Convoy / deploy screenshot" style="width: 100%; height: 100%;"></image-slot>
+        </div>
+        <div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span class="sr-display" style="font-size: 19px; font-weight: 700; color: var(--sr-text-35);">02</span><h3 class="sr-display" style="font-size: clamp(2.1rem, 3.6vw, 3.1rem); font-weight: 800; letter-spacing: -0.03em;">Convoy</h3></div>
+          <p class="sr-display" style="font-weight: 600; font-size: 21px; color: var(--sr-coral); margin-top: 8px;">Point it at your code. It ships.</p>
+          <p style="margin-top: 18px; font-size: 16.5px; line-height: 1.72; color: var(--sr-text-55); font-weight: 500; max-width: 46ch;">Convoy reads your actual codebase &mdash; stack, dependencies, config &mdash; picks the deployment path that fits, and carries the rollout all the way to production.</p>
+          <ul style="margin-top: 22px; display: flex; flex-direction: column; gap: 12px; list-style: none;">
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Repo-aware: detects the stack and the right target</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> From codebase to live deploy in one pass</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Handles routing, domains, and rollout</li>
+          </ul>
+          <a href="https://convoy-home.vercel.app/" target="_blank" rel="noopener noreferrer" style="margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--sr-text-90); border-bottom: 2px solid var(--sr-coral); padding-bottom: 3px;">View Convoy <span style="color: var(--sr-coral);">&#8599;</span></a>
+        </div>
+      </div>
+
+      <div data-sr-reveal style="display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: center; padding-top: var(--space-5); border-top: 1px solid var(--sr-stone);">
+        <div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span class="sr-display" style="font-size: 19px; font-weight: 700; color: var(--sr-text-35);">03</span><h3 class="sr-display" style="font-size: clamp(2.1rem, 3.6vw, 3.1rem); font-weight: 800; letter-spacing: -0.03em;">Ground Control</h3></div>
+          <p class="sr-display" style="font-weight: 600; font-size: 21px; color: var(--sr-coral); margin-top: 8px;">Eyes on production, always.</p>
+          <p style="margin-top: 18px; font-size: 16.5px; line-height: 1.72; color: var(--sr-text-55); font-weight: 500; max-width: 46ch;">The operations cockpit. Real logs, metrics and topology in one place, so your agent can reason about a live system &mdash; and ship the next change with confidence.</p>
+          <ul style="margin-top: 22px; display: flex; flex-direction: column; gap: 12px; list-style: none;">
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Live logs, metrics and service topology</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Multi-target deploys from one cockpit</li>
+            <li style="display: flex; gap: 12px; font-size: 15.5px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Agent-readable &mdash; built to be operated, not just watched</li>
+          </ul>
+          <a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" style="margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--sr-text-90); border-bottom: 2px solid var(--sr-coral); padding-bottom: 3px;">Open Ground Control <span style="color: var(--sr-coral);">&#8599;</span></a>
+        </div>
+        <div data-sr-parallax data-sr-speed="0.85" data-sr-reveal="clip" class="sr-card" style="aspect-ratio: 4/3; box-shadow: var(--shadow-lg); overflow: hidden;">
+          <image-slot id="sr-gc-shot" shape="rect" placeholder="Drop a Ground Control screenshot" style="width: 100%; height: 100%;"></image-slot>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agents" style="background: #16150F; color: #F5F4F0; padding: clamp(80px, 11vw, 150px) 0; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 70%; aspect-ratio: 2/1; background: radial-gradient(ellipse at 50% 50%, rgba(255,106,64,0.13), transparent 65%); pointer-events: none;"></div>
+    <div class="sr-container" style="position: relative;">
+      <div style="max-width: 820px; margin: 0 auto; text-align: center;">
+        <p data-sr-reveal style="font-size: 15px; font-weight: 700; color: var(--sr-coral-bright); margin-bottom: 22px;">Built for the agents doing the work</p>
+        <h2 data-sr-text class="sr-display" style="font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.0;">The pulse travels the pipeline.</h2>
+        <p data-sr-reveal style="margin-top: 26px; font-size: var(--text-lg); line-height: 1.7; color: rgba(245,244,240,0.6); font-weight: 500;">One unbroken signal from idea to production. Every stage carries the same five things forward &mdash; <span data-sr-scramble data-sr-words="ownership|continuity|delivery|speed|quality" style="color: var(--sr-coral-bright); font-weight: 700; font-variant: small-caps; letter-spacing: 0.02em;">ownership</span>.</p>
+      </div>
+
+      <div data-sr-draw data-sr-path data-sr-stagger="0.16" style="position: relative; margin-top: clamp(48px, 7vw, 88px);">
+        <svg viewBox="0 0 1120 300" style="width: 100%; overflow: visible;">
+          <path d="M 40 200 C 200 200 200 120 360 120 C 520 120 520 200 680 200 C 840 200 840 110 1000 110 L 1080 110" fill="none" stroke="rgba(245,244,240,0.12)" stroke-width="2" stroke-linecap="round"></path>
+          <path data-sr-path-line d="M 40 200 C 200 200 200 120 360 120 C 520 120 520 200 680 200 C 840 200 840 110 1000 110 L 1080 110" fill="none" stroke="var(--sr-coral-bright)" stroke-width="3" stroke-linecap="round" style="filter: drop-shadow(0 0 7px rgba(255,106,64,0.55));"></path>
+
+          <g>
+            <circle data-sr-path cx="360" cy="120" r="27" fill="#16150F" stroke="rgba(245,244,240,0.55)" stroke-width="2"></circle>
+            <path data-sr-path d="M 360 108 L 372 120 L 360 132 L 348 120 Z" fill="none" stroke="var(--sr-coral-bright)" stroke-width="2.2" stroke-linejoin="round"></path>
+            <text x="360" y="186" text-anchor="middle" class="sr-display" style="font-size: 22px; font-weight: 700; fill: #F5F4F0;">Forge</text>
+            <text x="360" y="208" text-anchor="middle" style="font-size: 13px; font-weight: 600; fill: rgba(245,244,240,0.5);">builds it</text>
+          </g>
+          <g>
+            <circle data-sr-path cx="680" cy="200" r="27" fill="#16150F" stroke="rgba(245,244,240,0.55)" stroke-width="2"></circle>
+            <path data-sr-path d="M 668 200 L 690 200 M 683 192 L 691 200 L 683 208" fill="none" stroke="var(--sr-coral-bright)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <text x="680" y="266" text-anchor="middle" class="sr-display" style="font-size: 22px; font-weight: 700; fill: #F5F4F0;">Convoy</text>
+            <text x="680" y="288" text-anchor="middle" style="font-size: 13px; font-weight: 600; fill: rgba(245,244,240,0.5);">ships it</text>
+          </g>
+          <g>
+            <circle data-sr-path cx="1000" cy="110" r="27" fill="#16150F" stroke="var(--sr-coral)" stroke-width="2.5"></circle>
+            <circle data-sr-path cx="1000" cy="110" r="6" fill="none" stroke="var(--sr-coral-bright)" stroke-width="2.2"></circle>
+            <path data-sr-path d="M 1000 110 L 1014 96" fill="none" stroke="var(--sr-coral-bright)" stroke-width="2.2" stroke-linecap="round"></path>
+            <text x="1000" y="176" text-anchor="middle" class="sr-display" style="font-size: 22px; font-weight: 700; fill: #F5F4F0;">Ground Control</text>
+            <text x="1000" y="198" text-anchor="middle" style="font-size: 13px; font-weight: 600; fill: rgba(245,244,240,0.5);">runs it</text>
+          </g>
+
+          <circle data-sr-path-dot cx="40" cy="200" r="7" fill="var(--sr-coral-bright)" style="filter: drop-shadow(0 0 9px rgba(255,106,64,0.9));"></circle>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="sr-section">
+    <div class="sr-container">
+      <div style="max-width: 720px; margin-bottom: var(--space-6);">
+        <h2 class="sr-display" data-sr-text style="font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;">Start free. Pay when you ship.</h2>
+        <p data-sr-reveal style="margin-top: 20px; font-size: var(--text-lg); line-height: 1.7; color: var(--sr-text-55); font-weight: 500; max-width: 54ch;">Forge is open and free while in beta. Convoy and Ground Control scale with what you run in production.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div data-sr-reveal class="sr-card" style="background: var(--sr-paper); padding: 32px; display: flex; flex-direction: column; border: 1px solid var(--sr-stone);">
+          <h3 class="sr-display" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">Forge</h3>
+          <p style="margin-top: 6px; font-size: 14.5px; font-weight: 600; color: var(--sr-coral);">Beta &middot; open</p>
+          <div style="margin-top: 22px; display: flex; align-items: baseline; gap: 4px;"><span class="sr-display" style="font-size: 48px; font-weight: 800; letter-spacing: -0.03em;">$0</span></div>
+          <p style="margin-top: 4px; font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Bring your own coding agent.</p>
+          <div style="height: 1px; background: var(--sr-stone); margin: 26px 0;"></div>
+          <ul style="display: flex; flex-direction: column; gap: 13px; list-style: none; flex: 1;">
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Full Forge skill set</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Unlimited build plans</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Community support</li>
+          </ul>
+          <a href="https://www.npmjs.com/package/@teckedd-code2save/b2dp" target="_blank" rel="noopener noreferrer" class="sr-btn sr-btn-ghost" style="margin-top: 26px; width: 100%; justify-content: center; font-weight: 700;">Install Forge</a>
+        </div>
+        <div data-sr-reveal class="sr-card" style="background: #16150F; color: #F5F4F0; padding: 32px; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); position: relative; transform: translateY(-8px);">
+          <div style="position: absolute; top: 20px; right: 24px; font-size: 12.5px; font-weight: 700; color: var(--sr-coral-bright);">Most teams</div>
+          <h3 class="sr-display" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">Convoy</h3>
+          <p style="margin-top: 6px; font-size: 14.5px; font-weight: 600; color: rgba(245,244,240,0.55);">Ship to production</p>
+          <div style="margin-top: 22px; display: flex; align-items: baseline; gap: 4px;"><span class="sr-display" style="font-size: 48px; font-weight: 800; letter-spacing: -0.03em;">$29</span><span style="font-size: 15px; font-weight: 600; color: rgba(245,244,240,0.5);">/mo</span></div>
+          <p style="margin-top: 4px; font-size: 14px; font-weight: 500; color: rgba(245,244,240,0.55);">Per developer, billed monthly.</p>
+          <div style="height: 1px; background: rgba(245,244,240,0.14); margin: 26px 0;"></div>
+          <ul style="display: flex; flex-direction: column; gap: 13px; list-style: none; flex: 1;">
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: rgba(245,244,240,0.78);"><span style="color: var(--sr-coral-bright);">&#9670;</span> Everything in Forge</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: rgba(245,244,240,0.78);"><span style="color: var(--sr-coral-bright);">&#9670;</span> Repo-aware deploys, any stack</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: rgba(245,244,240,0.78);"><span style="color: var(--sr-coral-bright);">&#9670;</span> Custom domains &amp; rollout</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: rgba(245,244,240,0.78);"><span style="color: var(--sr-coral-bright);">&#9670;</span> Ground Control included</li>
+          </ul>
+          <a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" data-sr-magnetic data-sr-strength="0.3" class="sr-btn sr-btn-primary" style="margin-top: 26px; width: 100%; justify-content: center; font-weight: 700;"><span data-sr-magnetic-inner>Start shipping &#8594;</span></a>
+        </div>
+        <div data-sr-reveal class="sr-card" style="background: var(--sr-paper); padding: 32px; display: flex; flex-direction: column; border: 1px solid var(--sr-stone);">
+          <h3 class="sr-display" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">Fleet</h3>
+          <p style="margin-top: 6px; font-size: 14.5px; font-weight: 600; color: var(--sr-coral);">Enterprise</p>
+          <div style="margin-top: 22px; display: flex; align-items: baseline; gap: 4px;"><span class="sr-display" style="font-size: 48px; font-weight: 800; letter-spacing: -0.03em;">Let&#39;s talk</span></div>
+          <p style="margin-top: 4px; font-size: 14px; font-weight: 500; color: var(--sr-text-55);">For orgs running many systems.</p>
+          <div style="height: 1px; background: var(--sr-stone); margin: 26px 0;"></div>
+          <ul style="display: flex; flex-direction: column; gap: 13px; list-style: none; flex: 1;">
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Everything in Convoy</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> SSO, audit logs, roles</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Private regions &amp; SLAs</li>
+            <li style="display: flex; gap: 11px; font-size: 15px; font-weight: 500; color: var(--sr-text-55);"><span style="color: var(--sr-coral);">&#9670;</span> Dedicated support</li>
+          </ul>
+          <a href="#cta" class="sr-btn sr-btn-ghost" style="margin-top: 26px; width: 100%; justify-content: center; font-weight: 700;">Contact sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="docs" class="sr-section" style="background: var(--sr-paper);">
+    <div class="sr-container">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+        <div>
+          <h2 class="sr-display" data-sr-text style="font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;">Made for developers and their agents.</h2>
+          <p data-sr-reveal style="margin-top: 20px; font-size: var(--text-lg); line-height: 1.7; color: var(--sr-text-55); font-weight: 500; max-width: 46ch;">One command drops Forge into your agent&#39;s toolbelt. Everything after that is plain language and clean APIs.</p>
+          <div data-sr-reveal style="margin-top: 30px; display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: flex; gap: 14px;"><span class="sr-display" style="font-size: 17px; font-weight: 800; color: var(--sr-coral);">01</span><div><div style="font-size: 16px; font-weight: 700; color: var(--sr-text-90);">Install the skill</div><div style="font-size: 14.5px; font-weight: 500; color: var(--sr-text-55); margin-top: 2px;">Add Forge to Claude, Cursor, or any MCP-aware agent.</div></div></div>
+            <div style="display: flex; gap: 14px;"><span class="sr-display" style="font-size: 17px; font-weight: 800; color: var(--sr-coral);">02</span><div><div style="font-size: 16px; font-weight: 700; color: var(--sr-text-90);">Describe the product</div><div style="font-size: 14.5px; font-weight: 500; color: var(--sr-text-55); margin-top: 2px;">Plain language in. A concrete build plan out.</div></div></div>
+            <div style="display: flex; gap: 14px;"><span class="sr-display" style="font-size: 17px; font-weight: 800; color: var(--sr-coral);">03</span><div><div style="font-size: 16px; font-weight: 700; color: var(--sr-text-90);">Ship with Convoy</div><div style="font-size: 14.5px; font-weight: 500; color: var(--sr-text-55); margin-top: 2px;">Point it at the repo; watch it go live in Ground Control.</div></div></div>
+          </div>
+          <a href="https://www.npmjs.com/package/@teckedd-code2save/b2dp" target="_blank" rel="noopener noreferrer" style="margin-top: 30px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--sr-text-90); border-bottom: 2px solid var(--sr-coral); padding-bottom: 3px;">Read the docs <span style="color: var(--sr-coral);">&#8599;</span></a>
+        </div>
+        <div data-sr-reveal class="sr-card" style="background: #16150F; padding: 0; box-shadow: var(--shadow-lg); overflow: hidden;">
+          <div style="display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(245,244,240,0.1);">
+            <span style="width: 11px; height: 11px; border-radius: 50%; background: #ff5f57;"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #febc2e;"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #28c840;"></span>
+            <span class="sr-mono" style="margin-left: 8px; font-size: 12px; color: rgba(245,244,240,0.45);">your-agent &mdash; forge</span>
+          </div>
+          <div class="sr-mono" style="padding: 22px; font-size: 13.5px; line-height: 1.95;">
+            <div style="color: rgba(245,244,240,0.4);"><span style="color: var(--sr-coral-bright);">$</span> npx <span data-sr-typewriter data-sr-speed="0.04" style="color: #F5F4F0;">@serendepify/forge init</span></div>
+            <div style="color: #6ee7a8; margin-top: 10px;">&#10003; Forge skill registered</div>
+            <div style="color: rgba(245,244,240,0.6);">&#8250; describe your product&hellip;</div>
+            <div style="color: rgba(245,244,240,0.92); margin-top: 8px;">&ldquo;a marketplace for local farmers&rdquo;</div>
+            <div style="color: rgba(245,244,240,0.4); margin-top: 10px;">planning architecture</div>
+            <div style="color: #6ee7a8;">&#10003; <span data-sr-count="23" data-sr-duration="1.4">23</span> files scaffolded &middot; ready for your agent</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="whatsnew" class="sr-section">
+    <div class="sr-container">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: var(--space-6); flex-wrap: wrap;">
+        <h2 class="sr-display" data-sr-text style="font-size: var(--text-xl); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; max-width: 14ch;">What&#39;s new at Serendepify.</h2>
+        <a href="#" style="font-size: 15px; font-weight: 700; color: var(--sr-text-90); border-bottom: 2px solid var(--sr-coral); padding-bottom: 3px;">All updates &#8599;</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 200px; gap: 18px;">
+        <div data-sr-reveal class="sr-card" style="grid-column: span 4; grid-row: span 2; overflow: hidden; position: relative; box-shadow: var(--shadow-md);">
+          <image-slot id="sr-news-hero" shape="rect" placeholder="Drop a Ground Control hero shot" style="position: absolute; inset: 0; width: 100%; height: 100%;"></image-slot>
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(22,21,15,0.85)); pointer-events: none;"></div>
+          <div style="position: absolute; left: 0; bottom: 0; padding: 30px; pointer-events: none;">
+            <p style="font-size: 13px; font-weight: 700; color: var(--sr-coral-bright);">Product</p>
+            <h3 class="sr-display" style="margin-top: 8px; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: #F5F4F0; max-width: 18ch;">Ground Control is live</h3>
+            <p style="margin-top: 8px; font-size: 15px; font-weight: 500; color: rgba(245,244,240,0.7); max-width: 40ch;">Logs, metrics and topology in one cockpit your agent can actually operate.</p>
+          </div>
+        </div>
+        <div data-sr-reveal class="sr-card" style="grid-column: span 2; grid-row: span 1; background: var(--sr-coral); padding: 26px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-md);">
+          <p style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8);">Release</p>
+          <div><h3 class="sr-display" style="font-size: 23px; font-weight: 800; letter-spacing: -0.02em; color: #fff; line-height: 1.1;">Convoy now reads any stack</h3></div>
+        </div>
+        <div data-sr-reveal class="sr-card" style="grid-column: span 2; grid-row: span 1; background: var(--sr-paper); border: 1px solid var(--sr-stone); padding: 26px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);">
+          <p style="font-size: 13px; font-weight: 700; color: var(--sr-coral);">Beta</p>
+          <div><h3 class="sr-display" style="font-size: 23px; font-weight: 800; letter-spacing: -0.02em; color: var(--sr-text-90); line-height: 1.1;">Forge opens to everyone</h3></div>
+        </div>
+        <div data-sr-reveal class="sr-card" style="grid-column: span 3; grid-row: span 1; overflow: hidden; position: relative; box-shadow: var(--shadow-md);">
+          <image-slot id="sr-news-2" shape="rect" placeholder="Drop a Convoy deploy shot" style="position: absolute; inset: 0; width: 100%; height: 100%;"></image-slot>
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(22,21,15,0.8)); pointer-events: none;"></div>
+          <div style="position: absolute; left: 0; bottom: 0; padding: 24px; pointer-events: none;"><h3 class="sr-display" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #F5F4F0;">38-second deploys</h3></div>
+        </div>
+        <div data-sr-reveal class="sr-card" style="grid-column: span 3; grid-row: span 1; background: #16150F; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-md);">
+          <p style="font-size: 13px; font-weight: 700; color: var(--sr-coral-bright);">Engineering</p>
+          <div><h3 class="sr-display" style="font-size: 23px; font-weight: 800; letter-spacing: -0.02em; color: #F5F4F0; line-height: 1.1;">How the pulse stays unbroken</h3></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" style="background: #16150F; color: #F5F4F0; padding: clamp(80px, 12vw, 160px) 0; position: relative; overflow: hidden;">
+    <div style="position: absolute; bottom: -30%; left: 50%; transform: translateX(-50%); width: 80%; aspect-ratio: 2/1; background: radial-gradient(ellipse at 50% 50%, rgba(255,106,64,0.16), transparent 65%); pointer-events: none;"></div>
+    <div class="sr-container" style="position: relative; text-align: center;">
+      <h2 data-sr-text class="sr-display" style="font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 800; letter-spacing: -0.04em; line-height: 0.98; max-width: 16ch; margin: 0 auto;">Bring the idea. We own the rest.</h2>
+      <div data-sr-reveal style="margin-top: 42px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" data-sr-magnetic data-sr-strength="0.4" class="sr-btn sr-btn-primary" style="font-weight: 700; font-size: 16px; padding: 16px 30px;"><span data-sr-magnetic-inner style="display: inline-flex; align-items: center; gap: 10px;">Open Ground Control &#8599;</span></a>
+        <a href="https://www.npmjs.com/package/@teckedd-code2save/b2dp" target="_blank" rel="noopener noreferrer" class="sr-btn" style="font-weight: 700; font-size: 16px; padding: 16px 30px; background: rgba(245,244,240,0.08); color: #F5F4F0; border: 1px solid rgba(245,244,240,0.2);">Install Forge</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: var(--sr-bg); border-top: 1px solid var(--sr-stone); padding: 64px 0 40px;">
+    <div class="sr-container">
+      <div style="display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+        <div style="max-width: 30ch;">
+          <a href="#top" style="display: flex; align-items: center; gap: 11px;">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none"><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#16150F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+            <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--sr-text-90);">serendepify<span style="color: var(--sr-coral);">.</span></span>
+          </a>
+          <p style="margin-top: 16px; font-size: 14.5px; font-weight: 500; line-height: 1.6; color: var(--sr-text-55);">Bring the idea. We own the rest &mdash; from first brief to running production.</p>
+        </div>
+        <div style="display: flex; gap: 64px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; gap: 12px;"><span style="font-size: 13px; font-weight: 700; color: var(--sr-text-90);">Product</span><a href="#lifecycle" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Lifecycle</a><a href="#pricing" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Pricing</a><a href="#docs" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Docs</a></div>
+          <div style="display: flex; flex-direction: column; gap: 12px;"><span style="font-size: 13px; font-weight: 700; color: var(--sr-text-90);">Products</span><a href="https://www.npmjs.com/package/@teckedd-code2save/b2dp" target="_blank" rel="noopener noreferrer" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Forge</a><a href="https://convoy-home.vercel.app/" target="_blank" rel="noopener noreferrer" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Convoy</a><a href="https://groundcontrol.serendepify.com" target="_blank" rel="noopener noreferrer" class="sr-navlink" style="font-size: 14px; font-weight: 500; color: var(--sr-text-55);">Ground Control</a></div>
+        </div>
+      </div>
+      <div style="margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--sr-stone); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <span style="font-size: 13px; font-weight: 500; color: var(--sr-text-35);">&copy; 2026 Serendepify. All rights reserved.</span>
+        <span style="font-size: 13px; font-weight: 500; color: var(--sr-text-35);">One continuous line of ownership.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SECTIONS_ANCHOR -->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    let tries = 0;
+    const run = () => {
+      const SM = window.SerendepifyMotion;
+      if (!window.gsap || !SM) { if (tries++ < 250) return setTimeout(run, 40); return; }
+      if (window.__srSiteInited) return;
+      window.__srSiteInited = true;
+      try {
+        const g = window.gsap;
+        if (g.ticker) { try { g.ticker.lagSmoothing(0); g.ticker.wake(); } catch (e) {} }
+        SM.SR.initialized = false; SM.init();
+        setTimeout(() => {
+          if (!g.ticker || g.ticker.frame < 2) {
+            try { g.globalTimeline.progress(1); } catch (e) {}
+            document.querySelectorAll('[data-sr-hero-item], [data-sr-card], [data-sr-reveal], [data-sr-text] .sr-w, [data-sr-text]').forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+          }
+        }, 1500);
+      } catch (e) { console.error('motion init', e); }
+    };
+    const start = () => { if (document.fonts && document.fonts.ready) { document.fonts.ready.then(run); setTimeout(run, 1200); } else { run(); } };
+    start();
+  }
+  componentWillUnmount() { window.__srSiteInited = false; }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

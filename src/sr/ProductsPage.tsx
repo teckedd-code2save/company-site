@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
 import { ImageSlot, LogoMark } from './ui';
@@ -35,13 +36,23 @@ function Section({ bg, children }: { bg: ReactNode; children: ReactNode }) {
 
 export default function ProductsPage() {
   useSerendepifyMotion();
+
+  // Set a page-specific title (and restore on unmount / navigation away).
+  useEffect(() => {
+    const prev = document.title;
+    document.title = 'Products · Serendepify';
+    return () => {
+      document.title = prev;
+    };
+  }, []);
+
   return (
     <div className="sr-snap-page">
       <a
         href="/"
         style={{
           position: 'fixed',
-          top: 26,
+          top: 24,
           left: 'clamp(28px, 8vw, 140px)',
           zIndex: 40,
           display: 'flex',
@@ -55,15 +66,22 @@ export default function ProductsPage() {
           serendepify<span style={{ color: 'var(--sr-coral)' }}>.</span>
         </span>
       </a>
+      {/* Explicit way back to the main site (the snap experience hijacks scroll,
+          so a normal nav isn't shown). */}
+      <a href="/" className="sr-back-btn" style={{ position: 'fixed', top: 22, right: 'clamp(28px, 8vw, 140px)', zIndex: 40 }}>
+        ← Back to site
+      </a>
       <div
         style={{
           position: 'fixed',
-          top: 30,
-          right: 'clamp(28px, 8vw, 140px)',
+          bottom: 26,
+          left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 40,
           fontSize: 13,
           fontWeight: 600,
           color: 'rgba(245,244,240,0.55)',
+          whiteSpace: 'nowrap',
         }}
       >
         Scroll to move through the line ↓

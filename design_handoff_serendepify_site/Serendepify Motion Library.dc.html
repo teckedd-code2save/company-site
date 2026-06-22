@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="sr/tokens.css">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/DrawSVGPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Observer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
+<script src="sr/serendepify-motion.js"></script>
+<style>
+  .showcase-page { background: var(--sr-bg); }
+  .showcase-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 80; height: var(--nav-height); border-bottom: 1px solid transparent; transition: background 0.35s, border-color 0.35s, backdrop-filter 0.35s; }
+  .showcase-nav.sr-nav-scrolled { background: rgba(231,229,223,0.92); backdrop-filter: blur(14px); border-bottom-color: rgba(27,25,22,0.08); }
+  .showcase-card { border-radius: var(--radius-lg); background: #fff; box-shadow: var(--shadow-sm); padding: 28px; margin-bottom: 22px; }
+  .showcase-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; color: var(--sr-text-90); }
+  .showcase-card .tag { display: inline-block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sr-text-35); background: var(--sr-stone); padding: 4px 10px; border-radius: var(--radius-sm); margin-bottom: 16px; }
+  .showcase-card .stage { position: relative; min-height: 200px; border-radius: var(--radius-md); background: var(--sr-ink-warm); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 32px; margin-bottom: 18px; }
+  .showcase-card .stage-light { background: var(--sr-paper); border: 1px solid var(--sr-stone); }
+  .showcase-card pre { background: var(--sr-ink); color: var(--sr-paper); padding: 16px; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; margin-top: 14px; }
+  .showcase-card pre code { color: var(--sr-coral-bright); }
+  .dark-section { background: var(--sr-ink); color: var(--sr-paper); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-4); margin: var(--space-5) 0; }
+  .dark-section .stage { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+  .marquee-track { display: flex; gap: 48px; white-space: nowrap; }
+  .marquee-item { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--sr-text-90); opacity: 0.35; }
+  .grid-tile { aspect-ratio: 1; background: var(--sr-coral); border-radius: var(--radius-sm); }
+  .flip-card-inner { position: relative; width: 200px; height: 260px; transform-style: preserve-3d; cursor: pointer; }
+  .flip-card-front, .flip-card-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; flex-direction: column; }
+  .flip-card-front { background: var(--sr-coral); color: #fff; }
+  .flip-card-back { background: var(--sr-ink); color: var(--sr-paper); transform: rotateY(180deg); }
+  .toc { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 70; }
+  .toc a { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--sr-text-35); padding: 4px 0; text-decoration: none; transition: color 0.2s; border-left: 2px solid transparent; padding-left: 10px; }
+  .toc a:hover, .toc a.active { color: var(--sr-coral); border-left-color: var(--sr-coral); }
+  @media (max-width: 768px) { .toc { display: none; } .showcase-card .stage { min-height: 160px; padding: 20px; } }
+  .hero-mark { width: 92px; height: 92px; }
+  .hero-bg-glow { position: absolute; top: -20%; right: -8%; width: 46%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(255,106,64,0.16), transparent 68%); pointer-events: none; }
+  .snap-wrap { position: relative; overflow: hidden; height: 380px; border-radius: var(--radius-lg); background: var(--sr-ink-warm); }
+  .snap-wrap section { position: absolute; top: 0; left: 0; width: 100%; height: 100%; visibility: hidden; overflow: hidden; }
+  .snap-wrap .outer, .snap-wrap .inner { width: 100%; height: 100%; overflow-y: hidden; }
+  .snap-wrap .bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
+  .snap-wrap .section-heading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; color: var(--sr-paper); text-align: center; white-space: nowrap; z-index: 2; text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+  .clip-text { overflow: hidden; }
+  .flip-scroll-container { position: relative; height: 600px; }
+  .flip-scroll-marker { position: absolute; left: 50%; transform: translateX(-50%); width: 120px; height: 120px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: rgba(245,244,240,0.5); }
+  .flip-scroll-marker:nth-child(1) { top: 10%; background: var(--sr-coral); }
+  .flip-scroll-marker:nth-child(2) { top: 50%; background: var(--sr-ink); border: 1px solid rgba(255,255,255,0.1); }
+  .flip-scroll-marker:nth-child(3) { top: 85%; background: var(--sr-stone); color: var(--sr-text-55); }
+  .flip-target { width: 50px; height: 50px; border-radius: 50%; background: var(--sr-coral-bright); box-shadow: 0 0 20px rgba(255,106,64,0.6); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-family: var(--font-mono); }
+</style>
+</helmet>
+
+<div class="showcase-page">
+  <div class="sr-scroll-progress" data-sr-scroll-progress></div>
+
+  <header class="showcase-nav" data-sr-nav>
+    <div class="sr-container" style="display:flex; align-items:center; justify-content:space-between; height:100%;">
+      <a href="#top" style="display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;">
+        <svg width="26" height="26" viewBox="0 0 64 64" fill="none" data-sr-logo><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#1b1916" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+        <span style="font-size:18px; font-weight:700; letter-spacing:-0.01em;">serendepify<span style="color:#E8542A;">.</span><span class="sr-mono" style="font-size:10px; letter-spacing:0.14em; color:var(--sr-text-35); margin-left:4px;">motion</span></span>
+      </a>
+      <nav style="display:flex; gap:28px; align-items:center;">
+        <a href="#text" class="sr-body" style="font-size:14px; font-weight:600; color:var(--sr-text-55); text-decoration:none;">Text</a>
+        <a href="#image" class="sr-body" style="font-size:14px; font-weight:600; color:var(--sr-text-55); text-decoration:none;">Image</a>
+        <a href="#card" class="sr-body" style="font-size:14px; font-weight:600; color:var(--sr-text-55); text-decoration:none;">Cards</a>
+        <a href="#layout" class="sr-body" style="font-size:14px; font-weight:600; color:var(--sr-text-55); text-decoration:none;">Layout</a>
+        <a href="#svg" class="sr-body" style="font-size:14px; font-weight:600; color:var(--sr-text-55); text-decoration:none;">SVG</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Component navigation">
+    <a href="#text" data-toc="text">Text</a>
+    <a href="#image" data-toc="image">Image</a>
+    <a href="#card" data-toc="card">Cards</a>
+    <a href="#layout" data-toc="layout">Layout</a>
+    <a href="#svg" data-toc="svg">SVG</a>
+  </nav>
+
+  <section id="top" style="padding:140px 0 80px; position:relative; overflow:hidden;">
+    <div class="hero-bg-glow"></div>
+    <div class="sr-container" data-sr-hero>
+      <div style="display:flex; align-items:center; gap:clamp(16px,3vw,32px); flex-wrap:wrap; margin-bottom:32px;" data-sr-hero-item>
+        <svg class="hero-mark" viewBox="0 0 64 64" fill="none" data-sr-logo><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#1b1916" stroke-width="6" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+        <div class="sr-display" style="font-size:clamp(2.6rem,6vw,4.6rem); font-weight:800; letter-spacing:-0.02em; color:var(--sr-text-90); line-height:1;">serendepify<span style="color:#E8542A;">.</span><span class="sr-mono" style="font-size:0.34em; font-weight:500; letter-spacing:0.14em; color:var(--sr-text-35); margin-left:0.3em;">motion</span></div>
+      </div>
+      <h1 class="sr-display" data-sr-text data-sr-hero-item style="font-weight:800; font-size:clamp(2rem,3.8vw,3.2rem); letter-spacing:-0.03em; color:var(--sr-text-90); line-height:1.05; max-width:18ch;">Plug-and-play GSAP components.</h1>
+      <p data-sr-hero-item style="margin-top:22px; font-size:var(--text-lg); font-weight:500; color:var(--sr-text-55); max-width:52ch; line-height:1.68;">Add a data attribute. Get an animation. Built for the Serendepify brand, ready for any site. Copy, paste, ship.</p>
+      <div data-sr-hero-item style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="#text" class="sr-btn sr-btn-primary" style="font-weight:700;">Explore components &rarr;</a>
+        <a href="Serendepify Site.dc.html" class="sr-btn sr-btn-ghost" style="font-weight:600;">View the live site</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="text" class="sr-section">
+    <div class="sr-container">
+      <div style="margin-bottom:var(--space-5);">
+        <div class="sr-eyebrow" data-sr-reveal>01 &mdash; Text Animations</div>
+        <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;">Words that arrive with intent.</h2>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>SplitText Reveal</h3>
+        <span class="tag">data-sr-text</span>
+        <div class="stage" style="min-height:160px;">
+          <h2 class="sr-display" data-sr-text style="font-size:clamp(1.8rem,3vw,2.4rem); font-weight:700; color:var(--sr-paper); text-align:center; line-height:1.1;">The pulse travels the pipeline.</h2>
+        </div>
+        <pre><code>&lt;h2 data-sr-text&gt;The pulse travels the pipeline.&lt;/h2&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Scramble Decode</h3>
+        <span class="tag">data-sr-scramble</span>
+        <div class="stage" style="min-height:120px;">
+          <div class="sr-mono" data-sr-scramble data-sr-words="Ownership|Continuity|Delivery|Speed|Quality" style="font-size:clamp(1.5rem,3vw,2.2rem); color:var(--sr-paper); text-align:center;">Ownership</div>
+        </div>
+        <pre><code>&lt;div data-sr-scramble data-sr-words="Ownership|Continuity|Delivery"&gt;
+  Ownership
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Typewriter</h3>
+        <span class="tag">data-sr-typewriter</span>
+        <div class="stage" style="min-height:120px;">
+          <div class="sr-mono" data-sr-typewriter data-sr-text="Describe what you want. The system does the rest." style="font-size:18px; color:var(--sr-paper); text-align:center;"></div>
+        </div>
+        <pre><code>&lt;div data-sr-typewriter data-sr-text="Describe what you want..."&gt;&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="image" class="sr-section">
+    <div class="sr-container">
+      <div style="margin-bottom:var(--space-5);">
+        <div class="sr-eyebrow" data-sr-reveal>02 &mdash; Image Animations</div>
+        <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;">Images that breathe on scroll.</h2>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Image Reveal</h3>
+        <span class="tag">data-sr-image</span>
+        <div class="showcase-card" style="padding:0; overflow:hidden; margin-bottom:0;">
+          <div data-sr-image data-sr-reveal="clip" style="aspect-ratio:21/9; overflow:hidden;">
+            <div style="width:100%; height:100%; background: linear-gradient(165deg, #aeb6dd 0%, #d3a3bf 38%, #f0a368 73%, #e8854a 100%); display:flex; align-items:center; justify-content:center;">
+              <span class="sr-display" style="font-size:clamp(22px,2.4vw,30px); font-weight:700; color:#fff; text-shadow:0 1px 16px rgba(0,0,0,0.22);">Introducing Ground Control</span>
+            </div>
+          </div>
+        </div>
+        <pre><code>&lt;div data-sr-image data-sr-reveal="clip"&gt;
+  &lt;img src="..." /&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Parallax Layers</h3>
+        <span class="tag">data-sr-parallax</span>
+        <div data-sr-parallax style="height:300px; border-radius:var(--radius-md); overflow:hidden; position:relative; background:var(--sr-ink-warm);">
+          <div data-sr-depth="0.3" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0.3;"><svg width="200" height="200" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="#f5f4f0" stroke-width="1" stroke-dasharray="4 8"></circle></svg></div>
+          <div data-sr-depth="1.0" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;"><span class="sr-display" style="font-size:36px; font-weight:700; color:var(--sr-paper);">Parallax</span></div>
+          <div data-sr-depth="2.0" style="position:absolute; bottom:20px; right:30px;"><span class="sr-mono" style="font-size:12px; color:var(--sr-coral-bright);">depth: 2.0</span></div>
+        </div>
+        <pre><code>&lt;div data-sr-parallax&gt;
+  &lt;div data-sr-depth="0.3"&gt;...&lt;/div&gt;
+  &lt;div data-sr-depth="1.0"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Ken Burns</h3>
+        <span class="tag">data-sr-kenburns</span>
+        <div data-sr-kenburns data-sr-zoom="1.15" data-sr-pan="right" style="height:220px; border-radius:var(--radius-md); overflow:hidden;">
+          <div style="width:100%; height:100%; background: linear-gradient(170deg, #b3c2d2 0%, #cdb89c 42%, #e0975c 78%, #c46a3e 100%);"></div>
+        </div>
+        <pre><code>&lt;div data-sr-kenburns data-sr-zoom="1.15" data-sr-pan="right"&gt;
+  &lt;img src="..." /&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="card" class="sr-section">
+    <div class="sr-container">
+      <div style="margin-bottom:var(--space-5);">
+        <div class="sr-eyebrow" data-sr-reveal>03 &mdash; Card Animations</div>
+        <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;">Cards that respond to attention.</h2>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Card Entrance &amp; Hover</h3>
+        <span class="tag">data-sr-card</span>
+        <div class="stage stage-light" style="gap:22px; flex-wrap:wrap;">
+          <div class="sr-card" data-sr-card style="width:260px; padding:24px;">
+            <div class="sr-card-media" style="height:120px; border-radius:var(--radius-md); background:linear-gradient(168deg, #c6cfc0 0%, #566c4a 100%); margin-bottom:16px;"></div>
+            <h4 class="sr-display" style="font-size:18px; font-weight:700;">Forge</h4>
+            <p style="font-size:13px; font-weight:500; color:var(--sr-text-55); margin-top:6px;">Idea to architecture.</p>
+          </div>
+          <div class="sr-card" data-sr-card style="width:260px; padding:24px;">
+            <div class="sr-card-media" style="height:120px; border-radius:var(--radius-md); background:linear-gradient(165deg, #aeb6dd 0%, #e8854a 100%); margin-bottom:16px;"></div>
+            <h4 class="sr-display" style="font-size:18px; font-weight:700;">Convoy</h4>
+            <p style="font-size:13px; font-weight:500; color:var(--sr-text-55); margin-top:6px;">Ship to production.</p>
+          </div>
+        </div>
+        <pre><code>&lt;div class="sr-card" data-sr-card&gt;
+  &lt;div class="sr-card-media"&gt;...&lt;/div&gt;
+  &lt;h4&gt;Forge&lt;/h4&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>3D Tilt on Hover</h3>
+        <span class="tag">data-sr-tilt</span>
+        <div class="stage" style="perspective:1000px;">
+          <div data-sr-tilt data-sr-max-tilt="15" data-sr-glare="true" data-sr-glare-opacity="0.35" style="width:200px; height:260px; border-radius:var(--radius-lg); background:linear-gradient(135deg, var(--sr-coral) 0%, #c44a2a 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; color:#fff; cursor:pointer; box-shadow:0 10px 30px rgba(232,84,42,0.3);">
+            <span class="sr-display" style="font-size:48px; font-weight:700;">3D</span>
+            <span class="sr-mono" style="font-size:12px; opacity:0.7; margin-top:8px;">hover me</span>
+          </div>
+        </div>
+        <pre><code>&lt;div data-sr-tilt data-sr-max-tilt="15" data-sr-glare="true"&gt;
+  ...content...
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Card Flip</h3>
+        <span class="tag">data-sr-card-flip</span>
+        <div class="stage" style="perspective:1000px;">
+          <div data-sr-card-flip data-sr-trigger="click" style="width:200px; height:260px;">
+            <div class="flip-card-inner">
+              <div class="flip-card-front"><span class="sr-display" style="font-size:32px; font-weight:700;">Front</span><span class="sr-mono" style="font-size:11px; opacity:0.6; margin-top:8px;">click to flip</span></div>
+              <div class="flip-card-back"><span class="sr-display" style="font-size:32px; font-weight:700;">Back</span><span class="sr-mono" style="font-size:11px; opacity:0.6; margin-top:8px;">more info here</span></div>
+            </div>
+          </div>
+        </div>
+        <pre><code>&lt;div data-sr-card-flip data-sr-trigger="click"&gt;
+  &lt;div class="flip-card-inner"&gt;
+    &lt;div class="flip-card-front"&gt;...&lt;/div&gt;
+    &lt;div class="flip-card-back"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="layout" class="sr-section">
+    <div class="sr-container">
+      <div style="margin-bottom:var(--space-5);">
+        <div class="sr-eyebrow" data-sr-reveal>04 &mdash; Layout Animations</div>
+        <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;">Sections that choreograph themselves.</h2>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Hero Entrance Sequence</h3>
+        <span class="tag">data-sr-hero</span>
+        <div class="stage" data-sr-hero style="flex-direction:column; gap:12px; align-items:flex-start; padding:40px;">
+          <span data-sr-hero-item class="sr-mono" style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sr-coral-bright);">AI Product Studio</span>
+          <h2 data-sr-hero-item class="sr-display" style="font-size:28px; font-weight:700; color:var(--sr-paper); line-height:1.1;">Autonomy from ideation to production.</h2>
+          <p data-sr-hero-item style="font-size:15px; font-weight:500; color:rgba(245,244,240,0.62); max-width:42ch;">From a spark of an idea to a deployed product.</p>
+          <a data-sr-hero-item href="#" class="sr-btn sr-btn-coral" style="margin-top:8px; font-weight:700;">Get started &rarr;</a>
+        </div>
+        <pre><code>&lt;div data-sr-hero&gt;
+  &lt;span data-sr-hero-item&gt;Eyebrow&lt;/span&gt;
+  &lt;h2 data-sr-hero-item&gt;Headline&lt;/h2&gt;
+  &lt;p data-sr-hero-item&gt;Body&lt;/p&gt;
+  &lt;a data-sr-hero-item&gt;CTA&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Infinite Marquee</h3>
+        <span class="tag">data-sr-marquee</span>
+        <div data-sr-marquee data-sr-speed="18" data-sr-pause-on-hover="true" style="overflow:hidden; border-radius:var(--radius-md); background:var(--sr-stone); padding:24px 0;">
+          <div data-sr-marquee-track class="marquee-track">
+            <span class="marquee-item">Forge</span><span class="marquee-item">&bull;</span><span class="marquee-item">Convoy</span><span class="marquee-item">&bull;</span><span class="marquee-item">Ground Control</span><span class="marquee-item">&bull;</span><span class="marquee-item">Shipd</span><span class="marquee-item">&bull;</span><span class="marquee-item">b2dp</span><span class="marquee-item">&bull;</span>
+            <span class="marquee-item">Forge</span><span class="marquee-item">&bull;</span><span class="marquee-item">Convoy</span><span class="marquee-item">&bull;</span><span class="marquee-item">Ground Control</span><span class="marquee-item">&bull;</span><span class="marquee-item">Shipd</span><span class="marquee-item">&bull;</span><span class="marquee-item">b2dp</span><span class="marquee-item">&bull;</span>
+          </div>
+        </div>
+        <pre><code>&lt;div data-sr-marquee data-sr-speed="18" data-sr-pause-on-hover="true"&gt;
+  &lt;div data-sr-marquee-track&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Elastic Grid Stagger</h3>
+        <span class="tag">data-sr-grid</span>
+        <div data-sr-grid data-sr-cols="6" data-sr-from="center" style="display:grid; grid-template-columns:repeat(6,1fr); gap:10px; max-width:400px; margin:0 auto;">
+          <div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div>
+          <div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div><div data-sr-grid-item class="grid-tile"></div>
+        </div>
+        <pre><code>&lt;div data-sr-grid data-sr-cols="6" data-sr-from="center"&gt;
+  &lt;div data-sr-grid-item&gt;&lt;/div&gt;
+  ...
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Count Up</h3>
+        <span class="tag">data-sr-count</span>
+        <div class="stage" style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; text-align:center;">
+          <div><div class="sr-display" data-sr-count="14" data-sr-duration="1.4" style="font-size:44px; font-weight:800; color:var(--sr-paper); letter-spacing:-0.02em;">14</div><div class="sr-mono" style="font-size:12px; color:rgba(245,244,240,0.5); margin-top:4px;">files scaffolded</div></div>
+          <div><div class="sr-display" data-sr-count="3" data-sr-duration="1.4" style="font-size:44px; font-weight:800; color:var(--sr-paper); letter-spacing:-0.02em;">3</div><div class="sr-mono" style="font-size:12px; color:rgba(245,244,240,0.5); margin-top:4px;">products, one line</div></div>
+          <div><div class="sr-display" data-sr-count="100" data-sr-duration="1.4" data-sr-suffix="%" style="font-size:44px; font-weight:800; color:var(--sr-paper); letter-spacing:-0.02em;">100%</div><div class="sr-mono" style="font-size:12px; color:rgba(245,244,240,0.5); margin-top:4px;">owned, idea to production</div></div>
+        </div>
+        <pre><code>&lt;div data-sr-count="14" data-sr-duration="1.4"&gt;14&lt;/div&gt;
+&lt;div data-sr-count="100" data-sr-suffix="%"&gt;100%&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Magnetic Button</h3>
+        <span class="tag">data-sr-magnetic</span>
+        <div class="stage" style="gap:20px;">
+          <button data-sr-magnetic data-sr-strength="0.4" class="sr-btn sr-btn-coral" style="padding:18px 36px; border-radius:var(--radius-pill); font-weight:700;"><span data-sr-magnetic-inner>Magnetic Hover</span></button>
+        </div>
+        <pre><code>&lt;button data-sr-magnetic data-sr-strength="0.4"&gt;
+  &lt;span data-sr-magnetic-inner&gt;Hover me&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Generic Scroll Reveal</h3>
+        <span class="tag">data-sr-reveal</span>
+        <div class="stage" style="flex-direction:column; gap:12px;">
+          <div data-sr-reveal data-sr-y="40" data-sr-duration="0.8" style="padding:20px 28px; background:var(--sr-paper); border-radius:var(--radius-md); color:var(--sr-text-90); font-weight:700;">Item One</div>
+          <div data-sr-reveal data-sr-y="40" data-sr-duration="0.8" style="padding:20px 28px; background:var(--sr-paper); border-radius:var(--radius-md); color:var(--sr-text-90); font-weight:700;">Item Two</div>
+          <div data-sr-reveal data-sr-y="40" data-sr-duration="0.8" style="padding:20px 28px; background:var(--sr-paper); border-radius:var(--radius-md); color:var(--sr-text-90); font-weight:700;">Item Three</div>
+        </div>
+        <pre><code>&lt;div data-sr-reveal data-sr-y="40" data-sr-duration="0.8"&gt;Item&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Scroll Scrub</h3>
+        <span class="tag">data-sr-scrub</span>
+        <div style="height:400px; display:flex; align-items:center; justify-content:center; background:var(--sr-stone); border-radius:var(--radius-md); overflow:hidden; margin-bottom:16px;">
+          <div data-sr-scrub data-sr-property="scale" data-sr-from="0.6" data-sr-to="1.4" data-sr-start="top 80%" data-sr-end="bottom 20%" style="width:120px; height:120px; background:linear-gradient(135deg, var(--sr-coral), var(--sr-coral-bright)); border-radius:var(--radius-md); box-shadow:0 0 40px rgba(232,84,42,0.3);"></div>
+        </div>
+        <pre><code>&lt;div data-sr-scrub data-sr-property="scale" data-sr-from="0.6" data-sr-to="1.4"&gt;...&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Section Snap &mdash; Observer + SplitText</h3>
+        <span class="tag">data-sr-snap</span>
+        <div data-sr-snap class="snap-wrap">
+          <section><div class="outer"><div class="inner"><div class="bg" style="background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div><h2 class="section-heading">Serendepify</h2></div></div></section>
+          <section><div class="outer"><div class="inner"><div class="bg" style="background: linear-gradient(160deg, #16213e 0%, #0f3460 50%, #533483 100%);"></div><h2 class="section-heading">Forge</h2></div></div></section>
+          <section><div class="outer"><div class="inner"><div class="bg" style="background: linear-gradient(160deg, #0f3460 0%, #533483 50%, #e94560 100%);"></div><h2 class="section-heading">Convoy</h2></div></div></section>
+        </div>
+        <pre><code>&lt;div data-sr-snap&gt;
+  &lt;section&gt;
+    &lt;div class="outer"&gt;&lt;div class="inner"&gt;
+      &lt;div class="bg" style="background-image:url(...);"&gt;&lt;/div&gt;
+      &lt;h2 class="section-heading"&gt;Text&lt;/h2&gt;
+    &lt;/div&gt;&lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>FLIP Scroll &mdash; Scrubbed Container Hops</h3>
+        <span class="tag">data-sr-flip-scroll</span>
+        <div data-sr-flip-scroll class="flip-scroll-container stage">
+          <div class="flip-scroll-marker" data-sr-flip-marker><div class="flip-target" data-sr-flip-target>dot</div></div>
+          <div class="flip-scroll-marker" data-sr-flip-marker></div>
+          <div class="flip-scroll-marker" data-sr-flip-marker></div>
+        </div>
+        <pre><code>&lt;div data-sr-flip-scroll&gt;
+  &lt;div class="container" data-sr-flip-marker&gt;
+    &lt;div data-sr-flip-target&gt;Target&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="container" data-sr-flip-marker&gt;&lt;/div&gt;
+  &lt;div class="container" data-sr-flip-marker&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="svg" class="sr-section">
+    <div class="sr-container">
+      <div style="margin-bottom:var(--space-5);">
+        <div class="sr-eyebrow" data-sr-reveal>05 &mdash; SVG Animations</div>
+        <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;">Lines that draw themselves.</h2>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Looping Gradient Draw</h3>
+        <span class="tag">data-sr-draw data-sr-draw-loop</span>
+        <div data-sr-draw data-sr-draw-loop class="stage" style="min-height:260px;">
+          <svg viewBox="-1 -1 103 103" width="220" height="220" fill="none" opacity="0" style="overflow:visible;">
+            <defs><linearGradient id="sr-grad-lib" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff8709"/><stop offset="100%" stop-color="#f7bdf8"/></linearGradient></defs>
+            <path data-sr-path d="M50.5 50.5h50v50s-19.2 1.3-37.2-16.7S56 35.4 35.5 15.5C18.5-1 .5.5.5.5v50h50s25.6-.6 38-18 12-32 12-32h-50v100H.5S.2 80.7 11.8 68.2 40 49.7 50.5 50.5Z" fill="none" stroke="url(#sr-grad-lib)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <pre><code>&lt;div data-sr-draw data-sr-draw-loop&gt;
+  &lt;svg&gt;&lt;path data-sr-path d="..." stroke="url(#grad)"&gt;&lt;/path&gt;&lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>MotionPath</h3>
+        <span class="tag">data-sr-path</span>
+        <div data-sr-path class="stage" style="min-height:260px;">
+          <svg viewBox="0 0 400 200" width="100%" height="200" style="overflow:visible;">
+            <path d="M30,100 C100,20 150,180 200,100 S300,20 370,100" fill="none" stroke="rgba(245,244,240,0.2)" stroke-width="2" stroke-linecap="round"></path>
+            <path data-sr-path-line d="M30,100 C100,20 150,180 200,100 S300,20 370,100" fill="none" stroke="var(--sr-coral-bright)" stroke-width="3" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(255,106,64,0.5));"></path>
+            <circle data-sr-path-dot cx="30" cy="100" r="6" fill="var(--sr-coral-bright)" style="filter:drop-shadow(0 0 8px rgba(255,106,64,0.8));"></circle>
+          </svg>
+        </div>
+        <pre><code>&lt;div data-sr-path&gt;
+  &lt;svg&gt;
+    &lt;path data-sr-path-line d="..."&gt;&lt;/path&gt;
+    &lt;circle data-sr-path-dot&gt;&lt;/circle&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <div class="showcase-card" data-sr-card>
+        <h3>Logo Entrance</h3>
+        <span class="tag">data-sr-logo</span>
+        <div class="stage" style="min-height:200px;">
+          <svg data-sr-logo width="120" height="120" viewBox="0 0 64 64" fill="none"><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="var(--sr-paper)" stroke-width="5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="var(--sr-coral-bright)" stroke-width="5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+        </div>
+        <pre><code>&lt;svg data-sr-logo width="120" height="120" viewBox="0 0 64 64"&gt;...&lt;/svg&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="dark" class="sr-section">
+    <div class="sr-container">
+      <div class="dark-section sr-dark">
+        <div style="margin-bottom:var(--space-5);">
+          <div class="sr-eyebrow" data-sr-reveal>06 &mdash; Dark Theme</div>
+          <h2 class="sr-display" data-sr-text style="font-size:var(--text-xl); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px; color:var(--sr-paper);">Same components. Different mood.</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:22px;">
+          <div data-sr-card style="padding:28px; border-radius:var(--radius-lg); background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);">
+            <div data-sr-text class="sr-display" style="font-size:24px; font-weight:700; color:var(--sr-paper); margin-bottom:8px;">Dark card</div>
+            <p style="font-size:14px; font-weight:500; color:var(--sr-dark-muted);">With reveal, tilt, and flip support out of the box.</p>
+          </div>
+          <div data-sr-card style="padding:28px; border-radius:var(--radius-lg); background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);">
+            <div data-sr-text class="sr-display" style="font-size:24px; font-weight:700; color:var(--sr-paper); margin-bottom:8px;">Dark text</div>
+            <p style="font-size:14px; font-weight:500; color:var(--sr-dark-muted);">SplitText and scramble work on any background.</p>
+          </div>
+        </div>
+        <pre style="margin-top:22px;"><code>&lt;!-- Add .sr-dark to any container --&gt;
+&lt;div class="sr-dark" style="background:var(--sr-ink);"&gt;
+  &lt;div data-sr-card&gt;...&lt;/div&gt;
+  &lt;div data-sr-text&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--sr-stone); padding:48px 0;">
+    <div class="sr-container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <svg width="24" height="24" viewBox="0 0 64 64" fill="none"><g transform="rotate(118 32 32)"><circle cx="32" cy="32" r="21" stroke="#1b1916" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="74 58"></circle><circle cx="32" cy="32" r="21" stroke="#E8542A" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="24 200" stroke-dashoffset="-80"></circle></g></svg>
+        <span style="font-size:16px; font-weight:700;">serendepify<span style="color:#E8542A;">.</span>motion</span>
+      </div>
+      <p class="sr-mono" style="font-size:11px; color:var(--sr-text-35);">Built for serendepify.ai &mdash; v4.0</p>
+    </div>
+  </footer>
+
+  <!-- LIB_ANCHOR -->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    let tries = 0;
+    const run = () => {
+      const SM = window.SerendepifyMotion;
+      if (!window.gsap || !SM) { if (tries++ < 250) return setTimeout(run, 40); return; }
+      if (window.__srLibInited) return;
+      window.__srLibInited = true;
+      try {
+        const g = window.gsap;
+        if (g.ticker) { try { g.ticker.lagSmoothing(0); g.ticker.wake(); } catch (e) {} }
+        SM.SR.initialized = false; SM.init();
+        setTimeout(() => {
+          if (!g.ticker || g.ticker.frame < 2) {
+            try { g.globalTimeline.progress(1); } catch (e) {}
+            document.querySelectorAll('[data-sr-hero-item], [data-sr-card], [data-sr-reveal], [data-sr-text]').forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+          }
+        }, 1500);
+      } catch (e) { console.error('motion init', e); }
+    };
+    const start = () => { if (document.fonts && document.fonts.ready) { document.fonts.ready.then(run); setTimeout(run, 1200); } else { run(); } };
+    start();
+    // TOC active state
+    const sections = ['text', 'image', 'card', 'layout', 'svg'];
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { document.querySelectorAll('[data-toc]').forEach((l) => l.classList.toggle('active', l.dataset.toc === e.target.id)); } });
+    }, { rootMargin: '-40% 0px -40% 0px' });
+    sections.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+  }
+  componentWillUnmount() { window.__srLibInited = false; }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
