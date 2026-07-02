@@ -211,11 +211,11 @@ function Hero() {
         <div
           data-sr-image
           className="sr-card"
-          style={{ marginTop: 56, aspectRatio: '16 / 7', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
+          style={{ marginTop: 56, aspectRatio: '16 / 8.4', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
         >
           <ImageSlot
-            label="Ground Control — cockpit view"
-            media={PRODUCT_MEDIA.groundControl}
+            label="Ground Control — dashboard overview"
+            media={PRODUCT_MEDIA.groundControlDashboard}
             mediaFit="contain"
             background="#111417"
           />
@@ -232,7 +232,7 @@ function Hero() {
 // changing hands.
 const FLIP_STAGES = [
   { tag: 'your idea', title: 'Building', sub: 'Forge — CLI + your agent' },
-  { tag: 'your build', title: 'Shipping', sub: 'Convoy — deploy to production' },
+  { tag: 'your build', title: 'Shipping', sub: 'Convoy — rehearse, canary, observe' },
   { tag: 'in production', title: 'Running', sub: 'Ground Control — built for VPS' },
 ];
 
@@ -297,7 +297,7 @@ function FlipBeat() {
         </div>
         <div className="sr-fstation sr-fs1">
           <div className="sr-display" style={stationName}>Convoy</div>
-          <div style={stationSub}>ships it</div>
+          <div style={stationSub}>rolls it out</div>
         </div>
         <div className="sr-fstation sr-fs2">
           <div className="sr-display" style={stationName}>Ground Control</div>
@@ -372,12 +372,12 @@ const LIFECYCLE: LifeRow[] = [
   {
     num: '02',
     name: 'Convoy',
-    tagline: 'Point it at your code. It ships.',
-    body: 'Convoy reads your actual codebase — stack, dependencies, config — picks the deployment path that fits, and carries the rollout all the way to production.',
+    tagline: 'Rehearse it. Gate it. Roll it out.',
+    body: 'Convoy turns a repo into a controlled deployment run: it scans source, plans the route, rehearses, gates risky steps, promotes canaries, and observes the live service.',
     features: [
-      'Repo-aware: detects the stack and the right target',
-      'From codebase to live deploy in one pass',
-      'Handles routing, domains, and rollout',
+      'Repo-aware planning from source, config, and environment',
+      'Human-approved gates for secrets, PRs, and risky deploy steps',
+      'Canary, promote, and observe loops with run memory',
     ],
     linkLabel: 'View Convoy',
     href: CONVOY_URL,
@@ -388,17 +388,17 @@ const LIFECYCLE: LifeRow[] = [
   {
     num: '03',
     name: 'Ground Control',
-    tagline: 'Eyes on production, always.',
-    body: 'The operations cockpit. Real logs, metrics and topology in one place, so your agent can reason about a live system — and ship the next change with confidence.',
+    tagline: 'Operate the VPS, not just watch it.',
+    body: 'Ground Control is the command center after deploy: dashboard signals, services, terminal, DNS, alerts, and AI assistance in one VPS-aware surface.',
     features: [
-      'Live logs, metrics and service topology',
-      'Multi-target deploys from one cockpit',
-      'Agent-readable — built to be operated, not just watched',
+      'Dashboard signals for health, memory, disk, and containers',
+      'Service and container controls with logs and restart actions',
+      'Terminal, DNS, alerts, and AI commands from one cockpit',
     ],
     linkLabel: 'Open Ground Control',
     href: GC_URL,
     slotLabel: 'Ground Control — dashboard',
-    media: PRODUCT_MEDIA.groundControl,
+    media: PRODUCT_MEDIA.groundControlServices,
     mediaFit: 'contain',
   },
 ];
@@ -447,7 +447,7 @@ function Lifecycle() {
             One agent owns the whole line.
           </h2>
           <p data-sr-reveal style={{ marginTop: 20, fontSize: 'var(--text-lg)', lineHeight: 1.7, color: 'var(--sr-text-55)', fontWeight: 500, maxWidth: '56ch' }}>
-            From a fuzzy brief to a running system. Forge builds it, Convoy ships it, Ground Control keeps it alive — one continuous handoff, no glue in between.
+            From a fuzzy brief to a running system. Forge builds it, Convoy rehearses and rolls it out, Ground Control operates it — one continuous handoff, no glue in between.
           </p>
         </div>
 
@@ -552,7 +552,7 @@ function AgentsPipeline() {
               <circle data-sr-path cx="680" cy="200" r="27" fill="#16150F" stroke="rgba(245,244,240,0.55)" strokeWidth="2" />
               <path data-sr-path d="M 668 200 L 690 200 M 683 192 L 691 200 L 683 208" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               <text x="680" y="266" textAnchor="middle" className="sr-display" style={{ fontSize: '22px', fontWeight: 700, fill: '#F5F4F0' }}>Convoy</text>
-              <text x="680" y="288" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.5)' }}>ships it</text>
+              <text x="680" y="288" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.5)' }}>rolls it out</text>
             </g>
             <g>
               <circle data-sr-path cx="1000" cy="110" r="27" fill="#16150F" stroke="var(--sr-coral)" strokeWidth="2.5" />
@@ -578,7 +578,7 @@ function Pricing() {
       <div className="sr-container">
         <div style={{ maxWidth: 720, marginBottom: 'var(--space-6)' }}>
           <h2 className="sr-display" data-sr-text style={{ fontSize: 'var(--text-xl)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.04 }}>
-            Start free. Pay when you ship.
+            Start free. Pay when you roll out.
           </h2>
           <p data-sr-reveal style={{ marginTop: 20, fontSize: 'var(--text-lg)', lineHeight: 1.7, color: 'var(--sr-text-55)', fontWeight: 500, maxWidth: '54ch' }}>
             Forge is open and free while in beta. Convoy and Ground Control scale with what you run in production.
@@ -606,7 +606,7 @@ function Pricing() {
           <div data-sr-reveal className="sr-card" style={{ background: '#16150F', color: '#F5F4F0', padding: 32, display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-lg)', position: 'relative', transform: 'translateY(-8px)' }}>
             <div style={{ position: 'absolute', top: 20, right: 24, fontSize: '12.5px', fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Most teams</div>
             <h3 className="sr-display" style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.02em' }}>Convoy</h3>
-            <p style={{ marginTop: 6, fontSize: '14.5px', fontWeight: 600, color: 'rgba(245,244,240,0.55)' }}>Ship to production</p>
+            <p style={{ marginTop: 6, fontSize: '14.5px', fontWeight: 600, color: 'rgba(245,244,240,0.55)' }}>Rehearse and roll out production</p>
             <div style={{ marginTop: 22, display: 'flex', alignItems: 'baseline', gap: 4 }}>
               <span className="sr-display" style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-0.03em' }}>$29</span>
               <span style={{ fontSize: 15, fontWeight: 600, color: 'rgba(245,244,240,0.5)' }}>/mo</span>
@@ -615,12 +615,12 @@ function Pricing() {
             <div style={{ height: 1, background: 'rgba(245,244,240,0.14)', margin: '26px 0' }} />
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 13, flex: 1 }}>
               <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Everything in Forge</FeatureItem>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Repo-aware deploys, any stack</FeatureItem>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Custom domains & rollout</FeatureItem>
+              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Repo-aware rehearsal plans</FeatureItem>
+              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Secrets, canaries, promote gates</FeatureItem>
               <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Ground Control included</FeatureItem>
             </ul>
             <a href={GC_URL} {...ext} data-sr-magnetic data-sr-strength="0.3" className="sr-btn sr-btn-primary" style={{ marginTop: 26, width: '100%', justifyContent: 'center', fontWeight: 700 }}>
-              <span data-sr-magnetic-inner>Start shipping →</span>
+              <span data-sr-magnetic-inner>Start a rollout →</span>
             </a>
           </div>
 
@@ -673,7 +673,7 @@ function Docs() {
             <div data-sr-reveal style={{ marginTop: 30, display: 'flex', flexDirection: 'column', gap: 18 }}>
               {step('01', 'Install the skill', 'Add Forge to Claude, Cursor, or any MCP-aware agent.')}
               {step('02', 'Describe the product', 'Plain language in. A concrete build plan out.')}
-              {step('03', 'Ship with Convoy', 'Point it at the repo; watch it go live in Ground Control.')}
+              {step('03', 'Roll out with Convoy', 'Point it at the repo; rehearse, gate, promote, and observe the rollout.')}
             </div>
             <a href={FORGE_URL} {...ext} style={{ ...textLink, marginTop: 30 }}>
               Read the docs <span style={{ color: 'var(--sr-coral)' }}>↗</span>
@@ -721,18 +721,18 @@ function WhatsNew() {
         <div className="sr-bento" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gridAutoRows: '200px', gap: 18 }}>
           {/* Large image card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 4', gridRow: 'span 2', overflow: 'hidden', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-            <ImageSlot absolute label="Ground Control — hero" media={PRODUCT_MEDIA.groundControl} mediaFit="cover" background="#111417" />
+            <ImageSlot absolute label="Ground Control — terminal" media={PRODUCT_MEDIA.groundControlTerminal} mediaFit="cover" background="#111417" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(22,21,15,0.85))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 30, pointerEvents: 'none' }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Product</p>
-              <h3 className="sr-display" style={{ marginTop: 8, fontSize: 30, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0', maxWidth: '18ch' }}>Ground Control is live</h3>
-              <p style={{ marginTop: 8, fontSize: 15, fontWeight: 500, color: 'rgba(245,244,240,0.7)', maxWidth: '40ch' }}>Logs, metrics and topology in one cockpit your agent can actually operate.</p>
+              <h3 className="sr-display" style={{ marginTop: 8, fontSize: 30, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0', maxWidth: '18ch' }}>Ground Control operates the VPS</h3>
+              <p style={{ marginTop: 8, fontSize: 15, fontWeight: 500, color: 'rgba(245,244,240,0.7)', maxWidth: '40ch' }}>Dashboard, services, terminal, alerts, and AI commands in one cockpit.</p>
             </div>
           </div>
           {/* Coral text card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--grad-coral)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-md)' }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>Release</p>
-            <h3 className="sr-display" style={{ fontSize: 23, fontWeight: 800, letterSpacing: '-0.02em', color: '#fff', lineHeight: 1.1 }}>Convoy now reads any stack</h3>
+            <h3 className="sr-display" style={{ fontSize: 23, fontWeight: 800, letterSpacing: '-0.02em', color: '#fff', lineHeight: 1.1 }}>Convoy now gates canary rollouts</h3>
           </div>
           {/* Paper text card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 2', gridRow: 'span 1', background: 'var(--grad-paper)', border: '1px solid var(--sr-stone)', padding: 26, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: 'var(--shadow-sm)' }}>
@@ -744,7 +744,7 @@ function WhatsNew() {
             <ImageSlot absolute label="Convoy — deploy" media={PRODUCT_MEDIA.convoy} mediaFit="cover" background="#111417" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(22,21,15,0.8))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 24, pointerEvents: 'none' }}>
-              <h3 className="sr-display" style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0' }}>38-second deploys</h3>
+              <h3 className="sr-display" style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0' }}>Secrets, canaries, promote</h3>
             </div>
           </div>
           {/* Dark text card */}
