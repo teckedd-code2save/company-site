@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { GC_URL, PRODUCT_MEDIA } from './media';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
 import { ImageSlot, LogoMark } from './ui';
-
-const GC_URL = 'https://groundcontrol.serendepify.com';
 
 const kicker: CSSProperties = { fontSize: 14, fontWeight: 700, color: 'var(--sr-coral-bright)', margin: '0 0 16px' };
 const heading: CSSProperties = {
@@ -103,7 +102,7 @@ export default function ProductsPage() {
         <Section
           bg={
             <>
-              <ImageSlot absolute label="Forge — build / scaffold view" />
+              <ImageSlot absolute label="Forge — build / scaffold view" media={PRODUCT_MEDIA.forge} mediaFit="cover" background="#111417" />
               <div style={scrim} />
             </>
           }
@@ -121,7 +120,7 @@ export default function ProductsPage() {
         <Section
           bg={
             <>
-              <ImageSlot absolute label="Convoy — deploy view" />
+              <ImageSlot absolute label="Convoy — deploy view" media={PRODUCT_MEDIA.convoy} mediaFit="cover" background="#111417" />
               <div style={scrim} />
             </>
           }
@@ -139,7 +138,7 @@ export default function ProductsPage() {
         <Section
           bg={
             <>
-              <ImageSlot absolute label="Ground Control — dashboard" />
+              <ImageSlot absolute label="Ground Control — dashboard" media={PRODUCT_MEDIA.groundControl} mediaFit="cover" background="#111417" />
               <div style={scrim} />
             </>
           }

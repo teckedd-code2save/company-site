@@ -42,9 +42,9 @@ const branches: Branch[] = [
   { id: 'shipd-branch', d: 'M 300 380 Q 380 340 440 300', delay: 0.7, color: DIM, width: 1.5 },
   { id: 'shipd-tip',    d: 'M 440 300 L 480 260', delay: 1.0, color: DIM, width: 1.5 },
 
-  // Feature branch: B2DP (splits left-mid)
-  { id: 'b2dp-branch', d: 'M 300 280 Q 220 240 160 200', delay: 0.9, color: ACCENT, width: 2 },
-  { id: 'b2dp-tip',    d: 'M 160 200 L 120 160', delay: 1.2, color: ACCENT, width: 2 },
+  // Feature branch: Forge (splits left-mid)
+  { id: 'forge-branch', d: 'M 300 280 Q 220 240 160 200', delay: 0.9, color: ACCENT, width: 2 },
+  { id: 'forge-tip',    d: 'M 160 200 L 120 160', delay: 1.2, color: ACCENT, width: 2 },
 
   // Feature branch: Datafy (splits right-mid)
   { id: 'datafy-branch', d: 'M 300 240 Q 380 200 460 160', delay: 1.1, color: DIM, width: 1.5 },
@@ -59,14 +59,14 @@ const nodes: Node[] = [
   { id: 'n-root',   cx: 300, cy: 520, delay: 0.1,  r: 6, glow: true },
   { id: 'n-mpp',    cx: 300, cy: 420, delay: 0.4,  r: 5, label: 'MPP',     labelX: 300, labelY: 445 },
   { id: 'n-shipd',  cx: 300, cy: 380, delay: 0.6,  r: 4, label: 'Shipd',   labelX: 300, labelY: 405 },
-  { id: 'n-b2dp',   cx: 300, cy: 280, delay: 0.8,  r: 5, label: 'B2DP',    labelX: 300, labelY: 305 },
+  { id: 'n-forge',  cx: 300, cy: 280, delay: 0.8,  r: 5, label: 'Forge',   labelX: 300, labelY: 305 },
   { id: 'n-datafy', cx: 300, cy: 240, delay: 1.0,  r: 4, label: 'Datafy',  labelX: 300, labelY: 265 },
   { id: 'n-top',    cx: 300, cy: 140, delay: 1.2,  r: 6, glow: true },
 
   // Leaf nodes
   { id: 'n-mpp-leaf',    cx: 140, cy: 300, delay: 1.1,  r: 5, label: 'Payments', labelX: 140, labelY: 275, glow: true },
   { id: 'n-shipd-leaf',  cx: 480, cy: 260, delay: 1.3,  r: 4, label: 'Deploy',   labelX: 480, labelY: 235 },
-  { id: 'n-b2dp-leaf',   cx: 120, cy: 160, delay: 1.5,  r: 5, label: 'Design',   labelX: 120, labelY: 135, glow: true },
+  { id: 'n-forge-leaf',  cx: 120, cy: 160, delay: 1.5,  r: 5, label: 'Design',   labelX: 120, labelY: 135, glow: true },
   { id: 'n-datafy-leaf', cx: 500, cy: 120, delay: 1.7,  r: 4, label: 'Ground',   labelX: 500, labelY: 95 },
 ];
 

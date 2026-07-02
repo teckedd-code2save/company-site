@@ -4,7 +4,7 @@ The official marketing website for Serendepify — a founder-led studio building
 
 ## About
 
-Serendepify builds autonomous agent tooling for the full software lifecycle: from describing a system in plain English to a live production deployment. This website showcases three products — Convoy, Shipd, and b2dp — and the philosophy behind them: fewer handoffs, description becomes deployment.
+Serendepify builds autonomous agent tooling for the full software lifecycle: from describing a system in plain English to a live production deployment. This website showcases three products — Forge, Convoy, and Ground Control — and the philosophy behind them: fewer handoffs, description becomes deployment.
 
 The site is a single-page React application with GSAP scroll animations, Three.js visual effects, and a product showcase featuring live video surfaces and animated deployment loops.
 
@@ -12,7 +12,7 @@ The site is a single-page React application with GSAP scroll animations, Three.j
 
 - **Convoy** — Agentic deployment with rehearsal, canary rollout, and observability. Claude-native, fully autonomous.
 - **Shipd** — Reads your repository and scores the best deployment options.
-- **b2dp** — Business spec in, complete platform out. A CLI that provisions skills, configures MCP servers, and generates full applications.
+- **Forge** — Business spec in, complete platform out. A CLI that provisions skills, configures MCP servers, and generates full applications.
 
 ## Tech Stack
 
