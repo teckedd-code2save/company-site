@@ -599,10 +599,10 @@ function Pricing() {
             Access
           </p>
           <h2 className="sr-display" data-sr-text style={{ fontSize: 'var(--text-xl)', fontWeight: 800, letterSpacing: 0, lineHeight: 1.04 }}>
-            Use the whole line while pricing settles.
+            Access the full line.
           </h2>
           <p data-sr-reveal style={{ marginTop: 20, fontSize: 'var(--text-lg)', lineHeight: 1.7, color: 'var(--sr-text-55)', fontWeight: 500, maxWidth: '54ch' }}>
-            Serendepify is still early. Forge is public today; Convoy and Ground Control are live surfaces for teams testing the build-rollout-operate workflow.
+            Forge is public today. Convoy and Ground Control are live early-access surfaces for teams testing the build-rollout-operate workflow.
           </p>
         </div>
         <div data-sr-reveal className="sr-card" style={{ background: '#16150F', color: '#F5F4F0', padding: 'clamp(28px, 5vw, 48px)', boxShadow: 'var(--shadow-lg)' }}>
@@ -615,17 +615,17 @@ function Pricing() {
                 Build, roll out, operate.
               </h3>
               <p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.6, fontWeight: 500, color: 'rgba(245,244,240,0.66)' }}>
-                Pricing will harden after the early product loop is validated. For now, start with Forge and explore the live Convoy and Ground Control surfaces.
+                Start with Forge today. Use Convoy and Ground Control to see how the line moves from build plan to rollout to live operations.
               </p>
-              <div style={{ marginTop: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-coral" style={{ fontWeight: 800 }}>
-                  Install Forge
+              <div style={{ marginTop: 26, display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+                <a href={FORGE_URL} {...ext} style={{ fontSize: 14, fontWeight: 800, color: 'var(--sr-coral-bright)', borderBottom: '1px solid currentColor', paddingBottom: 2 }}>
+                  Install Forge ↗
                 </a>
-                <a href={CONVOY_URL} {...ext} className="sr-btn" style={{ fontWeight: 800, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
-                  Open Convoy
+                <a href={CONVOY_URL} {...ext} style={{ fontSize: 14, fontWeight: 800, color: 'rgba(245,244,240,0.82)', borderBottom: '1px solid rgba(245,244,240,0.34)', paddingBottom: 2 }}>
+                  Open Convoy ↗
                 </a>
-                <a href={GC_URL} {...ext} className="sr-btn" style={{ fontWeight: 800, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
-                  Open Ground Control
+                <a href={GC_URL} {...ext} style={{ fontSize: 14, fontWeight: 800, color: 'rgba(245,244,240,0.82)', borderBottom: '1px solid rgba(245,244,240,0.34)', paddingBottom: 2 }}>
+                  Open Ground Control ↗
                 </a>
               </div>
             </div>
