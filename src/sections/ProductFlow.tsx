@@ -51,20 +51,20 @@ const products: Product[] = [
     mp4Src: '/images/products/shipd-surface.mp4',
   },
   {
-    id: 'b2dp',
+    id: 'forge',
     number: '03',
     tag: 'product builder',
     status: 'active',
     tone: 'coral',
-    title: 'b2dp',
+    title: 'Forge',
     blurb: 'A business spec in. A complete end-to-end platform out.',
     detail:
-      'b2dp is a business-to-data-platform CLI. Provision skills, configure MCP servers, and generate full applications with the agent of your choice — Claude, Gemini, Codex, and more.',
+      'Forge is a business-to-data-platform CLI. Provision skills, configure MCP servers, and generate full applications with the agent of your choice — Claude, Gemini, Codex, and more.',
     stack: ['skills system', 'CLI', 'MCP servers', 'agent orchestrator'],
-    link: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
+    link: 'https://www.npmjs.com/package/@teckedd-code2save/forge',
     visual: 'video',
-    videoSrc: '/images/products/b2dp-surface.webm',
-    mp4Src: '/images/products/b2dp-surface.mp4',
+    videoSrc: '/images/products/forge-surface.webm',
+    mp4Src: '/images/products/forge-surface.mp4',
   },
 ];
 

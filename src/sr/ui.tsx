@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 
 /** The finalized brand mark: two rotated arcs (ink + coral). */
@@ -53,17 +54,22 @@ export function Wordmark({ size = 19, color = 'var(--sr-text-90)' }: { size?: nu
   );
 }
 
-/**
- * Production stand-in for the design-tool `<image-slot>`. Renders a tasteful
- * placeholder where a real product screenshot will go. Swap for a real
- * `<img>`/`<picture>` once screenshots are supplied (see README → Assets).
- */
+export type SlotMedia = {
+  poster: string;
+  webm?: string;
+  mp4?: string;
+  gif?: string;
+};
+
 export function ImageSlot({
   label,
   style,
   absolute = false,
   background = 'radial-gradient(120% 120% at 72% 28%, #2a2820 0%, #16150F 68%)',
   labelColor = 'rgba(245,244,240,0.42)',
+  media,
+  mediaFit = 'cover',
+  mediaPosition = 'center center',
 }: {
   label: string;
   style?: CSSProperties;
@@ -71,7 +77,33 @@ export function ImageSlot({
   /** Override the placeholder backdrop (e.g. a brand dusk gradient). */
   background?: string;
   labelColor?: string;
+  media?: SlotMedia;
+  mediaFit?: CSSProperties['objectFit'];
+  mediaPosition?: CSSProperties['objectPosition'];
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaStyle: CSSProperties = {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: mediaFit,
+    objectPosition: mediaPosition,
+    display: 'block',
+  };
+
+  useEffect(() => {
+    const element = videoRef.current;
+    if (!element || !media) return;
+    element.muted = true;
+    const play = () => {
+      element.play().catch(() => {});
+    };
+    play();
+    element.addEventListener('canplay', play);
+    return () => element.removeEventListener('canplay', play);
+  }, [media]);
+
   return (
     <div
       role="img"
@@ -85,33 +117,57 @@ export function ImageSlot({
         alignItems: 'center',
         justifyContent: 'center',
         background,
+        overflow: 'hidden',
         ...style,
       }}
     >
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.5,
-          backgroundImage:
-            'radial-gradient(rgba(255,106,64,0.08) 1px, transparent 1px)',
-          backgroundSize: '26px 26px',
-        }}
-      />
-      <span
-        style={{
-          position: 'relative',
-          fontFamily: 'var(--font-mono)',
-          fontSize: 12,
-          letterSpacing: '0.04em',
-          color: labelColor,
-          textAlign: 'center',
-          padding: '0 18px',
-        }}
-      >
-        {label}
-      </span>
+      {media ? (
+        media.webm || media.mp4 ? (
+          <video
+            ref={videoRef}
+            aria-hidden="true"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={media.poster}
+            style={mediaStyle}
+          >
+            {media.webm && <source src={media.webm} type="video/webm" />}
+            {media.mp4 && <source src={media.mp4} type="video/mp4" />}
+          </video>
+        ) : (
+          <img aria-hidden="true" src={media.gif ?? media.poster} alt="" style={mediaStyle} />
+        )
+      ) : (
+        <>
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: 0.5,
+              backgroundImage:
+                'radial-gradient(rgba(255,106,64,0.08) 1px, transparent 1px)',
+              backgroundSize: '26px 26px',
+            }}
+          />
+          <span
+            style={{
+              position: 'relative',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 12,
+              letterSpacing: '0.04em',
+              color: labelColor,
+              textAlign: 'center',
+              padding: '0 18px',
+            }}
+          >
+            {label}
+          </span>
+        </>
+      )}
     </div>
   );
 }

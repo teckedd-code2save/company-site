@@ -8,7 +8,7 @@ const footerLinks = {
   products: [
     { label: 'Convoy', href: 'https://convoy-home.vercel.app/' },
     { label: 'Shipd',  href: 'https://shipd-seven.vercel.app/' },
-    { label: 'b2dp',   href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp' },
+    { label: 'Forge',  href: 'https://www.npmjs.com/package/@teckedd-code2save/forge' },
   ],
   company: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/edward-twumasi/' },
@@ -80,7 +80,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="max-w-xs text-sm leading-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
-              Autonomy from ideation to production. Convoy, Shipd, and b2dp — built for teams that ship.
+              Autonomy from ideation to production. Forge, Convoy, and Ground Control — built for teams that ship.
             </p>
             <div className="mt-5 flex gap-3">
               {socials.map(({ icon: Icon, href, label }) => (

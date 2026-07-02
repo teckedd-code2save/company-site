@@ -27,11 +27,11 @@ const fallbackCards: ProofCard[] = [
     cta: 'Open package',
   },
   {
-    name: 'b2dp',
+    name: 'Forge',
     eyebrow: 'NPM package',
     headline: 'Product builder CLI',
     detail: 'Fallback mode keeps the proof section useful even when external calls fail.',
-    href: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
+    href: 'https://www.npmjs.com/package/@teckedd-code2save/forge',
     cta: 'View package',
   },
   {
@@ -52,9 +52,9 @@ export function useLiveProof() {
     let active = true;
 
     async function load() {
-      const [datafyPkg, b2dpPkg, agentExchangeRepo] = await Promise.allSettled([
+      const [datafyPkg, forgePkg, agentExchangeRepo] = await Promise.allSettled([
         fetchPackageProof('@teckedd-code2save/datafy'),
-        fetchPackageProof('@teckedd-code2save/b2dp'),
+        fetchPackageProof('@teckedd-code2save/forge'),
         fetchRepoProof(siteConfig.githubOrg, 'agent-exchange'),
       ]);
 
@@ -64,7 +64,7 @@ export function useLiveProof() {
 
       if (
         datafyPkg.status !== 'fulfilled' &&
-        b2dpPkg.status !== 'fulfilled' &&
+        forgePkg.status !== 'fulfilled' &&
         agentExchangeRepo.status !== 'fulfilled'
       ) {
         setCards(fallbackCards);
@@ -83,16 +83,16 @@ export function useLiveProof() {
               cta: 'Open package',
             }
           : fallbackCards[0],
-        b2dpPkg.status === 'fulfilled'
+        forgePkg.status === 'fulfilled'
           ? {
-              name: 'b2dp',
+              name: 'Forge',
               eyebrow: 'NPM package',
-              headline: `Version ${b2dpPkg.value.latestVersion} is live`,
+              headline: `Version ${forgePkg.value.latestVersion} is live`,
               detail:
-                b2dpPkg.value.monthlyDownloads !== null
-                  ? `${formatCompactNumber(b2dpPkg.value.monthlyDownloads)} downloads last month, useful as a proof-of-interest signal for implementation work.`
+                forgePkg.value.monthlyDownloads !== null
+                  ? `${formatCompactNumber(forgePkg.value.monthlyDownloads)} downloads last month, useful as a proof-of-interest signal for implementation work.`
                   : 'Live package metadata loaded successfully, even though download counts were unavailable.',
-              href: b2dpPkg.value.url,
+              href: forgePkg.value.url,
               cta: 'View package',
             }
           : fallbackCards[1],

@@ -4,20 +4,20 @@ import { ArrowUpRight } from 'lucide-react';
 
 const products = [
   {
-    id: 'b2dp',
-    name: 'B2DP (Business to Data Platform)',
+    id: 'forge',
+    name: 'Forge',
     category: 'Product Design',
     status: 'Active' as const,
     tagline: 'Brief to Data Product. Architecture out.',
-    summary: 'Describe what you\'re building in plain language. B2DP maps it to data models, services, and an architecture your engineers can build from immediately.',
+    summary: 'Describe what you\'re building in plain language. Forge maps it to data models, services, and an architecture your agent can build from immediately.',
     highlights: [
       'Business logic mapped to data models and services',
       'AI-guided scaffolding from plain language input',
       'Output your team can hand off or build from directly',
     ],
-    link: 'https://www.npmjs.com/package/@teckedd-code2save/b2dp',
-    cta: 'Explore B2DP',
-    image: '/images/products/b2dp-surface.gif',
+    link: 'https://www.npmjs.com/package/@teckedd-code2save/forge',
+    cta: 'Explore Forge',
+    image: '/images/products/forge-surface.gif',
     kind: 'site' as const,
   },
   {

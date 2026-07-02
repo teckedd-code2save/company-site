@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { CONVOY_URL, FORGE_URL, GC_URL, PRODUCT_MEDIA } from './media';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
+import type { SlotMedia } from './ui';
 import { ImageSlot, LogoMark, Wordmark } from './ui';
-
-const GC_URL = 'https://groundcontrol.serendepify.com';
-const FORGE_URL = 'https://www.npmjs.com/package/@teckedd-code2save/b2dp';
-const CONVOY_URL = 'https://convoy-home.vercel.app/';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
@@ -215,7 +213,12 @@ function Hero() {
           className="sr-card"
           style={{ marginTop: 56, aspectRatio: '16 / 7', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
         >
-          <ImageSlot label="Ground Control — cockpit view" />
+          <ImageSlot
+            label="Ground Control — cockpit view"
+            media={PRODUCT_MEDIA.groundControl}
+            mediaFit="contain"
+            background="#111417"
+          />
         </div>
       </div>
     </section>
@@ -228,7 +231,7 @@ function Hero() {
 // same piece of work the whole way down — built, shipped, then run — never
 // changing hands.
 const FLIP_STAGES = [
-  { tag: 'your idea', title: 'Building', sub: 'Forge — b2dp CLI + your agent' },
+  { tag: 'your idea', title: 'Building', sub: 'Forge — CLI + your agent' },
   { tag: 'your build', title: 'Shipping', sub: 'Convoy — deploy to production' },
   { tag: 'in production', title: 'Running', sub: 'Ground Control — built for VPS' },
 ];
@@ -345,6 +348,8 @@ type LifeRow = {
   linkLabel: string;
   href: string;
   slotLabel: string;
+  media: SlotMedia;
+  mediaFit?: CSSProperties['objectFit'];
 };
 
 const LIFECYCLE: LifeRow[] = [
@@ -361,6 +366,8 @@ const LIFECYCLE: LifeRow[] = [
     linkLabel: 'Explore Forge',
     href: FORGE_URL,
     slotLabel: 'Forge — build / scaffold view',
+    media: PRODUCT_MEDIA.forge,
+    mediaFit: 'contain',
   },
   {
     num: '02',
@@ -375,6 +382,8 @@ const LIFECYCLE: LifeRow[] = [
     linkLabel: 'View Convoy',
     href: CONVOY_URL,
     slotLabel: 'Convoy — deploy view',
+    media: PRODUCT_MEDIA.convoy,
+    mediaFit: 'cover',
   },
   {
     num: '03',
@@ -389,6 +398,8 @@ const LIFECYCLE: LifeRow[] = [
     linkLabel: 'Open Ground Control',
     href: GC_URL,
     slotLabel: 'Ground Control — dashboard',
+    media: PRODUCT_MEDIA.groundControl,
+    mediaFit: 'contain',
   },
 ];
 
@@ -422,7 +433,7 @@ function LifecycleImage({ row }: { row: LifeRow }) {
       className="sr-card"
       style={{ aspectRatio: '4 / 3', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
     >
-      <ImageSlot label={row.slotLabel} />
+      <ImageSlot label={row.slotLabel} media={row.media} mediaFit={row.mediaFit} background="#111417" />
     </div>
   );
 }
@@ -678,7 +689,7 @@ function Docs() {
             <div className="sr-mono" style={{ padding: 22, fontSize: '13.5px', lineHeight: 1.95 }}>
               <div style={{ color: 'rgba(245,244,240,0.4)' }}>
                 <span style={{ color: 'var(--sr-coral-bright)' }}>$</span> npx{' '}
-                <span data-sr-typewriter data-sr-speed="0.04" style={{ color: '#F5F4F0' }}>@serendepify/forge init</span>
+                <span data-sr-typewriter data-sr-speed="0.04" style={{ color: '#F5F4F0' }}>@teckedd-code2save/forge init</span>
               </div>
               <div style={{ color: '#6ee7a8', marginTop: 10 }}>✓ Forge skill registered</div>
               <div style={{ color: 'rgba(245,244,240,0.6)' }}>› describe your product…</div>
@@ -710,7 +721,7 @@ function WhatsNew() {
         <div className="sr-bento" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gridAutoRows: '200px', gap: 18 }}>
           {/* Large image card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 4', gridRow: 'span 2', overflow: 'hidden', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-            <ImageSlot absolute label="Ground Control — hero" background="var(--grad-dusk-sky)" labelColor="rgba(22,21,15,0.5)" />
+            <ImageSlot absolute label="Ground Control — hero" media={PRODUCT_MEDIA.groundControl} mediaFit="cover" background="#111417" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(22,21,15,0.85))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 30, pointerEvents: 'none' }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Product</p>
@@ -730,7 +741,7 @@ function WhatsNew() {
           </div>
           {/* 3-col image card */}
           <div data-sr-reveal className="sr-card" style={{ gridColumn: 'span 3', gridRow: 'span 1', overflow: 'hidden', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-            <ImageSlot absolute label="Convoy — deploy" background="var(--grad-dusk)" labelColor="rgba(22,21,15,0.5)" />
+            <ImageSlot absolute label="Convoy — deploy" media={PRODUCT_MEDIA.convoy} mediaFit="cover" background="#111417" />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(22,21,15,0.8))', pointerEvents: 'none' }} />
             <div style={{ position: 'absolute', left: 0, bottom: 0, padding: 24, pointerEvents: 'none' }}>
               <h3 className="sr-display" style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.02em', color: '#F5F4F0' }}>38-second deploys</h3>

@@ -5,7 +5,7 @@ import { useModal } from '@/lib/modal-context';
 type FlowNode = { name: string; role: string; tone: 'mauve' | 'coral' };
 
 const workflowSteps: FlowNode[] = [
-  { name: 'b2dp', role: 'describe', tone: 'coral' },
+  { name: 'Forge', role: 'describe', tone: 'coral' },
   { name: 'Shipd', role: 'route', tone: 'mauve' },
   { name: 'Convoy', role: 'deploy', tone: 'coral' },
   { name: 'Production', role: 'live system', tone: 'mauve' },
@@ -175,7 +175,7 @@ export default function Features() {
           className="mt-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <p className="max-w-[640px] text-sm leading-[1.8] text-white/42">
-            Serendepify connects ideation to production: b2dp shapes the system, Shipd routes the path, and Convoy carries the rollout.
+            Serendepify connects ideation to production: Forge shapes the system, Shipd routes the path, and Convoy carries the rollout.
           </p>
           <MagneticButton
             onClick={openContact}

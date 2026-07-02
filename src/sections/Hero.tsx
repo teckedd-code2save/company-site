@@ -6,7 +6,7 @@ import { useModal } from '@/lib/modal-context';
 const productLinks = [
   { label: 'Convoy', href: '#convoy', accent: true },
   { label: 'Shipd', href: '#shipd' },
-  { label: 'b2dp', href: '#b2dp' },
+  { label: 'Forge', href: '#forge' },
 ];
 
 const easeEnter = [0.0, 0, 0.2, 1] as [number, number, number, number];
