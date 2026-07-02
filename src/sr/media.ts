@@ -13,14 +13,20 @@ export const PRODUCT_MEDIA = {
   },
   convoy: {
     poster: '/images/products/convoy-surface.png',
-    webm: '/images/products/convoy-surface.webm',
-    mp4: '/images/products/convoy-surface.mp4',
-    gif: '/images/products/convoy-surface.gif',
   },
   groundControl: {
     poster: '/images/products/groundcontrol-copilot.png',
     webm: '/images/products/groundcontrol-copilot.webm',
     mp4: '/images/products/groundcontrol-copilot.mp4',
     gif: '/images/products/groundcontrol-copilot.gif',
+  },
+  groundControlDashboard: {
+    poster: '/images/products/groundcontrol-dashboard.png',
+  },
+  groundControlServices: {
+    poster: '/images/products/groundcontrol-services.png',
+  },
+  groundControlTerminal: {
+    poster: '/images/products/groundcontrol-terminal.png',
   },
 } satisfies Record<string, SlotMedia>;

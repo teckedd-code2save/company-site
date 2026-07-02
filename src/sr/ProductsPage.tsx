@@ -125,31 +125,31 @@ export default function ProductsPage() {
             </>
           }
         >
-          <p style={kicker}>02 · Convoy · ships it</p>
+          <p style={kicker}>02 · Convoy · rolls it out</p>
           <h2 className="section-heading sr-display" style={heading}>
-            Point it at your code.
+            Rehearse.
             <br />
-            It ships.
+            Canary. Observe.
           </h2>
-          <p style={para}>Convoy reads your stack, picks the right deployment path, and carries the rollout all the way to production.</p>
+          <p style={para}>Convoy scans the repo, plans the route, rehearses the change, gates secrets and PRs, promotes canaries, and observes the live service.</p>
         </Section>
 
         {/* Ground Control */}
         <Section
           bg={
             <>
-              <ImageSlot absolute label="Ground Control — dashboard" media={PRODUCT_MEDIA.groundControl} mediaFit="cover" background="#111417" />
+              <ImageSlot absolute label="Ground Control — dashboard" media={PRODUCT_MEDIA.groundControlDashboard} mediaFit="cover" background="#111417" />
               <div style={scrim} />
             </>
           }
         >
           <p style={kicker}>03 · Ground Control · runs it</p>
           <h2 className="section-heading sr-display" style={heading}>
-            Eyes on production,
+            Operate every VPS
             <br />
-            always.
+            surface.
           </h2>
-          <p style={para}>The operations cockpit — real logs, metrics and topology your agent can reason about and operate.</p>
+          <p style={para}>Dashboard health, services, terminal, alerts, DNS, and AI assistance your agent can reason about and operate.</p>
           <a href={GC_URL} target="_blank" rel="noopener noreferrer" className="sr-btn sr-btn-primary" style={{ marginTop: 30, fontWeight: 700 }}>
             Open Ground Control ↗
           </a>
