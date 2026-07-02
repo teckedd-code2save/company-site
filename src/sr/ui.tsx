@@ -1,5 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { createPortal } from 'react-dom';
+import { Maximize2, X } from 'lucide-react';
 
 /** The finalized brand mark: two rotated arcs (ink + coral). */
 export function LogoMark({
@@ -70,6 +72,7 @@ export function ImageSlot({
   media,
   mediaFit = 'cover',
   mediaPosition = 'center center',
+  expandable,
 }: {
   label: string;
   style?: CSSProperties;
@@ -80,8 +83,12 @@ export function ImageSlot({
   media?: SlotMedia;
   mediaFit?: CSSProperties['objectFit'];
   mediaPosition?: CSSProperties['objectPosition'];
+  expandable?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const slotRef = useRef<HTMLButtonElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const canExpand = Boolean(media && expandable !== false);
   const mediaStyle: CSSProperties = {
     position: 'absolute',
     inset: 0,
@@ -104,23 +111,47 @@ export function ImageSlot({
     return () => element.removeEventListener('canplay', play);
   }, [media]);
 
-  return (
-    <div
-      role="img"
-      aria-label={label}
-      style={{
-        position: absolute ? 'absolute' : 'relative',
-        inset: absolute ? 0 : undefined,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background,
-        overflow: 'hidden',
-        ...style,
-      }}
-    >
+  useEffect(() => {
+    if (!expanded) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const close = () => {
+      setExpanded(false);
+      requestAnimationFrame(() => slotRef.current?.focus());
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') close();
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [expanded]);
+
+  const closeExpanded = () => {
+    setExpanded(false);
+    requestAnimationFrame(() => slotRef.current?.focus());
+  };
+
+  const slotStyle: CSSProperties = {
+    position: absolute ? 'absolute' : 'relative',
+    inset: absolute ? 0 : undefined,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background,
+    overflow: 'hidden',
+    ...style,
+  };
+
+  const content = (
+    <>
       {media ? (
         media.webm || media.mp4 ? (
           <video
@@ -168,6 +199,68 @@ export function ImageSlot({
           </span>
         </>
       )}
+      {canExpand && (
+        <span className="sr-media-expand-badge" aria-hidden="true">
+          <Maximize2 size={15} strokeWidth={2.2} />
+        </span>
+      )}
+    </>
+  );
+
+  if (canExpand && media) {
+    return (
+      <>
+        <button
+          ref={slotRef}
+          type="button"
+          aria-label={`Expand ${label}`}
+          className="sr-media-slot sr-media-slot-expandable"
+          style={slotStyle}
+          onClick={() => setExpanded(true)}
+        >
+          {content}
+        </button>
+        {expanded && createPortal(<ExpandedMedia media={media} label={label} onClose={closeExpanded} />, document.body)}
+      </>
+    );
+  }
+
+  return (
+    <div
+      role="img"
+      aria-label={label}
+      className="sr-media-slot"
+      style={slotStyle}
+    >
+      {content}
+    </div>
+  );
+}
+
+function ExpandedMedia({ media, label, onClose }: { media: SlotMedia; label: string; onClose: () => void }) {
+  return (
+    <div
+      className="sr-media-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={label}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <button type="button" className="sr-media-lightbox-close" aria-label="Close expanded media" onClick={onClose} autoFocus>
+        <X size={20} strokeWidth={2.2} />
+      </button>
+      <div className="sr-media-lightbox-frame">
+        {media.webm || media.mp4 ? (
+          <video controls autoPlay muted playsInline poster={media.poster} className="sr-media-lightbox-media">
+            {media.webm && <source src={media.webm} type="video/webm" />}
+            {media.mp4 && <source src={media.mp4} type="video/mp4" />}
+          </video>
+        ) : (
+          <img src={media.gif ?? media.poster} alt={label} className="sr-media-lightbox-media" />
+        )}
+      </div>
     </div>
   );
 }
