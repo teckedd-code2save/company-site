@@ -43,7 +43,7 @@ const NAV_LINKS = [
   { href: '#lifecycle', label: 'Lifecycle' },
   { href: '#agents', label: 'For agents' },
   { href: '/products', label: 'Products' },
-  { href: '#pricing', label: 'Pricing' },
+  { href: '#pricing', label: 'Access' },
   { href: '#docs', label: 'Docs' },
 ];
 
@@ -570,76 +570,82 @@ function AgentsPipeline() {
   );
 }
 
-/* ── Pricing ────────────────────────────────────────────────────── */
+/* ── Access ─────────────────────────────────────────────────────── */
+
+function AccessCapability({
+  eyebrow,
+  title,
+  body,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div style={{ padding: '22px 0', borderTop: '1px solid rgba(245,244,240,0.12)' }}>
+      <p style={{ fontSize: 12, fontWeight: 800, color: 'var(--sr-coral-bright)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{eyebrow}</p>
+      <h3 className="sr-display" style={{ marginTop: 7, fontSize: 24, fontWeight: 800, letterSpacing: 0, color: '#F5F4F0' }}>{title}</h3>
+      <p style={{ marginTop: 8, fontSize: 15, lineHeight: 1.55, fontWeight: 500, color: 'rgba(245,244,240,0.66)' }}>{body}</p>
+    </div>
+  );
+}
 
 function Pricing() {
   return (
-    <section id="pricing" className="sr-section">
+    <section id="pricing" className="sr-section" style={{ background: 'var(--sr-paper)' }}>
       <div className="sr-container">
-        <div style={{ maxWidth: 720, marginBottom: 'var(--space-6)' }}>
-          <h2 className="sr-display" data-sr-text style={{ fontSize: 'var(--text-xl)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1.04 }}>
-            Start free. Pay when you roll out.
+        <div style={{ maxWidth: 760, marginBottom: 'var(--space-6)' }}>
+          <p data-sr-reveal style={{ fontSize: 13, fontWeight: 800, color: 'var(--sr-coral)', textTransform: 'uppercase', letterSpacing: '0.14em', marginBottom: 14 }}>
+            Access
+          </p>
+          <h2 className="sr-display" data-sr-text style={{ fontSize: 'var(--text-xl)', fontWeight: 800, letterSpacing: 0, lineHeight: 1.04 }}>
+            Use the whole line while pricing settles.
           </h2>
           <p data-sr-reveal style={{ marginTop: 20, fontSize: 'var(--text-lg)', lineHeight: 1.7, color: 'var(--sr-text-55)', fontWeight: 500, maxWidth: '54ch' }}>
-            Forge is open and free while in beta. Convoy and Ground Control scale with what you run in production.
+            Serendepify is still early. Forge is public today; Convoy and Ground Control are live surfaces for teams testing the build-rollout-operate workflow.
           </p>
         </div>
-        <div className="sr-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {/* Forge */}
-          <div data-sr-reveal className="sr-card" style={{ background: 'var(--sr-paper)', padding: 32, display: 'flex', flexDirection: 'column', border: '1px solid var(--sr-stone)' }}>
-            <h3 className="sr-display" style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.02em' }}>Forge</h3>
-            <p style={{ marginTop: 6, fontSize: '14.5px', fontWeight: 600, color: 'var(--sr-coral)' }}>Beta · open</p>
-            <div style={{ marginTop: 22, display: 'flex', alignItems: 'baseline', gap: 4 }}>
-              <span className="sr-display" style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-0.03em' }}>$0</span>
+        <div data-sr-reveal className="sr-card" style={{ background: '#16150F', color: '#F5F4F0', padding: 'clamp(28px, 5vw, 48px)', boxShadow: 'var(--shadow-lg)' }}>
+          <div className="sr-grid-2" style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 42, alignItems: 'start' }}>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 800, color: 'var(--sr-coral-bright)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                Platform access
+              </p>
+              <h3 className="sr-display" style={{ marginTop: 14, fontSize: 'clamp(2rem, 4vw, 3.5rem)', lineHeight: 1, fontWeight: 800, letterSpacing: 0 }}>
+                Build, roll out, operate.
+              </h3>
+              <p style={{ marginTop: 18, fontSize: 17, lineHeight: 1.6, fontWeight: 500, color: 'rgba(245,244,240,0.66)' }}>
+                Pricing will harden after the early product loop is validated. For now, start with Forge and explore the live Convoy and Ground Control surfaces.
+              </p>
+              <div style={{ marginTop: 28, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-coral" style={{ fontWeight: 800 }}>
+                  Install Forge
+                </a>
+                <a href={CONVOY_URL} {...ext} className="sr-btn" style={{ fontWeight: 800, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
+                  Open Convoy
+                </a>
+                <a href={GC_URL} {...ext} className="sr-btn" style={{ fontWeight: 800, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
+                  Open Ground Control
+                </a>
+              </div>
             </div>
-            <p style={{ marginTop: 4, fontSize: 14, fontWeight: 500, color: 'var(--sr-text-55)' }}>Bring your own coding agent.</p>
-            <div style={{ height: 1, background: 'var(--sr-stone)', margin: '26px 0' }} />
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: 13, flex: 1 }}>
-              <FeatureItem>Full Forge skill set</FeatureItem>
-              <FeatureItem>Unlimited build plans</FeatureItem>
-              <FeatureItem>Community support</FeatureItem>
-            </ul>
-            <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-ghost" style={{ marginTop: 26, width: '100%', justifyContent: 'center', fontWeight: 700 }}>Install Forge</a>
-          </div>
-
-          {/* Convoy (featured) */}
-          <div data-sr-reveal className="sr-card" style={{ background: '#16150F', color: '#F5F4F0', padding: 32, display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-lg)', position: 'relative', transform: 'translateY(-8px)' }}>
-            <div style={{ position: 'absolute', top: 20, right: 24, fontSize: '12.5px', fontWeight: 700, color: 'var(--sr-coral-bright)' }}>Most teams</div>
-            <h3 className="sr-display" style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.02em' }}>Convoy</h3>
-            <p style={{ marginTop: 6, fontSize: '14.5px', fontWeight: 600, color: 'rgba(245,244,240,0.55)' }}>Rehearse and roll out production</p>
-            <div style={{ marginTop: 22, display: 'flex', alignItems: 'baseline', gap: 4 }}>
-              <span className="sr-display" style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-0.03em' }}>$29</span>
-              <span style={{ fontSize: 15, fontWeight: 600, color: 'rgba(245,244,240,0.5)' }}>/mo</span>
+            <div>
+              <AccessCapability
+                eyebrow="Forge · public beta"
+                title="Install now"
+                body="Turn a plain-language product brief into a concrete build plan, architecture, and agent-ready implementation path."
+              />
+              <AccessCapability
+                eyebrow="Convoy · early access"
+                title="Rehearse and gate rollouts"
+                body="Scan repos, stage deployment plans, approve risky steps, promote canaries, and observe production changes."
+              />
+              <AccessCapability
+                eyebrow="Ground Control · early access"
+                title="Operate the VPS cockpit"
+                body="Bring dashboard signals, services, logs, terminal, DNS, alerts, and AI commands into one operational surface."
+              />
             </div>
-            <p style={{ marginTop: 4, fontSize: 14, fontWeight: 500, color: 'rgba(245,244,240,0.55)' }}>Per developer, billed monthly.</p>
-            <div style={{ height: 1, background: 'rgba(245,244,240,0.14)', margin: '26px 0' }} />
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: 13, flex: 1 }}>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Everything in Forge</FeatureItem>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Repo-aware rehearsal plans</FeatureItem>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Secrets, canaries, promote gates</FeatureItem>
-              <FeatureItem color="var(--sr-coral-bright)" textColor="rgba(245,244,240,0.78)">Ground Control included</FeatureItem>
-            </ul>
-            <a href={GC_URL} {...ext} data-sr-magnetic data-sr-strength="0.3" className="sr-btn sr-btn-primary" style={{ marginTop: 26, width: '100%', justifyContent: 'center', fontWeight: 700 }}>
-              <span data-sr-magnetic-inner>Start a rollout →</span>
-            </a>
-          </div>
-
-          {/* Fleet */}
-          <div data-sr-reveal className="sr-card" style={{ background: 'var(--sr-paper)', padding: 32, display: 'flex', flexDirection: 'column', border: '1px solid var(--sr-stone)' }}>
-            <h3 className="sr-display" style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.02em' }}>Fleet</h3>
-            <p style={{ marginTop: 6, fontSize: '14.5px', fontWeight: 600, color: 'var(--sr-coral)' }}>Enterprise</p>
-            <div style={{ marginTop: 22, display: 'flex', alignItems: 'baseline', gap: 4 }}>
-              <span className="sr-display" style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-0.03em' }}>Let's talk</span>
-            </div>
-            <p style={{ marginTop: 4, fontSize: 14, fontWeight: 500, color: 'var(--sr-text-55)' }}>For orgs running many systems.</p>
-            <div style={{ height: 1, background: 'var(--sr-stone)', margin: '26px 0' }} />
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: 13, flex: 1 }}>
-              <FeatureItem>Everything in Convoy</FeatureItem>
-              <FeatureItem>SSO, audit logs, roles</FeatureItem>
-              <FeatureItem>Private regions & SLAs</FeatureItem>
-              <FeatureItem>Dedicated support</FeatureItem>
-            </ul>
-            <a href="#cta" className="sr-btn sr-btn-ghost" style={{ marginTop: 26, width: '100%', justifyContent: 'center', fontWeight: 700 }}>Contact sales</a>
           </div>
         </div>
       </div>
@@ -813,7 +819,7 @@ function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--sr-text-90)' }}>Product</span>
               <a href="#lifecycle" className="sr-navlink" style={colLink}>Lifecycle</a>
-              <a href="#pricing" className="sr-navlink" style={colLink}>Pricing</a>
+              <a href="#pricing" className="sr-navlink" style={colLink}>Access</a>
               <a href="#docs" className="sr-navlink" style={colLink}>Docs</a>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
