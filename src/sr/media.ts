@@ -7,9 +7,6 @@ export const CONVOY_URL = 'https://convoy-home.vercel.app/';
 export const PRODUCT_MEDIA = {
   forge: {
     poster: '/images/products/forge-surface.png',
-    webm: '/images/products/forge-surface.webm',
-    mp4: '/images/products/forge-surface.mp4',
-    gif: '/images/products/forge-surface.gif',
   },
   convoy: {
     poster: '/images/products/convoy-surface.png',
