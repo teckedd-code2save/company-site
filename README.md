@@ -1,18 +1,18 @@
 # Serendepify Website
 
-The official marketing website for Serendepify — a founder-led studio building agent systems that turn ideas into deployed products.
+The official marketing website for Serendepify — an AI operations company making production systems understandable and controllable for lean software teams.
 
 ## About
 
-Serendepify builds autonomous agent tooling for the full software lifecycle: from describing a system in plain English to a live production deployment. This website showcases three products — Forge, Convoy, and Ground Control — and the philosophy behind them: fewer handoffs, description becomes deployment.
+Serendepify is led by Ground Control, an operational cockpit for practical cloud and VPS infrastructure. Convoy provides controlled rollout, while Forge improves the architecture and build context created upstream. The website presents these as three connected product layers around one commercial wedge: production operations.
 
 The site is a single-page React application with GSAP scroll animations, Three.js visual effects, and a product showcase featuring live video surfaces and animated deployment loops.
 
 ## Products
 
-- **Convoy** — Agentic deployment with rehearsal, canary rollout, and observability. Claude-native, fully autonomous.
-- **Shipd** — Reads your repository and scores the best deployment options.
-- **Forge** — Business spec in, complete platform out. A CLI that provisions skills, configures MCP servers, and generates full applications.
+- **Ground Control** — The primary product: a VPS-aware operational cockpit for health, services, logs, terminal, DNS, alerts, and assisted actions.
+- **Convoy** — The controlled execution layer for repo-aware rehearsal, approval gates, canary rollout, and observation.
+- **Forge** — The upstream context layer that turns product intent into architecture, scaffolding, and agent-ready build plans.
 
 ## Tech Stack
 

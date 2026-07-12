@@ -126,7 +126,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     const prev = document.title;
-    document.title = 'Pitch · Serendepify';
+    document.title = 'Ground Control · Serendepify';
     return () => {
       document.title = prev;
     };
@@ -168,16 +168,16 @@ export default function ProductsPage() {
           whiteSpace: 'nowrap',
         }}
       >
-        Product-led pitch · live surfaces
+        Ground Control-led pitch · live surfaces
       </div>
 
       <div className="snap" data-sr-snap>
         <Section bg={<div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 120% at 72% 30%, #3a3327, #16150F 70%)' }} />}>
           <p style={kicker}>Product-led pitch</p>
           <h2 className="section-heading sr-display" style={{ ...wideHeading, fontSize: 'clamp(2.8rem, 7.5vw, 7rem)', maxWidth: '15ch' }}>
-            Serendepify is the operating layer for autonomous software creation.
+            Serendepify is the AI operations layer for teams running production.
           </h2>
-          <p style={para}>AI agents can generate code. Serendepify connects the path from brief to shipped, observable software.</p>
+          <p style={para}>Ground Control makes a live system legible. Convoy carries controlled changes, and Forge improves the context created upstream. Built in Accra for lean software teams.</p>
         </Section>
 
         <Section bg={<div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, #111417 0%, #16150F 52%, #2a1d16 100%)' }} />}>
@@ -192,28 +192,28 @@ export default function ProductsPage() {
         <Section bg={<ProductMedia label="Ground Control — services view" media={PRODUCT_MEDIA.groundControlServices} />}>
           <p style={kicker}>The platform</p>
           <h2 className="section-heading sr-display" style={wideHeading}>
-            One line from idea to live system.
+            Start with production. Connect the line around it.
           </h2>
-          <p style={para}>Forge shapes the build, Convoy controls the rollout, and Ground Control gives the agent production context it can reason about.</p>
-          <PitchChips items={['Build', 'Roll out', 'Operate']} />
+          <p style={para}>Ground Control is the operational surface. Convoy provides controlled execution; Forge gives the system better context before deployment.</p>
+          <PitchChips items={['Observe', 'Decide', 'Act']} />
         </Section>
 
-        <Section bg={<ProductMedia label="Forge — build / scaffold view" media={PRODUCT_MEDIA.forge} />}>
-          <p style={kicker}>01 · Forge · builds it</p>
+        <Section bg={<ProductMedia label="Ground Control — dashboard" media={PRODUCT_MEDIA.groundControlDashboard} />}>
+          <p style={kicker}>01 · Ground Control · the product</p>
           <h2 className="section-heading sr-display" style={heading}>
-            Brief to buildable system.
+            Production context in one cockpit.
           </h2>
-          <p style={para}>Forge turns fuzzy product intent into architecture, scaffolding, and a build path your coding agent can execute.</p>
-          <Bullets items={['Concrete plans from plain-language briefs', 'Agent-agnostic workflows for Claude, Cursor, and MCP-aware tools', 'Architecture and scaffolding instead of generic boilerplate']} />
+          <p style={para}>Ground Control makes practical infrastructure legible: health, services, terminal, alerts, DNS, logs, and assisted actions in one operational surface.</p>
+          <Bullets items={['Live signals for health, memory, disk, and containers', 'Service controls with logs, restart actions, and terminal access', 'Shared operational context for people and AI tools']} />
           <div style={ctaRow}>
-            <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
-              Install Forge ↗
+            <a href={GC_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
+              Open Ground Control ↗
             </a>
           </div>
         </Section>
 
         <Section bg={<ProductMedia label="Convoy — canary rollout view" media={PRODUCT_MEDIA.convoy} />}>
-          <p style={kicker}>02 · Convoy · rolls it out</p>
+          <p style={kicker}>02 · Convoy · controlled execution</p>
           <h2 className="section-heading sr-display" style={heading}>
             Rehearse. Gate. Canary.
           </h2>
@@ -226,16 +226,16 @@ export default function ProductsPage() {
           </div>
         </Section>
 
-        <Section bg={<ProductMedia label="Ground Control — dashboard" media={PRODUCT_MEDIA.groundControlDashboard} />}>
-          <p style={kicker}>03 · Ground Control · operates it</p>
+        <Section bg={<ProductMedia label="Forge — build / scaffold view" media={PRODUCT_MEDIA.forge} />}>
+          <p style={kicker}>03 · Forge · upstream context</p>
           <h2 className="section-heading sr-display" style={heading}>
-            Production context for agents.
+            Brief to buildable system.
           </h2>
-          <p style={para}>Ground Control makes the VPS legible: health, services, terminal, alerts, DNS, logs, and AI assistance in one operational cockpit.</p>
-          <Bullets items={['Dashboard signals for health, memory, disk, and containers', 'Service controls with logs, restart actions, and terminal access', 'Agent-readable operations context after deployment']} />
+          <p style={para}>Forge turns fuzzy product intent into architecture, scaffolding, and a build path a coding agent can execute.</p>
+          <Bullets items={['Concrete plans from plain-language briefs', 'Agent-agnostic workflows for modern coding tools', 'Architecture and scaffolding instead of generic boilerplate']} />
           <div style={ctaRow}>
-            <a href={GC_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
-              Open Ground Control ↗
+            <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
+              Install Forge ↗
             </a>
           </div>
         </Section>
@@ -245,17 +245,17 @@ export default function ProductsPage() {
           <h2 className="section-heading sr-display" style={wideHeading}>
             Live product surfaces, not a slide-only concept.
           </h2>
-          <p style={para}>Serendepify already exposes the public package, Convoy surface, and Ground Control cockpit that show the build-rollout-operate loop in motion.</p>
-          <PitchChips items={['Forge package published', 'Convoy web surface live', 'Ground Control cockpit live']} />
+          <p style={para}>Ground Control, Convoy, and Forge are working product surfaces—not a slide-only concept. The next step is proving the operational loop with design partners and measurable outcomes.</p>
+          <PitchChips items={['Ground Control cockpit live', 'Convoy surface live', 'Forge package published']} />
           <div style={ctaRow}>
-            <a href={FORGE_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
-              Install Forge
+            <a href={GC_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
+              Open Ground Control
             </a>
             <a href={CONVOY_URL} {...ext} className="sr-btn" style={{ fontWeight: 700, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
               Open Convoy
             </a>
-            <a href={GC_URL} {...ext} className="sr-btn" style={{ fontWeight: 700, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
-              Open Ground Control
+            <a href={FORGE_URL} {...ext} className="sr-btn" style={{ fontWeight: 700, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
+              Install Forge
             </a>
           </div>
         </Section>
