@@ -4,7 +4,7 @@ import { ImageSlot, LogoMark, Wordmark } from './ui';
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
 const products = [
-  { name: 'GroundControl', status: 'Flagship · Live', body: 'A self-hosted cockpit and deployment control plane for VPS fleets and practical infrastructure.', href: GC_URL, media: PRODUCT_MEDIA.groundControlDashboard },
+  { name: 'GroundControl', status: 'Flagship · Live', body: 'A self-hosted cockpit for VPS fleets, evolving with Loop: change-aware customer journeys, repair, canary, observation, and rollback.', href: GC_URL, media: PRODUCT_MEDIA.groundControlDashboard },
   { name: 'Convoy', status: 'Standalone · CLI + MCP', body: 'A supervised delivery agent: Claude opens the PR, review feedback steers a better revision, approval merges and promotes it, then guarded canary, observation, and production steps continue.', href: CONVOY_URL, media: PRODUCT_MEDIA.convoy },
   { name: 'Forge', status: 'Developer preview · CLI + Skills', body: 'An agent ecosystem bootstrapper for turning product requirements into backend and delivery workflows.', href: FORGE_URL, media: PRODUCT_MEDIA.forge },
 ];
