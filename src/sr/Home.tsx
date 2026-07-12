@@ -40,11 +40,11 @@ const REHEARSAL_STEPS = [
     id: 'review',
     number: '04',
     label: 'Review',
-    title: 'A tested correction, with uncertainty attached.',
-    body: 'The operator receives the reproduction result, tested candidate diff, remaining risk, and a reviewable pull request—never a silent production change.',
+    title: 'Verified evidence enters supervised delivery.',
+    body: 'Rehearsal hands the tested diagnosis and candidate change to Convoy. Convoy owns PR review, approval, merge, promotion, and the guarded path toward production.',
     status: 'Evidence ready for review',
     detail: '18 tests passed · p99 386ms · production untouched',
-    output: ['candidate patch applied in sandbox', 'integration suite passed', 'latency returned below threshold', 'pull request draft prepared'],
+    output: ['candidate patch applied in sandbox', 'integration suite passed', 'latency returned below threshold', 'Convoy handoff ready for review'],
   },
 ] as const;
 
@@ -181,7 +181,7 @@ function Rehearsal() {
           {REHEARSAL_STEPS.map((item) => <button key={item.id} type="button" className={item.id === activeStep ? 'active' : ''} onClick={() => setActiveStep(item.id)} role="tab" aria-selected={item.id === activeStep}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v4-rehearsal-grid">
-          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini reasoning</b><b>Daytona sandbox</b><b>Human approval</b></div></div>
+          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini reasoning</b><b>Daytona sandbox</b><b>Convoy handoff</b></div></div>
           <RehearsalSurface step={activeStep} />
         </div>
       </div>
@@ -194,9 +194,9 @@ function Products() {
     {
       status: 'Standalone product',
       name: 'Convoy',
-      tagline: 'Evidence-gated deployment agent.',
-      body: 'Understand a repository, rehearse the release, pause at approval gates, canary, observe, and roll back when health fails.',
-      tags: ['CLI', 'MCP', 'Model-adaptable'],
+      tagline: 'Supervised delivery from PR to production.',
+      body: 'Today Claude opens the PR. Review feedback steers an improved revision; approval merges it, promotes the release, and advances the guarded canary, observation, and production steps.',
+      tags: ['CLI + MCP', 'Approval-gated', 'Model-adaptable'],
       href: CONVOY_URL,
       media: PRODUCT_MEDIA.convoy,
     },
