@@ -5,56 +5,56 @@ import { ImageSlot, LogoMark, Wordmark } from './ui';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
-const REHEARSAL_STEPS = [
+const LOOP_STEPS = [
   {
-    id: 'capture',
+    id: 'map',
     number: '01',
-    label: 'Capture',
-    title: 'Production context, safely packaged.',
-    body: 'GroundControl gathers the alert, service topology, selected logs, repository reference, and a secrets-free environment schema.',
-    status: 'Incident bundle ready',
-    detail: '14 signals · 3 services · secrets removed',
-    output: ['api-prod latency threshold breached', 'service graph attached', 'environment values redacted', 'repository snapshot selected'],
+    label: 'Map',
+    title: 'Know which customer journeys can break.',
+    body: 'Gemini connects the code change to service topology, schemas, existing tests, and confirmed customer flows to map the real blast radius.',
+    status: '6 journeys affected',
+    detail: 'Payment update · checkout, orders, receipts, refunds',
+    output: ['payment handler changed', 'authorization contract affected', 'order and inventory flows linked', '6 customer journeys selected'],
   },
   {
-    id: 'reproduce',
+    id: 'exercise',
     number: '02',
-    label: 'Reproduce',
-    title: 'A disposable twin, not your live server.',
-    body: 'Daytona creates an isolated sandbox from the repository and safe incident context. The failure must reproduce before diagnosis continues.',
-    status: 'Failure reproduced',
-    detail: 'Daytona sandbox · isolated · snapshot saved',
-    output: ['sandbox gc-rh-142 created', 'dependencies restored', 'synthetic load started', 'p99 4,812ms · threshold 900ms'],
+    label: 'Exercise',
+    title: 'Run the release as customers would.',
+    body: 'Daytona creates a disposable Release Twin for the exact commit and artifact. Synthetic customers exercise functional journeys before speed and resource checks begin.',
+    status: 'Customer journeys running',
+    detail: 'Daytona twin · synthetic data · provider test mode',
+    output: ['release twin started', 'successful checkout passed', 'decline path passed', 'duplicate webhook created two orders'],
   },
   {
-    id: 'investigate',
+    id: 'repair',
     number: '03',
-    label: 'Investigate',
-    title: 'Gemini tests the hypothesis.',
-    body: 'Gemini receives scoped tools for repository search, file reads, command execution, and tests. It must verify a diagnosis with evidence.',
-    status: 'Root cause verified',
-    detail: 'High confidence · 6 tool calls · 2 hypotheses rejected',
-    output: ['read slow request trace', 'searched connection pool configuration', 'rejected database saturation hypothesis', 'verified missing client timeout'],
+    label: 'Repair',
+    title: 'A failure becomes a tested correction.',
+    body: 'Gemini reproduces the failed journey, verifies the cause, applies the smallest candidate in Daytona, and reruns related flows before preparing a draft fix PR.',
+    status: 'Repair verified',
+    detail: '19 tests passed · 5 related journeys rechecked',
+    output: ['duplicate order reproduced', 'idempotency guard missing', 'candidate patch applied in twin', 'draft repair PR ready for review'],
   },
   {
-    id: 'review',
+    id: 'release',
     number: '04',
-    label: 'Review',
-    title: 'Verified evidence enters supervised delivery.',
-    body: 'Rehearsal hands the tested diagnosis and candidate change to Convoy. Convoy owns PR review, approval, merge, promotion, and the guarded path toward production.',
-    status: 'Evidence ready for review',
-    detail: '18 tests passed · p99 386ms · production untouched',
-    output: ['candidate patch applied in sandbox', 'integration suite passed', 'latency returned below threshold', 'Convoy handoff ready for review'],
+    label: 'Release',
+    title: 'The same artifact earns promotion.',
+    body: 'After human approval and rebuild, GroundControl starts a bounded canary on the operator\'s VPS, observes deterministic health policy, then promotes or rolls back.',
+    status: 'Canary healthy',
+    detail: '5% traffic · p95 386ms · error rate 0.2%',
+    output: ['approved artifact deployed', 'customer probes passed', 'health remained within policy', 'ready for controlled promotion'],
   },
 ] as const;
 
-type RehearsalStep = (typeof REHEARSAL_STEPS)[number]['id'];
+type LoopStep = (typeof LOOP_STEPS)[number]['id'];
 
 function Nav() {
   const [open, setOpen] = useState(false);
   const links = [
     ['GroundControl', '#groundcontrol'],
-    ['Rehearsal', '#rehearsal'],
+    ['Loop', '#loop'],
     ['Products', '#products'],
     ['Company', '#company'],
   ];
@@ -75,26 +75,26 @@ function Nav() {
   );
 }
 
-function RehearsalSurface({ step = 'review', compact = false }: { step?: RehearsalStep; compact?: boolean }) {
-  const active = REHEARSAL_STEPS.find((item) => item.id === step) ?? REHEARSAL_STEPS[0];
+function LoopSurface({ step = 'release', compact = false }: { step?: LoopStep; compact?: boolean }) {
+  const active = LOOP_STEPS.find((item) => item.id === step) ?? LOOP_STEPS[0];
   return (
-    <div className={`rh-window${compact ? ' compact' : ''}`} aria-label="GroundControl Rehearsal product prototype">
+    <div className={`rh-window${compact ? ' compact' : ''}`} aria-label="GroundControl Loop product prototype">
       <div className="rh-window-bar">
         <div className="rh-dots"><i /><i /><i /></div>
-        <span>GroundControl / Rehearsal / RH-142</span>
+        <span>GroundControl / Loop / LR-142</span>
         <b>Product preview</b>
       </div>
       <div className="rh-window-body">
         <aside className="rh-sidebar">
-          <span className="rh-side-label">Run stages</span>
-          {REHEARSAL_STEPS.map((item) => (
+          <span className="rh-side-label">Loop stages</span>
+          {LOOP_STEPS.map((item) => (
             <div key={item.id} className={item.id === active.id ? 'active' : ''}><i>{item.number}</i><span>{item.label}</span></div>
           ))}
         </aside>
         <main className="rh-main" aria-live="polite">
           <div className="rh-run-head">
-            <div><span>Incident rehearsal</span><h3>{active.status}</h3></div>
-            <em><i /> production untouched</em>
+            <div><span>Release Twin</span><h3>{active.status}</h3></div>
+            <em><i /> production protected</em>
           </div>
           <div className="rh-terminal">
             <div className="rh-terminal-top"><span>evidence stream</span><b>{active.detail}</b></div>
@@ -103,9 +103,9 @@ function RehearsalSurface({ step = 'review', compact = false }: { step?: Rehears
             ))}
           </div>
           <div className="rh-evidence">
-            <div><small>Reproduction</small><strong>{active.id === 'capture' ? 'Pending' : 'Verified'}</strong></div>
-            <div><small>Confidence</small><strong>{active.id === 'investigate' || active.id === 'review' ? 'High' : 'Collecting'}</strong></div>
-            <div><small>Next action</small><strong>{active.id === 'review' ? 'Review PR' : active.label}</strong></div>
+            <div><small>Reproduction</small><strong>{active.id === 'map' ? 'Pending' : 'Verified'}</strong></div>
+            <div><small>Confidence</small><strong>{active.id === 'repair' || active.id === 'release' ? 'High' : 'Collecting'}</strong></div>
+            <div><small>Next action</small><strong>{active.id === 'release' ? 'Promote' : active.label}</strong></div>
           </div>
         </main>
       </div>
@@ -119,15 +119,15 @@ function Hero() {
       <div className="v4-shell v4-hero-grid">
         <div className="v4-hero-copy">
           <p className="v4-kicker">Serendepify · Infrastructure software from Accra</p>
-          <h1>Production,<br /><span>rehearsed before</span><br />it is touched.</h1>
-          <p className="v4-lede">GroundControl makes live infrastructure understandable. Rehearsal recreates a failure in an isolated Daytona sandbox, lets Gemini test the diagnosis, and returns evidence before a human approves the next move.</p>
+          <h1>Every release,<br /><span>tested through</span><br />the real journey.</h1>
+          <p className="v4-lede">GroundControl Loop takes the exact artifact from CI, exercises the customer journeys it can affect inside a Daytona Release Twin, repairs reproducible failures with Gemini, and guards the path onto infrastructure you own.</p>
           <div className="v4-actions">
-            <a className="v4-button primary" href="#rehearsal">Explore Rehearsal <span>↓</span></a>
+            <a className="v4-button primary" href="#loop">Explore Loop <span>↓</span></a>
             <a className="v4-button ghost" href={GC_URL} {...ext}>Open GroundControl ↗</a>
           </div>
-          <div className="v4-signal"><i /><span><b>Product preview</b> · Interactive prototype for the next GroundControl capability</span></div>
+          <div className="v4-signal"><i /><span><b>Product preview</b> · Change-aware journey testing, repair, canary, and rollback</span></div>
         </div>
-        <div className="v4-hero-product"><RehearsalSurface compact /></div>
+        <div className="v4-hero-product"><LoopSurface compact /></div>
       </div>
     </section>
   );
@@ -167,22 +167,22 @@ function GroundControl() {
   );
 }
 
-function Rehearsal() {
-  const [activeStep, setActiveStep] = useState<RehearsalStep>('capture');
-  const active = REHEARSAL_STEPS.find((item) => item.id === activeStep) ?? REHEARSAL_STEPS[0];
+function Loop() {
+  const [activeStep, setActiveStep] = useState<LoopStep>('map');
+  const active = LOOP_STEPS.find((item) => item.id === activeStep) ?? LOOP_STEPS[0];
   return (
-    <section className="v4-section v4-rehearsal" id="rehearsal">
+    <section className="v4-section v4-rehearsal" id="loop">
       <div className="v4-shell">
         <div className="v4-section-head light">
-          <div><p className="v4-kicker">02 · GroundControl Rehearsal</p><h2>Make the incident reproducible.</h2></div>
-          <p>A proposed Gemini + Daytona workflow for moving from production symptoms to tested, reviewable evidence.</p>
+          <div><p className="v4-kicker">02 · GroundControl Loop</p><h2>Failures do not halt the release. They enter repair.</h2></div>
+          <p>A proposed CI-to-production loop for change-aware customer journeys, resilient repair, and controlled rollout on infrastructure the operator owns.</p>
         </div>
-        <div className="v4-step-tabs" role="tablist" aria-label="Rehearsal stages">
-          {REHEARSAL_STEPS.map((item) => <button key={item.id} type="button" className={item.id === activeStep ? 'active' : ''} onClick={() => setActiveStep(item.id)} role="tab" aria-selected={item.id === activeStep}><span>{item.number}</span>{item.label}</button>)}
+        <div className="v4-step-tabs" role="tablist" aria-label="Loop stages">
+          {LOOP_STEPS.map((item) => <button key={item.id} type="button" className={item.id === activeStep ? 'active' : ''} onClick={() => setActiveStep(item.id)} role="tab" aria-selected={item.id === activeStep}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v4-rehearsal-grid">
-          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini reasoning</b><b>Daytona sandbox</b><b>Convoy handoff</b></div></div>
-          <RehearsalSurface step={activeStep} />
+          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini intelligence</b><b>Daytona Release Twin</b><b>Human approval</b></div></div>
+          <LoopSurface step={activeStep} />
         </div>
       </div>
     </section>
@@ -236,5 +236,5 @@ function Footer() {
 }
 
 export default function Home() {
-  return <div className="v4-page"><Nav /><main><Hero /><ProofBar /><GroundControl /><Rehearsal /><Products /><Company /></main><Footer /></div>;
+  return <div className="v4-page"><Nav /><main><Hero /><ProofBar /><GroundControl /><Loop /><Products /><Company /></main><Footer /></div>;
 }
