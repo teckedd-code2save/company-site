@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import { CONVOY_URL, FORGE_URL, GC_URL, PRODUCT_MEDIA } from './media';
+import { CONVOY_URL, FORGE_URL, GC_DEMO_URL, GC_URL, PRODUCT_MEDIA } from './media';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
 import { ImageSlot, LogoMark } from './ui';
 import type { SlotMedia } from './ui';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
+const PITCH_STEPS = ['Thesis', 'Gap', 'Platform', 'Ground Control', 'Convoy', 'Forge', 'Proof'];
 
 const kicker: CSSProperties = {
   fontSize: 14,
@@ -155,21 +156,13 @@ export default function ProductsPage() {
       <a href="/" className="sr-back-btn" style={{ position: 'fixed', top: 22, right: 'clamp(28px, 8vw, 140px)', zIndex: 40 }}>
         ← Back to site
       </a>
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 26,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 40,
-          fontSize: 13,
-          fontWeight: 700,
-          color: 'rgba(245,244,240,0.55)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        Ground Control-led pitch · live surfaces
-      </div>
+      <nav className="sr-pitch-nav" aria-label="Product pitch sections">
+        {PITCH_STEPS.map((step, index) => (
+          <button key={step} type="button" data-sr-snap-go={index} aria-label={`Open ${step} section`}>
+            <span>0{index + 1}</span><b>{step}</b>
+          </button>
+        ))}
+      </nav>
 
       <div className="snap" data-sr-snap>
         <Section bg={<div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 120% at 72% 30%, #3a3327, #16150F 70%)' }} />}>
@@ -178,6 +171,9 @@ export default function ProductsPage() {
             Serendepify is the AI operations layer for teams running production.
           </h2>
           <p style={para}>Ground Control makes a live system legible. Convoy carries controlled changes, and Forge improves the context created upstream. Built in Accra for lean software teams.</p>
+          <div style={ctaRow}>
+            <a href={GC_DEMO_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>Watch operations demo ▶</a>
+          </div>
         </Section>
 
         <Section bg={<div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, #111417 0%, #16150F 52%, #2a1d16 100%)' }} />}>
@@ -250,6 +246,9 @@ export default function ProductsPage() {
           <div style={ctaRow}>
             <a href={GC_URL} {...ext} className="sr-btn sr-btn-primary" style={{ fontWeight: 700 }}>
               Open Ground Control
+            </a>
+            <a href={GC_DEMO_URL} {...ext} className="sr-btn" style={{ fontWeight: 700, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
+              Watch demo
             </a>
             <a href={CONVOY_URL} {...ext} className="sr-btn" style={{ fontWeight: 700, background: 'rgba(245,244,240,0.1)', color: '#F5F4F0', border: '1px solid rgba(245,244,240,0.2)' }}>
               Open Convoy

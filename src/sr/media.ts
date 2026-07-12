@@ -1,6 +1,7 @@
 import type { SlotMedia } from './ui';
 
 export const GC_URL = 'https://groundcontrol.serendepify.com';
+export const GC_DEMO_URL = '/images/products/groundcontrol-copilot.mp4';
 export const FORGE_URL = 'https://www.npmjs.com/package/@teckedd-code2save/forge';
 export const CONVOY_URL = 'https://convoy-home.vercel.app/';
 

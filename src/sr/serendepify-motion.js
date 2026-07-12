@@ -758,9 +758,11 @@
       const headings = g.utils.toArray(wrap.querySelectorAll('.section-heading'));
       const outerWrappers = g.utils.toArray(wrap.querySelectorAll('.outer'));
       const innerWrappers = g.utils.toArray(wrap.querySelectorAll('.inner'));
+      const navButtons = $$('[data-sr-snap-go]');
+      const compact = window.matchMedia('(max-width: 860px)').matches;
 
       let splitHeadings = [];
-      if (SR.plugins.SplitText && headings.length) {
+      if (SR.plugins.SplitText && headings.length && !compact) {
         splitHeadings = headings.map((heading) =>
           new SR.plugins.SplitText(heading, { type: 'chars,words,lines', linesClass: 'clip-text' })
         );
@@ -782,7 +784,7 @@
         const dFactor = fromTop ? -1 : 1;
 
         const tl = g.timeline({
-          defaults: { duration: 1.25, ease: 'power1.inOut' },
+          defaults: { duration: compact ? 0.78 : 1.05, ease: 'power1.inOut' },
           onComplete: () => (animating = false),
         });
 
@@ -818,7 +820,23 @@
         }
 
         currentIndex = index;
+        navButtons.forEach((button, buttonIndex) => {
+          const active = buttonIndex === currentIndex;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-current', active ? 'step' : 'false');
+        });
       }
+
+      navButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          if (!animating && index !== currentIndex) gotoSection(index, index > currentIndex ? 1 : -1);
+        });
+      });
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown' || event.key === 'PageDown') gotoSection(currentIndex + 1, 1);
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') gotoSection(currentIndex - 1, -1);
+      });
 
       Obs.create({
         type: 'wheel,touch,pointer',
@@ -866,7 +884,7 @@
           trigger: wrap,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 2,
+          scrub: 1,
         },
       });
 

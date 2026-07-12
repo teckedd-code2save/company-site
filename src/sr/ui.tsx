@@ -103,6 +103,11 @@ export function ImageSlot({
     const element = videoRef.current;
     if (!element || !media) return;
     element.muted = true;
+    const staticMedia = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 680px)').matches;
+    if (staticMedia) {
+      element.pause();
+      return;
+    }
     const play = () => {
       element.play().catch(() => {});
     };

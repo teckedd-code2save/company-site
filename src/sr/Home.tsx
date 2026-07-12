@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import { CONVOY_URL, FORGE_URL, GC_URL, PRODUCT_MEDIA } from './media';
+import { CONVOY_URL, FORGE_URL, GC_DEMO_URL, GC_URL, PRODUCT_MEDIA } from './media';
 import { useSerendepifyMotion } from './useSerendepifyMotion';
 import type { SlotMedia } from './ui';
 import { ImageSlot, LogoMark, Wordmark } from './ui';
@@ -188,6 +188,7 @@ function Hero() {
                 <span data-sr-magnetic-inner style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>Open Ground Control ↗</span>
               </a>
               <a href="#lifecycle" className="sr-btn sr-btn-ghost" style={{ fontWeight: 600 }}>See the operating system</a>
+              <a href={GC_DEMO_URL} {...ext} className="sr-demo-link">Watch the operations demo <span aria-hidden="true">▶</span></a>
             </div>
           </div>
           <div className="sr-hero-stats" data-sr-hero-item style={{ display: 'flex', gap: 40, justifyContent: 'flex-end' }}>
@@ -207,16 +208,49 @@ function Hero() {
         </div>
         <div
           data-sr-image
-          className="sr-card"
+          className="sr-card sr-hero-ops-card"
           style={{ marginTop: 56, aspectRatio: '16 / 8.4', boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}
         >
           <ImageSlot
-            label="Ground Control — dashboard overview"
-            media={PRODUCT_MEDIA.groundControlDashboard}
+            absolute
+            label="Ground Control — AI operations surface"
+            media={PRODUCT_MEDIA.groundControl}
             mediaFit="contain"
             background="#111417"
           />
+          <div className="sr-live-pill"><span /> Live early access</div>
+          <div className="sr-ops-dock" aria-label="Ground Control capabilities">
+            <div><small>Health</small><strong>Visible</strong></div>
+            <div><small>Changes</small><strong>Reviewable</strong></div>
+            <div><small>Rollouts</small><strong>Controlled</strong></div>
+          </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function ProofStrip() {
+  const proof = [
+    ['Live cockpit', 'Ground Control is available as an early-access operational surface.'],
+    ['Controlled rollout', 'Convoy exposes rehearsal, approval gates, canaries, and observation.'],
+    ['Open build layer', 'Forge is published for teams shaping stronger build context upstream.'],
+  ];
+
+  return (
+    <section className="sr-proof-strip" aria-label="Working product proof">
+      <div className="sr-container sr-proof-grid">
+        <div className="sr-proof-intro">
+          <span>Working product proof</span>
+          <strong>Not a slide-only concept.</strong>
+        </div>
+        {proof.map(([title, body], index) => (
+          <article key={title} data-sr-reveal>
+            <b>0{index + 1}</b>
+            <h2>{title}</h2>
+            <p>{body}</p>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -269,7 +303,7 @@ function FlipBeat() {
   const s = FLIP_STAGES[stage];
 
   return (
-    <section ref={sectionRef} data-sr-flip-scroll style={{ height: '300vh', position: 'relative', background: 'var(--sr-bg)' }}>
+    <section ref={sectionRef} data-sr-flip-scroll className="sr-flip-section" style={{ position: 'relative', background: 'var(--sr-bg)' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div className="sr-container" style={{ paddingTop: 96 }}>
           <h2
@@ -520,46 +554,40 @@ function AgentsPipeline() {
           </p>
         </div>
 
-        <div data-sr-draw data-sr-path data-sr-stagger="0.16" style={{ position: 'relative', marginTop: 'clamp(48px, 7vw, 88px)' }}>
-          <svg viewBox="0 0 1120 300" style={{ width: '100%', overflow: 'visible' }}>
-            <path
-              d="M 40 200 C 200 200 200 120 360 120 C 520 120 520 200 680 200 C 840 200 840 110 1000 110 L 1080 110"
-              fill="none"
-              stroke="rgba(245,244,240,0.12)"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              data-sr-path-line
-              d="M 40 200 C 200 200 200 120 360 120 C 520 120 520 200 680 200 C 840 200 840 110 1000 110 L 1080 110"
-              fill="none"
-              stroke="var(--sr-coral-bright)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              style={{ filter: 'drop-shadow(0 0 7px rgba(255,106,64,0.55))' }}
-            />
+        <div data-sr-draw data-sr-path data-sr-stagger="0.16" className="sr-system-hub">
+          <svg viewBox="0 0 1120 360" role="img" aria-label="Forge supplies upstream context to Ground Control while Convoy carries controlled actions">
+            <defs>
+              <marker id="sr-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--sr-coral-bright)" />
+              </marker>
+            </defs>
+            <path d="M 275 180 C 350 180 370 180 430 180" fill="none" stroke="rgba(245,244,240,0.12)" strokeWidth="2" />
+            <path d="M 690 180 C 750 180 775 180 845 180" fill="none" stroke="rgba(245,244,240,0.12)" strokeWidth="2" />
+            <path data-sr-path data-sr-path-line d="M 275 180 C 350 180 370 180 430 180" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="3" strokeLinecap="round" markerEnd="url(#sr-arrow)" />
+            <path data-sr-path data-sr-path-line d="M 690 180 C 750 180 775 180 845 180" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="3" strokeLinecap="round" markerEnd="url(#sr-arrow)" />
 
             <g>
-              <circle data-sr-path cx="360" cy="120" r="27" fill="#16150F" stroke="rgba(245,244,240,0.55)" strokeWidth="2" />
-              <path data-sr-path d="M 360 108 L 372 120 L 360 132 L 348 120 Z" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.2" strokeLinejoin="round" />
-              <text x="360" y="186" textAnchor="middle" className="sr-display" style={{ fontSize: '22px', fontWeight: 700, fill: '#F5F4F0' }}>Forge</text>
-              <text x="360" y="208" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.5)' }}>builds it</text>
-            </g>
-            <g>
-              <circle data-sr-path cx="680" cy="200" r="27" fill="#16150F" stroke="rgba(245,244,240,0.55)" strokeWidth="2" />
-              <path data-sr-path d="M 668 200 L 690 200 M 683 192 L 691 200 L 683 208" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="680" y="266" textAnchor="middle" className="sr-display" style={{ fontSize: '22px', fontWeight: 700, fill: '#F5F4F0' }}>Convoy</text>
-              <text x="680" y="288" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.5)' }}>rolls it out</text>
-            </g>
-            <g>
-              <circle data-sr-path cx="1000" cy="110" r="27" fill="#16150F" stroke="var(--sr-coral)" strokeWidth="2.5" />
-              <circle data-sr-path cx="1000" cy="110" r="6" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.2" />
-              <path data-sr-path d="M 1000 110 L 1014 96" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.2" strokeLinecap="round" />
-              <text x="1000" y="176" textAnchor="middle" className="sr-display" style={{ fontSize: '22px', fontWeight: 700, fill: '#F5F4F0' }}>Ground Control</text>
-              <text x="1000" y="198" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.5)' }}>runs it</text>
+              <rect x="90" y="105" width="185" height="150" rx="30" fill="rgba(245,244,240,0.04)" stroke="rgba(245,244,240,0.24)" />
+              <text x="182" y="164" textAnchor="middle" className="sr-display" style={{ fontSize: '24px', fontWeight: 800, fill: '#F5F4F0' }}>Forge</text>
+              <text x="182" y="194" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.52)' }}>upstream context</text>
+              <text x="182" y="216" textAnchor="middle" style={{ fontSize: '12px', fontWeight: 500, fill: 'rgba(245,244,240,0.38)' }}>plan · architecture · build</text>
             </g>
 
-            <circle data-sr-path-dot cx="40" cy="200" r="7" fill="var(--sr-coral-bright)" style={{ filter: 'drop-shadow(0 0 9px rgba(255,106,64,0.9))' }} />
+            <g>
+              <rect x="430" y="65" width="260" height="230" rx="42" fill="rgba(255,106,64,0.12)" stroke="var(--sr-coral-bright)" strokeWidth="2.5" />
+              <circle cx="560" cy="130" r="25" fill="none" stroke="var(--sr-coral-bright)" strokeWidth="2.5" />
+              <circle cx="560" cy="130" r="6" fill="var(--sr-coral-bright)" />
+              <text x="560" y="197" textAnchor="middle" className="sr-display" style={{ fontSize: '29px', fontWeight: 800, fill: '#F5F4F0' }}>Ground Control</text>
+              <text x="560" y="229" textAnchor="middle" style={{ fontSize: '14px', fontWeight: 700, fill: 'var(--sr-coral-bright)' }}>observe · decide</text>
+              <text x="560" y="253" textAnchor="middle" style={{ fontSize: '12px', fontWeight: 500, fill: 'rgba(245,244,240,0.48)' }}>health · services · logs · actions</text>
+            </g>
+
+            <g>
+              <rect x="845" y="105" width="185" height="150" rx="30" fill="rgba(245,244,240,0.04)" stroke="rgba(245,244,240,0.24)" />
+              <text x="937" y="164" textAnchor="middle" className="sr-display" style={{ fontSize: '24px', fontWeight: 800, fill: '#F5F4F0' }}>Convoy</text>
+              <text x="937" y="194" textAnchor="middle" style={{ fontSize: '13px', fontWeight: 600, fill: 'rgba(245,244,240,0.52)' }}>controlled action</text>
+              <text x="937" y="216" textAnchor="middle" style={{ fontSize: '12px', fontWeight: 500, fill: 'rgba(245,244,240,0.38)' }}>rehearse · gate · verify</text>
+            </g>
           </svg>
         </div>
       </div>
@@ -848,6 +876,7 @@ export default function Home() {
       <div className="sr-scroll-progress" data-sr-scroll-progress />
       <Nav />
       <Hero />
+      <ProofStrip />
       <FlipBeat />
       <Lifecycle />
       <AgentsPipeline />

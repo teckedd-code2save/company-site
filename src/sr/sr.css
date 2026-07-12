@@ -58,6 +58,30 @@ body { overflow-x: visible; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
+/* ── Ground Control hero surface ─────────────────────────────── */
+.sr-demo-link { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 4px; color: var(--sr-text-55); font-size: 13px; font-weight: 700; border-bottom: 1px solid rgba(27,25,22,.28); transition: color .2s, border-color .2s; }
+.sr-demo-link:hover { color: var(--sr-text-90); border-color: var(--sr-coral); }
+.sr-hero-ops-card { position: relative; isolation: isolate; background: #111417; }
+.sr-live-pill { position: absolute; z-index: 5; top: 18px; left: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid rgba(245,244,240,.2); border-radius: var(--radius-pill); background: rgba(17,20,23,.72); color: rgba(245,244,240,.88); backdrop-filter: blur(12px); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; pointer-events: none; }
+.sr-live-pill span { width: 7px; height: 7px; border-radius: 50%; background: #6ee7a8; box-shadow: 0 0 0 5px rgba(110,231,168,.12); }
+.sr-ops-dock { position: absolute; z-index: 5; left: 50%; bottom: 18px; width: min(620px, calc(100% - 36px)); transform: translateX(-50%); display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(245,244,240,.18); border-radius: var(--radius-lg); background: rgba(17,20,23,.78); color: #F5F4F0; backdrop-filter: blur(16px); box-shadow: 0 18px 42px rgba(0,0,0,.26); pointer-events: none; }
+.sr-ops-dock div { padding: 13px 18px; }
+.sr-ops-dock div + div { border-left: 1px solid rgba(245,244,240,.12); }
+.sr-ops-dock small, .sr-ops-dock strong { display: block; }
+.sr-ops-dock small { color: rgba(245,244,240,.5); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.sr-ops-dock strong { margin-top: 4px; font-size: 14px; }
+
+/* ── Verifiable product proof ────────────────────────────────── */
+.sr-proof-strip { border-top: 1px solid var(--sr-stone); border-bottom: 1px solid var(--sr-stone); background: var(--sr-paper); }
+.sr-proof-grid { display: grid; grid-template-columns: 1.08fr repeat(3, 1fr); }
+.sr-proof-intro, .sr-proof-grid article { min-height: 190px; padding: 30px 26px; }
+.sr-proof-grid article { border-left: 1px solid var(--sr-stone); }
+.sr-proof-intro { display: flex; flex-direction: column; justify-content: space-between; }
+.sr-proof-intro span, .sr-proof-grid article b { color: var(--sr-coral); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.sr-proof-intro strong { max-width: 12ch; font-family: var(--font-display); font-size: 26px; line-height: 1.05; }
+.sr-proof-grid article h2 { margin-top: 34px; font-family: var(--font-display); font-size: 19px; font-weight: 800; }
+.sr-proof-grid article p { margin-top: 9px; color: var(--sr-text-55); font-size: 13px; font-weight: 500; line-height: 1.55; }
+
 /* ── Expandable product media ─────────────────────────────────── */
 .sr-media-slot {
   border: 0;
@@ -223,6 +247,7 @@ ul { list-style: none; }
  * Markers define the geometries the card fits to (GSAP Flip.getState reads
  * these rects). Stations are the ghost labels. Kept in CSS so they can be made
  * responsive — the inline-style version couldn't be media-queried. */
+.sr-flip-section { height: 210vh; }
 .sr-fmarker { position: absolute; }
 .sr-fm0 { left: 7%;  top: 47%; width: 300px; height: 210px; }
 .sr-fm1 { left: 40%; top: 61%; width: 260px; height: 180px; }
@@ -241,6 +266,9 @@ ul { list-style: none; }
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.sr-system-hub { position: relative; margin-top: clamp(46px, 6vw, 78px); }
+.sr-system-hub svg { display: block; width: 100%; overflow: visible; }
 
 @media (max-width: 860px) {
   /* On small screens the horizontal "line" doesn't fit; let the card travel
@@ -298,6 +326,12 @@ ul { list-style: none; }
 }
 .sr-back-btn:hover { background: rgba(245, 244, 240, 0.16); transform: translateY(-1px); }
 
+.sr-pitch-nav { position: fixed; z-index: 50; left: 50%; bottom: 22px; width: min(860px, calc(100% - 40px)); transform: translateX(-50%); display: grid; grid-template-columns: repeat(7, 1fr); padding: 5px; border: 1px solid rgba(245,244,240,.16); border-radius: var(--radius-pill); background: rgba(22,21,15,.72); backdrop-filter: blur(18px); }
+.sr-pitch-nav button { min-width: 0; padding: 9px 8px; border: 0; border-radius: var(--radius-pill); background: transparent; color: rgba(245,244,240,.44); cursor: pointer; font: inherit; transition: color .2s, background .2s; }
+.sr-pitch-nav button span { display: block; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.sr-pitch-nav button b { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; font-size: 11px; white-space: nowrap; }
+.sr-pitch-nav button:hover, .sr-pitch-nav button.active { color: #F5F4F0; background: rgba(245,244,240,.1); }
+
 /* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 860px) {
   .sr-grid-2 { grid-template-columns: 1fr !important; }
@@ -305,4 +339,23 @@ ul { list-style: none; }
   .sr-hero-stats { justify-content: flex-start !important; }
   .sr-bento { grid-template-columns: repeat(2, 1fr) !important; }
   .sr-bento > * { grid-column: span 2 !important; }
+  .sr-hero-ops-card { aspect-ratio: 4 / 3 !important; }
+  .sr-live-pill { top: 12px; left: 12px; }
+  .sr-ops-dock { bottom: 12px; width: calc(100% - 24px); }
+  .sr-ops-dock div { padding: 10px 9px; }
+  .sr-ops-dock strong { font-size: 12px; }
+  .sr-proof-grid { grid-template-columns: 1fr; }
+  .sr-proof-intro, .sr-proof-grid article { min-height: auto; padding: 24px 4px; }
+  .sr-proof-grid article { border-left: 0; border-top: 1px solid var(--sr-stone); }
+  .sr-proof-intro { gap: 24px; }
+  .sr-proof-grid article h2 { margin-top: 14px; }
+  .sr-flip-section { height: 165vh; }
+  .sr-system-hub { margin-inline: -22px; overflow-x: auto; }
+  .sr-system-hub svg { min-width: 760px; }
+  .sr-pitch-nav { width: calc(100% - 24px); bottom: 12px; display: flex; overflow-x: auto; border-radius: var(--radius-lg); }
+  .sr-pitch-nav button { flex: 0 0 84px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-pitch-nav button { transition: none; }
 }
