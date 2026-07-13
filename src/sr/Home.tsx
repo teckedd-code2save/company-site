@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { siteConfig } from '@/lib/site-config';
 import { CONVOY_URL, FORGE_URL, GC_URL } from './media';
 import { LogoMark, Wordmark } from './ui';
@@ -64,6 +65,10 @@ const INTELLIGENCE_STAGES = [
 ] as const;
 
 type IntelligenceStage = (typeof INTELLIGENCE_STAGES)[number]['id'];
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (update: () => void) => void;
+};
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -141,15 +146,19 @@ function Hero() {
     <section className="v5-hero" id="top">
       <div className="v5-hero-glow" />
       <div className="v5-shell">
-        <div className="v5-hero-copy">
-          <p className="v5-kicker"><i /> Infrastructure intelligence from Accra</p>
-          <h1>Software that keeps <em>your software</em> running.</h1>
-          <p className="v5-lede">Serendepify builds operational intelligence for lean teams running applications on their own infrastructure. GroundControl understands every service, tests meaningful changes and guides safe recovery when something breaks.</p>
-          <div className="v5-actions">
-            <a className="v5-button primary" href="#autopilot">See the intelligence <span>↓</span></a>
-            <a className="v5-button secondary" href={GC_URL} {...ext}>Open GroundControl <span>↗</span></a>
+        <div className="v5-hero-intro">
+          <div className="v5-hero-copy">
+            <p className="v5-kicker"><i /> Infrastructure intelligence from Accra</p>
+            <h1>Software that keeps <em>your software</em> running.</h1>
           </div>
-          <div className="v5-hero-note"><span>01</span><p><b>Built for infrastructure you own.</b> Docker Compose first. Existing pipelines welcome. Operator control preserved.</p></div>
+          <div className="v5-hero-support">
+            <p className="v5-lede">Serendepify builds operational intelligence for lean teams running applications on their own infrastructure. GroundControl understands every service, tests meaningful changes and guides safe recovery when something breaks.</p>
+            <div className="v5-actions">
+              <a className="v5-button primary" href="#autopilot">See the intelligence <span>↓</span></a>
+              <a className="v5-button secondary" href={GC_URL} {...ext}>Open GroundControl <span>↗</span></a>
+            </div>
+            <div className="v5-hero-note"><span>01</span><p><b>Built for infrastructure you own.</b> Docker Compose first. Existing pipelines welcome. Operator control preserved.</p></div>
+          </div>
         </div>
         <div className="v5-hero-surface"><IntelligenceSurface /></div>
       </div>
@@ -191,6 +200,20 @@ function Autopilot() {
   const sectionRef = useRef<HTMLElement>(null);
   const active = INTELLIGENCE_STAGES.find((item) => item.id === activeStage) ?? INTELLIGENCE_STAGES[0];
 
+  const selectStage = useCallback((stage: IntelligenceStage) => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const transitionDocument = document as ViewTransitionDocument;
+
+    if (reduceMotion || !transitionDocument.startViewTransition) {
+      setActiveStage(stage);
+      return;
+    }
+
+    transitionDocument.startViewTransition(() => {
+      flushSync(() => setActiveStage(stage));
+    });
+  }, []);
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -207,14 +230,12 @@ function Autopilot() {
     if (!isInView || isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const timer = window.setTimeout(() => {
-      setActiveStage((current) => {
-        const currentIndex = INTELLIGENCE_STAGES.findIndex((item) => item.id === current);
-        return INTELLIGENCE_STAGES[(currentIndex + 1) % INTELLIGENCE_STAGES.length].id;
-      });
+      const currentIndex = INTELLIGENCE_STAGES.findIndex((item) => item.id === activeStage);
+      selectStage(INTELLIGENCE_STAGES[(currentIndex + 1) % INTELLIGENCE_STAGES.length].id);
     }, 4200);
 
     return () => window.clearTimeout(timer);
-  }, [activeStage, isInView, isPaused]);
+  }, [activeStage, isInView, isPaused, selectStage]);
 
   return (
     <section
@@ -230,11 +251,11 @@ function Autopilot() {
         <div className="v5-section-label light"><span>02</span><p>Proactive autopilot</p><b>Product direction</b></div>
         <div className="v5-autopilot-head"><h2>When the host changes,<br />GroundControl proves what still works.</h2><p>It selects tests from the affected service graph, investigates regressions and chooses the least disruptive path back to health.</p></div>
         <div className="v5-stage-tabs" role="tablist" aria-label="GroundControl intelligence stages">
-          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setActiveStage(item.id); setIsPaused(false); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
+          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setIsPaused(false); selectStage(item.id); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v5-stage-layout">
           <div className="v5-stage-copy" key={active.id}><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
-          <IntelligenceSurface stage={activeStage} />
+          <div className="v5-stage-surface" key={active.id}><IntelligenceSurface stage={activeStage} /></div>
         </div>
       </div>
     </section>
