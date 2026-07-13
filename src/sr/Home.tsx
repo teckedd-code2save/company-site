@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { useEffect, useRef, useState } from 'react';
 import { siteConfig } from '@/lib/site-config';
 import { CONVOY_URL, FORGE_URL, GC_URL } from './media';
 import { LogoMark, Wordmark } from './ui';
@@ -65,10 +64,6 @@ const INTELLIGENCE_STAGES = [
 ] as const;
 
 type IntelligenceStage = (typeof INTELLIGENCE_STAGES)[number]['id'];
-
-type ViewTransitionDocument = Document & {
-  startViewTransition?: (update: () => void) => void;
-};
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -200,20 +195,6 @@ function Autopilot() {
   const sectionRef = useRef<HTMLElement>(null);
   const active = INTELLIGENCE_STAGES.find((item) => item.id === activeStage) ?? INTELLIGENCE_STAGES[0];
 
-  const selectStage = useCallback((stage: IntelligenceStage) => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const transitionDocument = document as ViewTransitionDocument;
-
-    if (reduceMotion || !transitionDocument.startViewTransition) {
-      setActiveStage(stage);
-      return;
-    }
-
-    transitionDocument.startViewTransition(() => {
-      flushSync(() => setActiveStage(stage));
-    });
-  }, []);
-
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -230,12 +211,14 @@ function Autopilot() {
     if (!isInView || isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const timer = window.setTimeout(() => {
-      const currentIndex = INTELLIGENCE_STAGES.findIndex((item) => item.id === activeStage);
-      selectStage(INTELLIGENCE_STAGES[(currentIndex + 1) % INTELLIGENCE_STAGES.length].id);
+      setActiveStage((current) => {
+        const currentIndex = INTELLIGENCE_STAGES.findIndex((item) => item.id === current);
+        return INTELLIGENCE_STAGES[(currentIndex + 1) % INTELLIGENCE_STAGES.length].id;
+      });
     }, 4200);
 
     return () => window.clearTimeout(timer);
-  }, [activeStage, isInView, isPaused, selectStage]);
+  }, [activeStage, isInView, isPaused]);
 
   return (
     <section
@@ -251,7 +234,7 @@ function Autopilot() {
         <div className="v5-section-label light"><span>02</span><p>Proactive autopilot</p><b>Product direction</b></div>
         <div className="v5-autopilot-head"><h2>When the host changes,<br />GroundControl proves what still works.</h2><p>It selects tests from the affected service graph, investigates regressions and chooses the least disruptive path back to health.</p></div>
         <div className="v5-stage-tabs" role="tablist" aria-label="GroundControl intelligence stages">
-          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setIsPaused(false); selectStage(item.id); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
+          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setIsPaused(false); setActiveStage(item.id); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v5-stage-layout">
           <div className="v5-stage-copy" key={active.id}><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
