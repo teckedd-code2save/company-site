@@ -21,10 +21,10 @@ const LOOP_STEPS = [
     number: '02',
     label: 'Exercise',
     title: 'Run the release as customers would.',
-    body: 'Daytona creates a disposable Release Twin for the exact commit and artifact. Synthetic customers exercise functional journeys before speed and resource checks begin.',
+    body: 'Loop creates an isolated Daytona environment for the exact commit and artifact. Synthetic customers exercise functional journeys before speed and resource checks begin.',
     status: 'Customer journeys running',
     detail: 'Daytona twin · synthetic data · provider test mode',
-    output: ['release twin started', 'successful checkout passed', 'decline path passed', 'duplicate webhook created two orders'],
+    output: ['Loop environment started', 'successful checkout passed', 'decline path passed', 'duplicate webhook created two orders'],
   },
   {
     id: 'repair',
@@ -93,7 +93,7 @@ function LoopSurface({ step = 'release', compact = false }: { step?: LoopStep; c
         </aside>
         <main className="rh-main" aria-live="polite">
           <div className="rh-run-head">
-            <div><span>Release Twin</span><h3>{active.status}</h3></div>
+            <div><span>Loop Run</span><h3>{active.status}</h3></div>
             <em><i /> production protected</em>
           </div>
           <div className="rh-terminal">
@@ -120,7 +120,7 @@ function Hero() {
         <div className="v4-hero-copy">
           <p className="v4-kicker">Serendepify · Infrastructure software from Accra</p>
           <h1>Every release,<br /><span>tested through</span><br />the real journey.</h1>
-          <p className="v4-lede">GroundControl Loop takes the exact artifact from CI, exercises the customer journeys it can affect inside a Daytona Release Twin, repairs reproducible failures with Gemini, and guards the path onto infrastructure you own.</p>
+          <p className="v4-lede">GroundControl Loop takes the exact artifact from CI, exercises the customer journeys it can affect inside an isolated Daytona environment, repairs reproducible failures with Gemini, and guards the path onto infrastructure you own.</p>
           <div className="v4-actions">
             <a className="v4-button primary" href="#loop">Explore Loop <span>↓</span></a>
             <a className="v4-button ghost" href={GC_URL} {...ext}>Open GroundControl ↗</a>
@@ -181,7 +181,7 @@ function Loop() {
           {LOOP_STEPS.map((item) => <button key={item.id} type="button" className={item.id === activeStep ? 'active' : ''} onClick={() => setActiveStep(item.id)} role="tab" aria-selected={item.id === activeStep}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v4-rehearsal-grid">
-          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini intelligence</b><b>Daytona Release Twin</b><b>Human approval</b></div></div>
+          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini intelligence</b><b>Daytona isolation</b><b>Human approval</b></div></div>
           <LoopSurface step={activeStep} />
         </div>
       </div>
