@@ -237,8 +237,8 @@ function Autopilot() {
           {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setIsPaused(false); setActiveStage(item.id); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v5-stage-layout">
-          <div className="v5-stage-copy" key={active.id}><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
-          <div className="v5-stage-surface" key={active.id}><IntelligenceSurface stage={activeStage} /></div>
+          <div className="v5-stage-copy" key={`copy-${active.id}`}><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
+          <div className="v5-stage-surface" key={`surface-${active.id}`}><IntelligenceSurface stage={activeStage} /></div>
         </div>
       </div>
     </section>
