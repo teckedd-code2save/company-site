@@ -1,111 +1,134 @@
 import { useState } from 'react';
 import { siteConfig } from '@/lib/site-config';
-import { CONVOY_URL, FORGE_URL, GC_URL, PRODUCT_MEDIA } from './media';
-import { ImageSlot, LogoMark, Wordmark } from './ui';
+import { CONVOY_URL, FORGE_URL, GC_URL } from './media';
+import { LogoMark, Wordmark } from './ui';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
-const LOOP_STEPS = [
+const INTELLIGENCE_STAGES = [
   {
-    id: 'map',
+    id: 'observe',
     number: '01',
-    label: 'Map',
-    title: 'Know which customer journeys can break.',
-    body: 'Gemini connects the code change to service topology, schemas, existing tests, and confirmed customer flows to map the real blast radius.',
-    status: '6 journeys affected',
-    detail: 'Payment update · checkout, orders, receipts, refunds',
-    output: ['payment handler changed', 'authorization contract affected', 'order and inventory flows linked', '6 customer journeys selected'],
+    label: 'Observe',
+    eyebrow: 'Host change detected',
+    title: 'A release changed the API topology.',
+    body: 'GroundControl sees the new image, Compose revision, container state, proxy route and public endpoint as one connected operational event.',
+    signal: 'deploy/api@2f81c6',
+    result: '4 affected relationships',
+    logs: ['image api@sha256:2f81 deployed', 'container api replaced', 'internal port 8080 → 3000', 'checkout.serendepify.com affected'],
   },
   {
-    id: 'exercise',
+    id: 'trace',
     number: '02',
-    label: 'Exercise',
-    title: 'Run the release as customers would.',
-    body: 'Loop creates an isolated Daytona environment for the exact commit and artifact. Synthetic customers exercise functional journeys before speed and resource checks begin.',
-    status: 'Customer journeys running',
-    detail: 'Daytona twin · synthetic data · provider test mode',
-    output: ['Loop environment started', 'successful checkout passed', 'decline path passed', 'duplicate webhook created two orders'],
+    label: 'Understand',
+    eyebrow: 'Service graph updated',
+    title: 'The public route no longer reaches the app.',
+    body: 'The live service graph traces the domain through Caddy and the Docker network, then compares the current topology with the last verified healthy state.',
+    signal: 'caddy → api:8080',
+    result: 'upstream mismatch',
+    logs: ['DNS resolves correctly', 'TLS certificate is valid', 'Caddy route targets api:8080', 'application now listens on api:3000'],
   },
   {
-    id: 'repair',
+    id: 'test',
     number: '03',
-    label: 'Repair',
-    title: 'A failure becomes a tested correction.',
-    body: 'Gemini reproduces the failed journey, verifies the cause, applies the smallest candidate in Daytona, and reruns related flows before preparing a draft fix PR.',
-    status: 'Repair verified',
-    detail: '19 tests passed · 5 related journeys rechecked',
-    output: ['duplicate order reproduced', 'idempotency guard missing', 'candidate patch applied in twin', 'draft repair PR ready for review'],
+    label: 'Test',
+    eyebrow: 'Customer journey failed',
+    title: 'Checkout is broken outside the host.',
+    body: 'A targeted synthetic customer journey runs because the API and proxy changed. It verifies the experience from the public internet—not just container health.',
+    signal: 'checkout / submit',
+    result: '502 in 184ms',
+    logs: ['homepage reachable', 'cart created', 'checkout submission failed: 502', 'failure isolated to payments API route'],
   },
   {
-    id: 'release',
+    id: 'recover',
     number: '04',
-    label: 'Release',
-    title: 'The same artifact earns promotion.',
-    body: 'After human approval and rebuild, GroundControl starts a bounded canary on the operator\'s VPS, observes deterministic health policy, then promotes or rolls back.',
-    status: 'Canary healthy',
-    detail: '5% traffic · p95 386ms · error rate 0.2%',
-    output: ['approved artifact deployed', 'customer probes passed', 'health remained within policy', 'ready for controlled promotion'],
+    label: 'Recover',
+    eyebrow: 'Reversible repair prepared',
+    title: 'The smallest safe correction is ready.',
+    body: 'GroundControl validates a proxy diff, explains the evidence and prepares an exact rollback. Policy decides whether to guide, request approval or act automatically.',
+    signal: 'reverse_proxy api:3000',
+    result: 'risk: low · reversible',
+    logs: ['candidate Caddy config generated', 'caddy validate passed', 'upstream reachable from proxy network', 'previous revision retained for rollback'],
+  },
+  {
+    id: 'verify',
+    number: '05',
+    label: 'Verify',
+    eyebrow: 'Recovery proven',
+    title: 'The customer journey works again.',
+    body: 'The repair is only complete after the public journey passes. GroundControl records the evidence, confirmed cause and successful action as operational memory.',
+    signal: 'checkout / complete',
+    result: '200 · 612ms · healthy',
+    logs: ['Caddy reloaded without restart', 'public API probe passed', 'checkout journey completed', 'incident linked to change and repair'],
   },
 ] as const;
 
-type LoopStep = (typeof LOOP_STEPS)[number]['id'];
+type IntelligenceStage = (typeof INTELLIGENCE_STAGES)[number]['id'];
 
 function Nav() {
   const [open, setOpen] = useState(false);
   const links = [
     ['GroundControl', '#groundcontrol'],
-    ['Loop', '#loop'],
-    ['Products', '#products'],
+    ['Autopilot', '#autopilot'],
+    ['How it works', '#intelligence'],
     ['Company', '#company'],
   ];
 
   return (
-    <header className="v4-nav">
-      <div className="v4-shell v4-nav-inner">
-        <a href="#top" className="v4-brand" aria-label="Serendepify home"><LogoMark size={28} /><Wordmark /></a>
-        <nav className={`v4-links${open ? ' open' : ''}`} aria-label="Primary navigation">
+    <header className="v5-nav">
+      <div className="v5-shell v5-nav-inner">
+        <a href="#top" className="v5-brand" aria-label="Serendepify home"><LogoMark size={29} /><Wordmark /></a>
+        <nav className={`v5-links${open ? ' open' : ''}`} aria-label="Primary navigation">
           {links.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
-          <a className="v4-nav-cta" href={GC_URL} {...ext}>Open GroundControl ↗</a>
+          <a className="v5-nav-cta" href={GC_URL} {...ext}>Open GroundControl <span>↗</span></a>
         </nav>
-        <button className="v4-menu" type="button" aria-label="Toggle navigation" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
-          <span /><span />
-        </button>
+        <button className="v5-menu" type="button" aria-label="Toggle navigation" aria-expanded={open} onClick={() => setOpen((value) => !value)}><span /><span /></button>
       </div>
     </header>
   );
 }
 
-function LoopSurface({ step = 'release', compact = false }: { step?: LoopStep; compact?: boolean }) {
-  const active = LOOP_STEPS.find((item) => item.id === step) ?? LOOP_STEPS[0];
+function IntelligenceSurface({ stage = 'trace' }: { stage?: IntelligenceStage }) {
+  const active = INTELLIGENCE_STAGES.find((item) => item.id === stage) ?? INTELLIGENCE_STAGES[0];
   return (
-    <div className={`rh-window${compact ? ' compact' : ''}`} aria-label="GroundControl Loop product prototype">
-      <div className="rh-window-bar">
-        <div className="rh-dots"><i /><i /><i /></div>
-        <span>GroundControl / Loop / LR-142</span>
-        <b>Product preview</b>
+    <div className="v5-surface" aria-label="GroundControl intelligence product direction">
+      <div className="v5-surface-top">
+        <div><i /><i /><i /></div>
+        <span>groundcontrol / investigation / gc-1842</span>
+        <b><i /> product direction</b>
       </div>
-      <div className="rh-window-body">
-        <aside className="rh-sidebar">
-          <span className="rh-side-label">Loop stages</span>
-          {LOOP_STEPS.map((item) => (
-            <div key={item.id} className={item.id === active.id ? 'active' : ''}><i>{item.number}</i><span>{item.label}</span></div>
-          ))}
+      <div className="v5-surface-body">
+        <aside className="v5-rail">
+          <strong>GroundControl</strong>
+          <p>Operations</p>
+          <nav>
+            <span className="active"><i /> Intelligence <b>1</b></span>
+            <span><i /> Applications</span>
+            <span><i /> Changes</span>
+            <span><i /> Journeys</span>
+            <span><i /> Hosts</span>
+          </nav>
+          <div className="v5-host-health"><i /><div><b>accra-prod-01</b><small>connected · healthy</small></div></div>
         </aside>
-        <main className="rh-main" aria-live="polite">
-          <div className="rh-run-head">
-            <div><span>Loop Run</span><h3>{active.status}</h3></div>
-            <em><i /> production protected</em>
+        <main className="v5-console">
+          <div className="v5-console-head">
+            <div><span>INCIDENT GC-1842</span><h3>{active.eyebrow}</h3></div>
+            <b className="v5-live"><i /> investigating</b>
           </div>
-          <div className="rh-terminal">
-            <div className="rh-terminal-top"><span>evidence stream</span><b>{active.detail}</b></div>
-            {active.output.map((line, index) => (
-              <div className="rh-log" key={line}><span>{String(index + 1).padStart(2, '0')}</span><i className={index === active.output.length - 1 ? 'ok' : ''}>◆</i><code>{line}</code></div>
-            ))}
+          <div className="v5-impact-row">
+            <div><small>Signal</small><strong>{active.signal}</strong></div>
+            <div><small>Finding</small><strong>{active.result}</strong></div>
           </div>
-          <div className="rh-evidence">
-            <div><small>Reproduction</small><strong>{active.id === 'map' ? 'Pending' : 'Verified'}</strong></div>
-            <div><small>Confidence</small><strong>{active.id === 'repair' || active.id === 'release' ? 'High' : 'Collecting'}</strong></div>
-            <div><small>Next action</small><strong>{active.id === 'release' ? 'Promote' : active.label}</strong></div>
+          <div className="v5-graph" aria-label="Service relationship graph">
+            <div className="v5-node domain"><span>PUBLIC</span><b>checkout.serendepify.com</b></div>
+            <i className="v5-edge first"><span>HTTPS</span></i>
+            <div className="v5-node proxy"><span>PROXY</span><b>Caddy</b><small>:443</small></div>
+            <i className="v5-edge broken"><span>502</span></i>
+            <div className="v5-node service"><span>SERVICE</span><b>payments-api</b><small>:3000</small></div>
+          </div>
+          <div className="v5-evidence">
+            <div className="v5-evidence-head"><span>Evidence stream</span><b>live topology + change ledger</b></div>
+            {active.logs.map((line, index) => <div className="v5-log" key={line}><span>{String(index + 1).padStart(2, '0')}</span><i className={index === active.logs.length - 1 ? 'hot' : ''}>◆</i><code>{line}</code></div>)}
           </div>
         </main>
       </div>
@@ -115,126 +138,132 @@ function LoopSurface({ step = 'release', compact = false }: { step?: LoopStep; c
 
 function Hero() {
   return (
-    <section className="v4-hero" id="top">
-      <div className="v4-shell v4-hero-grid">
-        <div className="v4-hero-copy">
-          <p className="v4-kicker">Serendepify · Infrastructure software from Accra</p>
-          <h1>Every release,<br /><span>tested through</span><br />the real journey.</h1>
-          <p className="v4-lede">GroundControl Loop takes the exact artifact from CI, exercises the customer journeys it can affect inside an isolated Daytona environment, repairs reproducible failures with Gemini, and guards the path onto infrastructure you own.</p>
-          <div className="v4-actions">
-            <a className="v4-button primary" href="#loop">Explore Loop <span>↓</span></a>
-            <a className="v4-button ghost" href={GC_URL} {...ext}>Open GroundControl ↗</a>
+    <section className="v5-hero" id="top">
+      <div className="v5-hero-glow" />
+      <div className="v5-shell">
+        <div className="v5-hero-copy">
+          <p className="v5-kicker"><i /> Infrastructure intelligence from Accra</p>
+          <h1>Software that keeps<br /><em>your software</em> running.</h1>
+          <p className="v5-lede">Serendepify builds operational intelligence for lean teams running applications on their own infrastructure. GroundControl understands every service, tests meaningful changes and guides safe recovery when something breaks.</p>
+          <div className="v5-actions">
+            <a className="v5-button primary" href="#autopilot">See the intelligence <span>↓</span></a>
+            <a className="v5-button secondary" href={GC_URL} {...ext}>Open GroundControl <span>↗</span></a>
           </div>
-          <div className="v4-signal"><i /><span><b>Product preview</b> · Change-aware journey testing, repair, canary, and rollback</span></div>
+          <div className="v5-hero-note"><span>01</span><p><b>Built for infrastructure you own.</b> Docker Compose first. Existing pipelines welcome. Operator control preserved.</p></div>
         </div>
-        <div className="v4-hero-product"><LoopSurface compact /></div>
+        <div className="v5-hero-surface"><IntelligenceSurface /></div>
       </div>
     </section>
   );
 }
 
-function ProofBar() {
-  const facts = [
-    ['Live today', 'GroundControl cockpit'],
-    ['Self-hosted', 'No SaaS in the middle'],
-    ['Open source', 'Inspectable product'],
-    ['One install', 'VPS-ready bootstrap'],
-  ];
-  return <section className="v4-proof"><div className="v4-shell v4-proof-grid">{facts.map(([title, body]) => <div key={title}><span>{title}</span><strong>{body}</strong></div>)}</div></section>;
+function SignalStrip() {
+  return <section className="v5-signal-strip"><div className="v5-shell">{[
+    ['Understands', 'Live service relationships'],
+    ['Exercises', 'Customer-facing journeys'],
+    ['Explains', 'Evidence before action'],
+    ['Recovers', 'Reversible by policy'],
+  ].map(([verb, detail]) => <div key={verb}><span>{verb}</span><strong>{detail}</strong></div>)}</div></section>;
 }
 
-function GroundControl() {
+function GroundControlIntro() {
   return (
-    <section className="v4-section" id="groundcontrol">
-      <div className="v4-shell">
-        <div className="v4-section-head">
-          <div><p className="v4-kicker">01 · Flagship product</p><h2>The cockpit for the servers you actually run.</h2></div>
-          <p>GroundControl connects to VPS hosts, reads real Docker, proxy, system and Kubernetes state, and turns it into one place to inspect and act.</p>
-        </div>
-        <div className="v4-gc-grid">
-          <div className="v4-product-shot"><ImageSlot label="GroundControl services" media={PRODUCT_MEDIA.groundControlServices} mediaFit="contain" background="#111417" /></div>
-          <div className="v4-capabilities">
-            {[
-              ['01', 'See live topology', 'Hosts, projects, sites, services, containers and pods mapped from actual system state.'],
-              ['02', 'Operate infrastructure', 'Logs, health, service controls, terminal, DNS, alerts and deployments in one authenticated surface.'],
-              ['03', 'Keep control local', 'Single-tenant and self-hosted, with no telemetry or operational data required to leave your network.'],
-            ].map(([number, title, body]) => <article key={number}><b>{number}</b><h3>{title}</h3><p>{body}</p></article>)}
-            <div className="v4-inline-actions"><a href={GC_URL} {...ext}>Open live product ↗</a><a href="https://github.com/teckedd-code2save/groundcontrol" {...ext}>View source ↗</a></div>
-          </div>
+    <section className="v5-section v5-intro" id="groundcontrol">
+      <div className="v5-shell">
+        <div className="v5-section-label"><span>01</span><p>GroundControl</p></div>
+        <div className="v5-statement"><h2>Your VPS is not a collection of charts. It is a living system.</h2><p>GroundControl connects code, deployments, containers, proxies, domains and customer journeys into one operational picture—then follows every consequential change through verification or recovery.</p></div>
+        <div className="v5-principles">
+          {[
+            ['See the whole path', 'Trace a customer request from the public domain through DNS, TLS, reverse proxy, network and application process.'],
+            ['Know what changed', 'Join GitHub, deployment and host events into a causal timeline anchored to the last verified healthy state.'],
+            ['Act with proof', 'Every diagnosis links evidence. Every mutation carries a risk level, verification plan and exact rollback.'],
+          ].map(([title, body], index) => <article key={title}><b>0{index + 1}</b><h3>{title}</h3><p>{body}</p></article>)}
         </div>
       </div>
     </section>
   );
 }
 
-function Loop() {
-  const [activeStep, setActiveStep] = useState<LoopStep>('map');
-  const active = LOOP_STEPS.find((item) => item.id === activeStep) ?? LOOP_STEPS[0];
+function Autopilot() {
+  const [activeStage, setActiveStage] = useState<IntelligenceStage>('observe');
+  const active = INTELLIGENCE_STAGES.find((item) => item.id === activeStage) ?? INTELLIGENCE_STAGES[0];
   return (
-    <section className="v4-section v4-rehearsal" id="loop">
-      <div className="v4-shell">
-        <div className="v4-section-head light">
-          <div><p className="v4-kicker">02 · GroundControl Loop</p><h2>Failures do not halt the release. They enter repair.</h2></div>
-          <p>A proposed CI-to-production loop for change-aware customer journeys, resilient repair, and controlled rollout on infrastructure the operator owns.</p>
+    <section className="v5-section v5-autopilot" id="autopilot">
+      <div className="v5-shell">
+        <div className="v5-section-label light"><span>02</span><p>Proactive autopilot</p><b>Product direction</b></div>
+        <div className="v5-autopilot-head"><h2>When the host changes,<br />GroundControl proves what still works.</h2><p>It selects tests from the affected service graph, investigates regressions and chooses the least disruptive path back to health.</p></div>
+        <div className="v5-stage-tabs" role="tablist" aria-label="GroundControl intelligence stages">
+          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => setActiveStage(item.id)} key={item.id}><span>{item.number}</span>{item.label}</button>)}
         </div>
-        <div className="v4-step-tabs" role="tablist" aria-label="Loop stages">
-          {LOOP_STEPS.map((item) => <button key={item.id} type="button" className={item.id === activeStep ? 'active' : ''} onClick={() => setActiveStep(item.id)} role="tab" aria-selected={item.id === activeStep}><span>{item.number}</span>{item.label}</button>)}
-        </div>
-        <div className="v4-rehearsal-grid">
-          <div className="v4-step-copy"><p>{active.number} · {active.label}</p><h3>{active.title}</h3><span>{active.body}</span><div className="v4-tech-row"><b>Gemini intelligence</b><b>Daytona isolation</b><b>Human approval</b></div></div>
-          <LoopSurface step={activeStep} />
+        <div className="v5-stage-layout">
+          <div className="v5-stage-copy"><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
+          <IntelligenceSurface stage={activeStage} />
         </div>
       </div>
     </section>
   );
 }
 
-function Products() {
-  const products = [
-    {
-      status: 'Standalone product',
-      name: 'Convoy',
-      tagline: 'Supervised delivery from PR to production.',
-      body: 'Today Claude opens the PR. Review feedback steers an improved revision; approval merges it, promotes the release, and advances the guarded canary, observation, and production steps.',
-      tags: ['CLI + MCP', 'Approval-gated', 'Model-adaptable'],
-      href: CONVOY_URL,
-      media: PRODUCT_MEDIA.convoy,
-    },
-    {
-      status: 'Developer preview',
-      name: 'Forge',
-      tagline: 'Agent ecosystem bootstrapper.',
-      body: 'Configure skills and MCP tools that turn product requirements into architecture, backend artifacts, tests, and delivery workflows.',
-      tags: ['CLI', 'Skills', 'Agent-agnostic'],
-      href: FORGE_URL,
-      media: PRODUCT_MEDIA.forge,
-    },
+function Intelligence() {
+  const cards = [
+    { number: '01', eyebrow: 'Living topology', title: 'Understand the system behind the URL.', body: 'GroundControl continuously maps the relationship between domains, Caddy or Nginx, Docker networks, services, processes and dependencies.', visual: <div className="v5-mini-map"><span>domain</span><i /><span>proxy</span><i className="warn" /><span>service</span></div> },
+    { number: '02', eyebrow: 'Synthetic journeys', title: 'Test customer outcomes, not green containers.', body: 'A proxy, image, environment or route change triggers only the journeys inside its likely blast radius—sign-in, checkout, APIs or any outcome the operator confirms.', visual: <div className="v5-mini-run"><span><i /> Login</span><b>passed</b><span><i /> Checkout</span><b className="fail">failed · 502</b><span><i /> Account API</span><b>passed</b></div> },
+    { number: '03', eyebrow: 'Recovery ladder', title: 'Repair, redeploy or guide with context.', body: 'GroundControl restores the last healthy state, validates a configuration correction or proposes a resilient deployment blueprint. High-risk work becomes a guided plan.', visual: <div className="v5-mini-ladder"><span>restore known-good config <b>low risk</b></span><span>redeploy previous artifact <b>reversible</b></span><span>guided topology change <b>approval</b></span></div> },
+    { number: '04', eyebrow: 'Operational memory', title: 'Every confirmed recovery improves the next one.', body: 'Symptoms, evidence, causes and successful actions become service-specific memory without turning historical correlation into unquestioned fact.', visual: <div className="v5-mini-memory"><strong>Similar incident found</strong><p>Port drift after API image update</p><span>92% evidence overlap</span></div> },
   ];
   return (
-    <section className="v4-section v4-products" id="products">
-      <div className="v4-shell">
-        <div className="v4-section-head"><div><p className="v4-kicker">03 · More from Serendepify</p><h2>Independent products.<br />A shared systems instinct.</h2></div><p>Convoy and Forge are not components inside GroundControl. They are separate products shaped by the same focus on evidence, useful automation, and operator control.</p></div>
-        <div className="v4-product-grid">{products.map((product) => <article key={product.name} className="v4-product-card"><div className="v4-card-media"><ImageSlot label={product.name} media={product.media} mediaFit="contain" background="#111417" /></div><div className="v4-card-body"><span>{product.status}</span><h3>{product.name}</h3><h4>{product.tagline}</h4><p>{product.body}</p><div className="v4-tags">{product.tags.map((tag) => <b key={tag}>{tag}</b>)}</div><a href={product.href} {...ext}>Explore {product.name} ↗</a></div></article>)}</div>
+    <section className="v5-section v5-intelligence" id="intelligence"><div className="v5-shell">
+      <div className="v5-section-label"><span>03</span><p>The intelligence layer</p></div>
+      <div className="v5-statement compact"><h2>Observe. Understand. Test. Recover. Verify.</h2><p>This is not a general-purpose shell agent. GroundControl works through narrow tools, explicit policy and reversible actions.</p></div>
+      <div className="v5-intel-grid">{cards.map((card) => <article key={card.number}><header><span>{card.number}</span><p>{card.eyebrow}</p></header><h3>{card.title}</h3><p>{card.body}</p><div className="v5-card-visual">{card.visual}</div></article>)}</div>
+    </div></section>
+  );
+}
+
+function Control() {
+  return (
+    <section className="v5-section v5-control"><div className="v5-shell v5-control-grid">
+      <div><p className="v5-kicker dark"><i /> Autonomy without surrender</p><h2>Your infrastructure.<br />Your policies.<br />Your final say.</h2></div>
+      <div className="v5-policy">
+        {[
+          ['Monitor', 'Detect changes and exercise affected journeys.'],
+          ['Guide', 'Investigate and prepare exact recovery steps.'],
+          ['Approve', 'Execute a reversible repair after one decision.'],
+          ['Autopilot', 'Act automatically inside a narrow, pre-approved policy.'],
+        ].map(([name, body], index) => <div key={name}><span>0{index + 1}</span><h3>{name}</h3><p>{body}</p>{index === 3 && <b>opt-in</b>}</div>)}
       </div>
-    </section>
+    </div></section>
+  );
+}
+
+function Ecosystem() {
+  return (
+    <section className="v5-section v5-ecosystem"><div className="v5-shell">
+      <div className="v5-section-label"><span>04</span><p>Built around the flagship</p></div>
+      <div className="v5-ecosystem-head"><h2>One company thesis.<br />GroundControl at the centre.</h2><p>Serendepify builds systems that make consequential software work legible, controlled and recoverable.</p></div>
+      <div className="v5-products">
+        <a className="primary" href={GC_URL} {...ext}><span>Flagship · live early access</span><h3>GroundControl</h3><p>Operational intelligence and safe recovery for applications running on infrastructure you own.</p><b>Open product ↗</b></a>
+        <a href={CONVOY_URL} {...ext}><span>Independent product</span><h3>Convoy</h3><p>Supervised delivery and promotion workflows with reviewable evidence.</p><b>Explore ↗</b></a>
+        <a href={FORGE_URL} {...ext}><span>Developer tool</span><h3>Forge</h3><p>Agent-ready engineering practices distributed through a focused CLI.</p><b>Explore ↗</b></a>
+      </div>
+    </div></section>
   );
 }
 
 function Company() {
   return (
-    <section className="v4-section v4-company" id="company">
-      <div className="v4-shell v4-company-grid">
-        <div><p className="v4-kicker">04 · Company</p><h2>Built from the operational edge.</h2></div>
-        <div><p>Serendepify is a founder-led software company in Accra building tools for developers and small teams operating real systems without large platform departments.</p><p>The thesis is simple: intelligent software should make systems more legible, preserve human control, and produce evidence for every consequential action.</p><a href={`mailto:${siteConfig.contactEmail}`}>Work with us ↗</a></div>
-      </div>
-    </section>
+    <section className="v5-section v5-company" id="company"><div className="v5-shell v5-company-grid">
+      <div><p className="v5-kicker dark"><i /> Serendepify · Accra, Ghana</p><h2>Built for the teams who own the outcome.</h2></div>
+      <div><p>Lean teams should not need a platform department to understand and recover the systems they run. We are building GroundControl from the operational edge: practical servers, real customer journeys and human accountability.</p><div className="v5-actions"><a className="v5-button primary" href={`mailto:${siteConfig.contactEmail}`}>Talk to Serendepify <span>↗</span></a><a className="v5-button secondary" href="https://github.com/teckedd-code2save/groundcontrol" {...ext}>View the build <span>↗</span></a></div></div>
+    </div></section>
   );
 }
 
 function Footer() {
-  return <footer className="v4-footer"><div className="v4-shell"><div><LogoMark size={25} /><Wordmark size={18} /></div><p>GroundControl · Convoy · Forge</p><span>© 2026 Serendepify · Accra, Ghana</span></div></footer>;
+  return <footer className="v5-footer"><div className="v5-shell"><div className="v5-footer-brand"><LogoMark size={28} /><Wordmark size={19} /></div><p>Operational intelligence for infrastructure you own.</p><div className="v5-footer-links"><a href={GC_URL} {...ext}>GroundControl</a><a href={CONVOY_URL} {...ext}>Convoy</a><a href={FORGE_URL} {...ext}>Forge</a></div><span>© 2026 Serendepify · Accra, Ghana</span></div></footer>;
 }
 
 export default function Home() {
-  return <div className="v4-page"><Nav /><main><Hero /><ProofBar /><GroundControl /><Loop /><Products /><Company /></main><Footer /></div>;
+  return <div className="v5-page"><Nav /><main><Hero /><SignalStrip /><GroundControlIntro /><Autopilot /><Intelligence /><Control /><Ecosystem /><Company /></main><Footer /></div>;
 }
+
