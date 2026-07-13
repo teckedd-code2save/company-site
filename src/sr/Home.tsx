@@ -143,7 +143,7 @@ function Hero() {
       <div className="v5-shell">
         <div className="v5-hero-copy">
           <p className="v5-kicker"><i /> Infrastructure intelligence from Accra</p>
-          <h1>Software that keeps<br /><em>your software</em> running.</h1>
+          <h1>Software that keeps <em>your software</em> running.</h1>
           <p className="v5-lede">Serendepify builds operational intelligence for lean teams running applications on their own infrastructure. GroundControl understands every service, tests meaningful changes and guides safe recovery when something breaks.</p>
           <div className="v5-actions">
             <a className="v5-button primary" href="#autopilot">See the intelligence <span>↓</span></a>
@@ -197,7 +197,7 @@ function Autopilot() {
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.35 },
+      { threshold: 0.08, rootMargin: '-10% 0px -10% 0px' },
     );
     observer.observe(section);
     return () => observer.disconnect();
@@ -230,7 +230,7 @@ function Autopilot() {
         <div className="v5-section-label light"><span>02</span><p>Proactive autopilot</p><b>Product direction</b></div>
         <div className="v5-autopilot-head"><h2>When the host changes,<br />GroundControl proves what still works.</h2><p>It selects tests from the affected service graph, investigates regressions and chooses the least disruptive path back to health.</p></div>
         <div className="v5-stage-tabs" role="tablist" aria-label="GroundControl intelligence stages">
-          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => setActiveStage(item.id)} key={item.id}><span>{item.number}</span>{item.label}</button>)}
+          {INTELLIGENCE_STAGES.map((item) => <button type="button" role="tab" aria-selected={item.id === activeStage} className={item.id === activeStage ? 'active' : ''} onClick={() => { setActiveStage(item.id); setIsPaused(false); }} key={item.id}><span>{item.number}</span>{item.label}</button>)}
         </div>
         <div className="v5-stage-layout">
           <div className="v5-stage-copy" key={active.id}><p>{active.eyebrow}</p><h3>{active.title}</h3><span>{active.body}</span><div><b>Targeted testing</b><b>Evidence chain</b><b>Verified recovery</b></div></div>
