@@ -837,7 +837,7 @@ ul { list-style: none; }
 .v5-stage-tabs button span { color: #555a50; font-family: var(--font-mono); font-size: 7px; }
 .v5-stage-tabs button.active { background: var(--v5-lime); color: #11130f; }
 .v5-stage-tabs button.active span { color: rgba(17,19,15,.5); }
-.v5-stage-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 70px; align-items: center; min-height: 690px; padding: 70px; border: 1px solid var(--v5-dark-line); border-top: 0; background: rgba(255,255,255,.018); view-transition-name: autopilot-stage; }
+.v5-stage-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 70px; align-items: center; min-height: 690px; padding: 70px; border: 1px solid var(--v5-dark-line); border-top: 0; background: rgba(255,255,255,.018); }
 .v5-stage-copy > p { color: var(--v5-lime); font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
 .v5-stage-copy { min-height: 310px; display: flex; flex-direction: column; justify-content: center; animation: v5-stage-enter .52s cubic-bezier(.22,1,.36,1) both; }
 .v5-stage-surface { min-width: 0; animation: v5-stage-enter .52s .05s cubic-bezier(.22,1,.36,1) both; }
@@ -936,32 +936,6 @@ ul { list-style: none; }
 @keyframes v5-stage-enter {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes v5-stage-leave {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-8px); }
-}
-
-@supports (view-transition-name: none) {
-  .v5-stage-copy,
-  .v5-stage-surface { animation: none; }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
-
-  ::view-transition-group(autopilot-stage) {
-    animation-duration: .58s;
-    animation-timing-function: cubic-bezier(.22,1,.36,1);
-  }
-
-  ::view-transition-old(autopilot-stage) {
-    animation: v5-stage-leave .24s ease both;
-  }
-
-  ::view-transition-new(autopilot-stage) {
-    animation: v5-stage-enter .48s .08s cubic-bezier(.22,1,.36,1) both;
-  }
 }
 
 @media (max-width: 1240px) {
