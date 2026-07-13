@@ -260,10 +260,9 @@ function Company() {
 }
 
 function Footer() {
-  return <footer className="v5-footer"><div className="v5-shell"><div className="v5-footer-brand"><LogoMark size={28} /><Wordmark size={19} /></div><p>Operational intelligence for infrastructure you own.</p><div className="v5-footer-links"><a href={GC_URL} {...ext}>GroundControl</a><a href={CONVOY_URL} {...ext}>Convoy</a><a href={FORGE_URL} {...ext}>Forge</a></div><span>© 2026 Serendepify · Accra, Ghana</span></div></footer>;
+  return <footer className="v5-footer"><div className="v5-shell"><div className="v5-footer-brand"><LogoMark size={28} inkColor="#F0F2E9" /><Wordmark size={19} color="#F0F2E9" /></div><p>Operational intelligence for infrastructure you own.</p><div className="v5-footer-links"><a href={GC_URL} {...ext}>GroundControl</a><a href={CONVOY_URL} {...ext}>Convoy</a><a href={FORGE_URL} {...ext}>Forge</a></div><span>© 2026 Serendepify · Accra, Ghana</span></div></footer>;
 }
 
 export default function Home() {
   return <div className="v5-page"><Nav /><main><Hero /><SignalStrip /><GroundControlIntro /><Autopilot /><Intelligence /><Control /><Ecosystem /><Company /></main><Footer /></div>;
 }
-
