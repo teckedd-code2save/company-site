@@ -41,19 +41,24 @@ jobs:
         run: npm run build
 
   # CD: deploys to Vercel (vercel.json: buildCommand "npm run build",
-  # outputDirectory "dist") only after CI passes on main. Skipped until the
-  # VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID secrets are added to the
-  # repo — the guard keeps the workflow green without them.
+  # outputDirectory "dist") only after CI passes on main. The step is skipped
+  # until the VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID secrets are
+  # added to the repo — the guard keeps the workflow green without them.
+  # (Note: the secrets context is unavailable in `if:` expressions at any
+  # level, so the guard reads the secret through step `env`.)
   deploy:
     name: Deploy to Vercel (production)
     needs: ci
-    if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != ''
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
       - name: Deploy to Vercel
+        if: env.VERCEL_TOKEN != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
