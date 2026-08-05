@@ -106,7 +106,7 @@ This is a living document for the Serendepify website. Add entries when you disc
 
 Items explicitly tracked as future work, not sharp edges:
 
-1. CI pipeline (GitHub Actions: type-check, lint, build) — tracked in open issues #16, #47, #51, #58–63.
+1. ~~CI pipeline (GitHub Actions: type-check, lint, build)~~ — **done** `9ada08c` (`.github/workflows/ci.yml`: lint, `tsc -b`, build on push/PR to main; guarded Vercel production deploy once `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets are set).
 2. Test infrastructure with Vitest — tracked in issue #52.
 3. Deleting the legacy `src/sections/` tree once `src/sr/` is confirmed stable.
 4. Updating AGENTS.md to match the `src/sr/` layout and existing Docker setup.

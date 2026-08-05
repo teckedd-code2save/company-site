@@ -179,7 +179,7 @@ The project is configured for **Vercel**:
 - API routes in `api/` are automatically deployed as Vercel serverless functions.
 - `vite.config.ts` sets `base: './'` so assets resolve correctly in both dev and production.
 
-No Docker, container orchestration, or CI config files are present in the repo.
+CI is handled by `.github/workflows/ci.yml` — lint, `tsc -b` type-check, and production build on every push/PR to `main`, plus a Vercel production deploy (guarded on `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets, so it's skipped until they're set). No Docker/container orchestration config is present.
 
 ---
 
