@@ -48,8 +48,9 @@ export default function ContactModal() {
       toast.success("Message sent. We'll reply within 24 hours.");
       setForm({ name: '', email: '', company: '', project_type: '', message: '' });
       closeContact();
-    } catch (err: any) {
-      toast.error(err.message || 'Something went wrong. Please try again or email us directly.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again or email us directly.';
+      toast.error(message);
     } finally {
       setLoading(false);
     }

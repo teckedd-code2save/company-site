@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint, type-check & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # tsc -b (build mode) is the correct type-check for this repo's
+      # solution-style root tsconfig (files: [] + references to app/node).
+      # A plain `tsc --noEmit` at the root compiles zero files and silently
+      # passes. `npm run build` runs the same `tsc -b` again — incremental
+      # via tsbuildinfo, so this is cheap.
+      - name: Type-check
+        run: npx tsc -b
+
+      - name: Build
+        run: npm run build
+
+  # CD: deploys to Vercel (vercel.json: buildCommand "npm run build",
+  # outputDirectory "dist") only after CI passes on main. Skipped until the
+  # VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID secrets are added to the
+  # repo — the guard keeps the workflow green without them.
+  deploy:
+    name: Deploy to Vercel (production)
+    needs: ci
+    if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
