@@ -68,13 +68,13 @@ This is a living document for the Serendepify website. Add entries when you disc
 
 **Mitigation:** Prefer the actual repo state over AGENTS.md claims; update AGENTS.md when touching either area.
 
-## 9. No test framework [Severity: MEDIUM]
+## 9. ~~No test framework~~ [Severity: MEDIUM] — **fixed** `82bcd07`
 
-**What:** There are no `.test.` or `.spec.` files and no test runner configured.
+**What:** There were no `.test.` or `.spec.` files and no test runner configured.
 
 **Why it matters:** The pricing flow, checkout fallbacks, and Autopilot animations have shipped several fixes without regression coverage.
 
-**Mitigation:** Until Vitest infrastructure lands (tracked in open issues), verify with `npm run lint` and `npm run build` plus manual checks of checkout and hero motion.
+**Mitigation:** Vitest + React Testing Library landed in `82bcd07` (issue #52): `npm test` runs in CI, and `vitest.setup.ts` stubs the jsdom-missing browser APIs. Add tests alongside new behavior; keep render tests deterministic by relying on the setup stubs.
 
 ## 10. Modals are context-driven, not route-driven [Severity: LOW]
 
@@ -107,6 +107,6 @@ This is a living document for the Serendepify website. Add entries when you disc
 Items explicitly tracked as future work, not sharp edges:
 
 1. ~~CI pipeline (GitHub Actions: type-check, lint, build)~~ — **done** `9ada08c` (`.github/workflows/ci.yml`: lint, `tsc -b`, build on push/PR to main; guarded Vercel production deploy once `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets are set).
-2. Test infrastructure with Vitest — tracked in issue #52.
+2. ~~Test infrastructure with Vitest~~ — **done** `82bcd07` (vitest@4 + React Testing Library, `npm test` wired into CI; issue #52).
 3. Deleting the legacy `src/sections/` tree once `src/sr/` is confirmed stable.
 4. Updating AGENTS.md to match the `src/sr/` layout and existing Docker setup.
