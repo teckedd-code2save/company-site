@@ -185,11 +185,13 @@ CI is handled by `.github/workflows/ci.yml` — lint, `tsc -b` type-check, and p
 
 ## Testing
 
-**There is no test framework configured.** There are no `.test.` or `.spec.` files in the repository.
+Vitest + React Testing Library (jsdom) is configured:
 
-If you add tests, the team would likely prefer:
-- **Vitest** (aligns with the Vite toolchain), or
-- **Jest** with `jsdom` / `@testing-library/react`.
+- Run once: `npm test` (the same command CI runs)
+- Watch mode: `npm run test:watch`
+- Unit/component tests colocate with their modules (`src/lib/utils.test.ts`, `src/sr/ui.test.tsx`); app-level smoke tests live in `src/__tests__/` (`App.test.tsx` covers both `/` and `/products` routes).
+- `vitest.setup.ts` registers jest-dom matchers and stubs the browser APIs jsdom lacks (`matchMedia`, `IntersectionObserver`, `ResizeObserver`, `HTMLMediaElement.play/pause`) so render tests stay deterministic — the `sr/` components guard their animation/media paths with these APIs.
+- Path alias `@/` resolves in tests via `vitest.config.ts` (mirrors the Vite config).
 
 ---
 
