@@ -52,19 +52,17 @@ src/
     HeroParticles.tsx   # WebGL particle field (React Three Fiber)
     Navbar.tsx          # Sticky navigation bar
     PricingModal.tsx    # Full-screen pricing modal
-  sections/             # Page sections composed in App.tsx
-    CTABanner.tsx
-    CTASection.tsx
-    ContactForm.tsx
-    Features.tsx
-    Footer.tsx
-    Founder.tsx
-    Hero.tsx
-    Pricing.tsx
-    ProductFlow.tsx
-    Products.tsx
-    Testimonials.tsx
-    TrustLogos.tsx
+  sr/                   # Live page components (v5 design system)
+    Home.tsx            # `/` route: Nav, Hero, Autopilot, Intelligence, Control, Ecosystem, Company
+    ProductsPage.tsx    # `/products` route: product index
+    ui.tsx              # v5 primitives (LogoMark, Wordmark, ImageSlot, buttons)
+    ui.test.tsx         # Tests for the v5 primitives
+    media.ts            # Product media + external product URLs
+    sr.css              # v5 styles (imported by main.tsx)
+    sr-tokens.css       # v5 design tokens
+    serendepify-motion.js  # Vendored motion engine — do not hand-edit (see PENDINGS #2)
+    serendepify-motion.d.ts
+    useSerendepifyMotion.ts # React binding for the motion engine
   hooks/                # Custom React hooks
     use-live-proof.ts   # Fetches live NPM/GitHub stats for proof section
     use-mobile.ts       # Responsive breakpoint detector (768px)
@@ -74,7 +72,7 @@ src/
     modal-context.tsx   # React Context for pricing/contact modal state
     site-config.ts      # Environment-driven site config and payment link resolver
     utils.ts            # `cn()` — clsx + tailwind-merge utility
-  App.tsx               # Root component: mounts sections + modals
+  App.tsx               # Pathname router: '/' → sr/Home, '/products' → sr/ProductsPage
   main.tsx              # React DOM entry point
   index.css             # Global styles, Tailwind directives, custom animations
   App.css               # App-specific styles (mostly unused)
@@ -127,7 +125,7 @@ npm run lint
 - The site respects `prefers-reduced-motion` (see `@media (prefers-reduced-motion: reduce)` in `src/index.css`).
 
 ### Component Patterns
-- **Sections** (e.g., `Hero.tsx`, `Pricing.tsx`) are default exports in `src/sections/`.
+- **Pages** — `Home.tsx` and `ProductsPage.tsx` in `src/sr/` are the only page components, routed by `App.tsx`. The landing page's inner sections (Hero, Autopilot, Intelligence, …) are private components *inside* `Home.tsx`, not separate files.
 - **UI primitives** (e.g., `button.tsx`) live in `src/components/ui/` and follow shadcn/ui conventions:
   - Use `cva` (class-variance-authority) for variant APIs.
   - Support `asChild` via `@radix-ui/react-slot`.
@@ -179,7 +177,7 @@ The project is configured for **Vercel**:
 - API routes in `api/` are automatically deployed as Vercel serverless functions.
 - `vite.config.ts` sets `base: './'` so assets resolve correctly in both dev and production.
 
-CI is handled by `.github/workflows/ci.yml` — lint, `tsc -b` type-check, and production build on every push/PR to `main`, plus a Vercel production deploy (guarded on `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets, so it's skipped until they're set). No Docker/container orchestration config is present.
+CI is handled by `.github/workflows/ci.yml` — lint, `tsc -b` type-check, tests, and production build on every push/PR to `main`, plus a Vercel production deploy (guarded on `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets, so it's skipped until they're set). A containerized path also exists: `Dockerfile` (node:22-alpine build → nginx:1.27-alpine runner) with `nginx.conf`, for self-hosted deploys.
 
 ---
 
@@ -206,8 +204,10 @@ Vitest + React Testing Library (jsdom) is configured:
 
 ## Key Business Logic
 
-### Pricing Flow
-1. User clicks a CTA in `Pricing.tsx` (inline section) or `PricingModal.tsx` (full-screen modal).
+### Pricing / Checkout Flow
+> **Status:** dormant — none of the current `src/sr/` pages render a pricing CTA (all CTAs are external links). The flow below describes the modal + API path that remains wired for checkout and activates if a CTA is added back.
+
+1. A CTA opens `PricingModal.tsx` (full-screen modal, controlled by `ModalProvider` in `src/lib/modal-context.tsx`).
 2. `handleCheckout` resolves the plan action:
    - `contact` → opens the contact modal.
    - `pay` → redirects to a direct payment link.
