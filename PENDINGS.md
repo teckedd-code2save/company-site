@@ -4,13 +4,13 @@ This is a living document for the Serendepify website. Add entries when you disc
 
 ---
 
-## 1. The live UI lives in `src/sr/` — `src/sections/` is dead code [Severity: HIGH]
+## 1. ~~The live UI lives in `src/sr/` — `src/sections/` is dead code~~ [Severity: HIGH] — **fixed** `28266cc`
 
-**What:** `src/App.tsx` imports `Home` and `ProductsPage` from `./sr/`, and `src/main.tsx` imports `./sr/sr.css`. The `src/sections/` directory (About, Features, Hero, Pricing, etc.) has zero imports anywhere in the codebase.
+**What:** `src/App.tsx` imports `Home` and `ProductsPage` from `./sr/`, and `src/main.tsx` imports `./sr/sr.css`. The `src/sections/` directory (About, Features, Hero, Pricing, etc.) had zero imports anywhere in the codebase.
 
-**Why it matters:** AGENTS.md still documents `sections/` as the component home. An agent that follows AGENTS.md will edit dead files and "fix" things that have no effect on the rendered site.
+**Why it mattered:** AGENTS.md documented `sections/` as the component home, so an agent that followed it would edit dead files and "fix" things that have no effect on the rendered site.
 
-**Mitigation:** Edit components under `src/sr/`. Treat `src/sections/` as legacy until it is deleted.
+**Resolution:** `src/sections/` was deleted and AGENTS.md now documents `src/sr/` as the component home (issue #66).
 
 ## 2. `serendepify-motion.js` is a vendored artifact [Severity: MEDIUM]
 
@@ -60,13 +60,13 @@ This is a living document for the Serendepify website. Add entries when you disc
 
 **Mitigation:** Give every Autopilot stage a unique key and regenerate snapshots when stages are added or reordered.
 
-## 8. AGENTS.md is stale on Docker and layout [Severity: LOW]
+## 8. ~~AGENTS.md is stale on Docker and layout~~ [Severity: LOW] — **fixed** `28266cc`
 
-**What:** AGENTS.md claims "No Docker, container orchestration, or CI config files are present" — but `Dockerfile` (node:22-alpine build → nginx:1.27-alpine runner) and `nginx.conf` exist, and the layout section is outdated (see #1).
+**What:** AGENTS.md claimed "No Docker, container orchestration, or CI config files are present" — but `Dockerfile` (node:22-alpine build → nginx:1.27-alpine runner) and `nginx.conf` exist, and the layout section was outdated (see #1).
 
-**Why it matters:** Agents trust AGENTS.md and may duplicate infrastructure that already exists or misplace components.
+**Why it mattered:** Agents trust AGENTS.md and may duplicate infrastructure that already exists or misplace components.
 
-**Mitigation:** Prefer the actual repo state over AGENTS.md claims; update AGENTS.md when touching either area.
+**Resolution:** AGENTS.md now documents `src/sr/` as the component home and mentions the `Dockerfile`/`nginx.conf` containerized path (issue #66).
 
 ## 9. ~~No test framework~~ [Severity: MEDIUM] — **fixed** `82bcd07`
 
@@ -108,5 +108,5 @@ Items explicitly tracked as future work, not sharp edges:
 
 1. ~~CI pipeline (GitHub Actions: type-check, lint, build)~~ — **done** `9ada08c` (`.github/workflows/ci.yml`: lint, `tsc -b`, build on push/PR to main; guarded Vercel production deploy once `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets are set).
 2. ~~Test infrastructure with Vitest~~ — **done** `82bcd07` (vitest@4 + React Testing Library, `npm test` wired into CI; issue #52).
-3. Deleting the legacy `src/sections/` tree once `src/sr/` is confirmed stable.
-4. Updating AGENTS.md to match the `src/sr/` layout and existing Docker setup.
+3. ~~Deleting the legacy `src/sections/` tree once `src/sr/` is confirmed stable.~~ — **done** `28266cc` (issue #66: all 14 files removed; repo-wide grep for `sections/` returns nothing).
+4. ~~Updating AGENTS.md to match the `src/sr/` layout and existing Docker setup.~~ — **done** `28266cc` (issue #66: directory tree, component patterns, and deployment notes now match the `src/sr/` layout and the `Dockerfile`/`nginx.conf` setup).
