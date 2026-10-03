@@ -6,14 +6,14 @@
 
 ## Project Overview
 
-**Serendepify Website** is a marketing landing page for Serendepify — an AI-autonomy tooling company. It is a single-page React application (SPA) with rich visual effects, animated sections, and an integrated Stripe checkout flow.
+**Serendepify Website** presents the company’s products and client engineering services. It is a React SPA with separate home, products, services, company, and contact paths. Current company pages do not render Stripe checkout.
 
 Key characteristics:
-- Dark-first visual identity (pure black `#000000` background, neon mint `#00E699` accent).
-- Heavy use of scroll-triggered and micro-interaction animations via Framer Motion.
-- WebGL particle field in the hero section using React Three Fiber + Three.js.
-- Self-drawing SVG branch diagram representing the product stack.
-- Graceful fallback behavior when Stripe or external APIs are unavailable.
+- Ivory and ink visual identity with coral/lime accents and the existing brand mark.
+- Clear paths to products and client services, including a focused email-draft inquiry.
+- Haven’s real product film, native playback controls, captions, chapters, and a direct-product fallback.
+- Interactive GroundControl and RentAWeekend walkthroughs; actual screens and examples are identified accurately.
+- Restrained CSS motion and reduced-motion support. The vendored motion engine remains untouched.
 
 ---
 
@@ -53,8 +53,14 @@ src/
     Navbar.tsx          # Sticky navigation bar
     PricingModal.tsx    # Full-screen pricing modal
   sr/                   # Live page components (v5 design system)
-    Home.tsx            # `/` route: Nav, Hero, Autopilot, Intelligence, Control, Ecosystem, Company
+    Home.tsx            # `/`: company introduction, products, services, and showcases
     ProductsPage.tsx    # `/products` route: product index
+    CompanyPages.tsx    # `/services`, `/company`, `/contact`, and not-found pages
+    CompanyLayout.tsx   # Shared navigation, footer, metadata, and invitation
+    ProductShowcases.tsx # Haven film and interactive product walkthroughs
+    companyData.ts     # Product destinations and service definitions
+    contactBrief.ts    # Encoded email draft, without a submission backend
+    company.css        # Scoped company styles, reusing brand tokens
     ui.tsx              # v5 primitives (LogoMark, Wordmark, ImageSlot, buttons)
     ui.test.tsx         # Tests for the v5 primitives
     media.ts            # Product media + external product URLs
@@ -72,7 +78,7 @@ src/
     modal-context.tsx   # React Context for pricing/contact modal state
     site-config.ts      # Environment-driven site config and payment link resolver
     utils.ts            # `cn()` — clsx + tailwind-merge utility
-  App.tsx               # Pathname router: '/' → sr/Home, '/products' → sr/ProductsPage
+  App.tsx               # Pathname router for company pages; unknown paths show not-found
   main.tsx              # React DOM entry point
   index.css             # Global styles, Tailwind directives, custom animations
   App.css               # App-specific styles (mostly unused)
@@ -125,7 +131,7 @@ npm run lint
 - The site respects `prefers-reduced-motion` (see `@media (prefers-reduced-motion: reduce)` in `src/index.css`).
 
 ### Component Patterns
-- **Pages** — `Home.tsx` and `ProductsPage.tsx` in `src/sr/` are the only page components, routed by `App.tsx`. The landing page's inner sections (Hero, Autopilot, Intelligence, …) are private components *inside* `Home.tsx`, not separate files.
+- **Pages** — `Home.tsx`, `ProductsPage.tsx`, and the pages in `CompanyPages.tsx` are routed by `App.tsx`. Shared company content uses `CompanyLayout`, `ProductShowcases`, and `companyData`.
 - **UI primitives** (e.g., `button.tsx`) live in `src/components/ui/` and follow shadcn/ui conventions:
   - Use `cva` (class-variance-authority) for variant APIs.
   - Support `asChild` via `@radix-ui/react-slot`.
@@ -175,7 +181,7 @@ Copy `.env.example` to `.env` locally. Variables are split between client-side (
 The project is configured for **Vercel**:
 - `vercel.json` specifies `"buildCommand": "npm run build"` and `"outputDirectory": "dist"`.
 - API routes in `api/` are automatically deployed as Vercel serverless functions.
-- `vite.config.ts` sets `base: './'` so assets resolve correctly in both dev and production.
+- `vite.config.ts` sets `base: '/'` so assets resolve correctly on direct and trailing-slash company routes.
 
 CI is handled by `.github/workflows/ci.yml` — lint, `tsc -b` type-check, tests, and production build on every push/PR to `main`, plus a Vercel production deploy (guarded on `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets, so it's skipped until they're set). A containerized path also exists: `Dockerfile` (node:22-alpine build → nginx:1.27-alpine runner) with `nginx.conf`, for self-hosted deploys.
 

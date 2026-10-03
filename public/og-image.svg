@@ -1,6 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#050505"/>
-  <rect x="520" y="235" width="160" height="160" rx="24" fill="#FFFFFF"/>
-  <text x="600" y="480" text-anchor="middle" font-family="system-ui, sans-serif" font-size="48" font-weight="600" fill="#fff">Serendepify AI</text>
-  <text x="600" y="530" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" font-weight="400" fill="rgba(255,255,255,0.55)">We build the stack that makes AI autonomous.</text>
+  <rect width="1200" height="630" fill="#F1F0E8"/>
+  <path d="M60 140H1140M60 515H1140M850 60V570" stroke="#171812" opacity=".15"/>
+  <text x="64" y="100" font-family="system-ui, sans-serif" font-size="34" font-weight="700" fill="#171812">serendepify<tspan fill="#E8542A">.</tspan></text>
+  <text x="64" y="275" font-family="system-ui, sans-serif" font-size="82" font-weight="600" letter-spacing="-5" fill="#171812">We keep</text>
+  <text x="64" y="375" font-family="system-ui, sans-serif" font-size="82" font-weight="600" letter-spacing="-5" fill="none" stroke="#171812" stroke-width="1.5">making things.</text>
+  <text x="64" y="452" font-family="system-ui, sans-serif" font-size="25" fill="#606259">Products of our own. Engineering for yours.</text>
+  <circle cx="985" cy="294" r="105" fill="#C8FF3D"/>
+  <path d="M985 229V359M920 294H1050M939 248L1031 340M939 340L1031 248" stroke="#E8542A" stroke-width="12"/>
+  <text x="64" y="565" font-family="system-ui, sans-serif" font-size="21" fill="#171812">Haven</text>
+  <text x="242" y="565" font-family="system-ui, sans-serif" font-size="21" fill="#171812">GroundControl</text>
+  <text x="505" y="565" font-family="system-ui, sans-serif" font-size="21" fill="#171812">RentAWeekend</text>
+  <text x="898" y="565" font-family="system-ui, sans-serif" font-size="17" fill="#606259">Built in Accra ↗</text>
 </svg>
