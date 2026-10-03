@@ -1,29 +1,32 @@
 # Serendepify Website
 
-The official marketing website for Serendepify — an AI operations company making production systems understandable and controllable for lean software teams.
+The official Serendepify website, presenting our products and client engineering services with equal prominence.
 
 ## About
 
-Serendepify is led by Ground Control, an operational cockpit for practical cloud and VPS infrastructure. Convoy provides controlled rollout, while Forge improves the architecture and build context created upstream. The website presents these as three connected product layers around one commercial wedge: production operations.
+Explore Haven, GroundControl, and RentAWeekend, or discuss product engineering, agents and integrations, interactive 3D, or deployment and operations. Convoy and Forge remain in the wider product catalogue.
 
-The site is a single-page React application with GSAP scroll animations, Three.js visual effects, and a product showcase featuring live video surfaces and animated deployment loops.
+The React application has dedicated home, products, services, company, and contact routes. Haven has a 30-second film captured from the real app, with chapter controls and optional descriptive captions. GroundControl and RentAWeekend have interactive walkthroughs. The contact flow prepares an email draft for the visitor to send; it does not submit to an unconfigured backend or claim delivery.
 
 ## Products
 
-- **Ground Control** — The primary product: a VPS-aware operational cockpit for health, services, logs, terminal, DNS, alerts, and assisted actions.
-- **Convoy** — The controlled execution layer for repo-aware rehearsal, approval gates, canary rollout, and observation.
-- **Forge** — The upstream context layer that turns product intent into architecture, scaffolding, and agent-ready build plans.
+- **Haven** — Explore a sample home, arrange furniture, and plan a measured room. Includes a retailer path.
+- **GroundControl** — An open-source, self-hosted VPS control plane with agent access through MCP and OAuth.
+- **RentAWeekend** — Planning and local help for outings, housing, errands, and trips in Ghana.
+- **Convoy** — Supervised deployment workflows.
+- **Forge** — Engineering practices and context for coding agents.
 
 ## Tech Stack
 
 - React 19 + TypeScript 5
 - Vite 7
 - Tailwind CSS 3 + tw-animate-css
-- Framer Motion (scroll and component animations)
-- GSAP (production motion engine)
-- Three.js + React Three Fiber (3D effects)
+- CSS entrance and interaction motion, respecting reduced motion
+- Existing GSAP/Three.js tooling retained; product footage loads on request
 - Radix UI (accessible primitives)
-- Stripe (payment integration)
+- Stripe API retained but dormant; no checkout in company pages
+
+See [the release notes](docs/company-update-2026-10-03.md) for routes, media provenance, and validation.
 
 ## Quick Start
 
